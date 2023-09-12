@@ -14,6 +14,12 @@
         transition-timing-function: ease-in-out;
     }
     
+    .md-icon {
+        --md-filled-tonal-icon-button-container-shape: 20px;
+    }
+    .md-icon:hover {
+        
+    }
     .icon-filled {
         font-variation-settings: 'FILL' 1;
         animation: icon-fill 0.15s ease-in;
@@ -23,6 +29,21 @@
         pointer-events: none;
         filter: grayscale(1);
         user-select: none;
+    }
+
+
+    .full-screen {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .avatar-panel {
+        width: 175px;
+        min-width: 50px;
+        height: 175px;
+        min-height: 50px;
+        border-radius: 9999px;
     }
 }
 
