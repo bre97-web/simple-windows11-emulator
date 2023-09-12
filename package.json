@@ -32,9 +32,10 @@
   "files": [],
   "workspaces": [],
   "dependencies": {
+    "@fluentui/web-components": "^2.5.16",
     "@fontsource/roboto": "^5.0.8",
     "@headlessui/vue": "^1.7.15",
-    "@material/web": "^1.0.0-pre.15",
+    "@material/web": "^1.0.0-pre.17",
     "autoprefixer": "^10.4.15",
     "lit": "^2.8.0",
     "material-symbols": "^0.10.4",

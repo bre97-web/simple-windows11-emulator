@@ -20,6 +20,10 @@ import '@material/web/all'
 import 'material-symbols/outlined.css'
 import '@fontsource/roboto/unicode.json'
 
+import { allComponents, provideFluentDesignSystem } from '@fluentui/web-components';
+
+provideFluentDesignSystem().register(allComponents);
+
 /**
  * Global Components.
  * It's some Unit Text.
