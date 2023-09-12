@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer base {
+
+}
+
+@layer components {
+    .elevation {
+        --md-elevation-level: 3;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in-out;
+    }
+    
+    .icon-filled {
+        font-variation-settings: 'FILL' 1;
+        animation: icon-fill 0.15s ease-in;
+    }
+
+    .disabled-force {
+        pointer-events: none;
+        filter: grayscale(1);
+        user-select: none;
+    }
+}
+
+@layer utilities {
+    @keyframes icon-fill {
+        from {
+            font-variation-settings: 'FILL' 0;
+        } to {
+            font-variation-settings: 'FILL' 1;
+        }
+    }
+}

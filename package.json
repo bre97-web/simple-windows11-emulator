@@ -1,0 +1,107 @@
+{
+  "name": "",
+  "version": "0.0.1",
+  "description": "",
+  "author": "bre97-web",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "scripts": {
+    "type-check": "wireit",
+    "dev": "wireit",
+    "dev:src": "wireit",
+    "build": "wireit",
+    "build:src": "wireit",
+    "preview": "wireit",
+    "preview:src": "wireit",
+    "publish:npm": "node ./scripts/publish-to-npm.js && npx prettier --write package.json",
+    "publish:gpr": "node ./scripts/publish-to-gpr.js && npx prettier --write package.json",
+    "publish:firebase": "node ./scripts/publish-to-firebase.js && npx prettier --write publish.config.json",
+    "publish:github": "node ./scripts/publish-to-github.js && npx prettier --write publish.config.json",
+    "format:json": "npx prettier --write package.json",
+    "format:ts": "tsc --pretty",
+    "test": "exit 0"
+  },
+  "type": "module",
+  "files": [],
+  "workspaces": [],
+  "dependencies": {
+    "@fontsource/roboto": "^5.0.8",
+    "@headlessui/vue": "^1.7.15",
+    "@material/web": "^1.0.0-pre.15",
+    "autoprefixer": "^10.4.15",
+    "lit": "^2.8.0",
+    "material-symbols": "^0.10.4",
+    "moment": "^2.29.4",
+    "pinia": "^2.1.6",
+    "pinia-plugin-persistedstate": "^3.2.0",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "tslib": "^2.6.1",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vue/tsconfig": "^0.4.0",
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9",
+    "vue": "^3.3.4",
+    "vue-tsc": "^1.8.8",
+    "wireit": "^0.10.0"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:src"
+      ]
+    },
+    "build:src": {
+      "command": "vite build",
+      "files": [
+        "src/**/*",
+        "!catalog/**/*",
+        "!docs/**/*",
+        "!config/**/*"
+      ],
+      "output": [
+        "docs/**/*"
+      ],
+      "dependencies": [
+        "type-check"
+      ]
+    },
+    "type-check": {
+      "command": "vue-tsc --noEmit",
+      "files": [
+        "!node_modules",
+        "!.storybook",
+        "!catalog"
+      ]
+    },
+    "preview": {
+      "dependencies": [
+        "preview:src"
+      ]
+    },
+    "preview:src": {
+      "command": "vite preview"
+    },
+    "dev": {
+      "dependencies": [
+        "dev:src"
+      ]
+    },
+    "dev:src": {
+      "command": "vite"
+    }
+  }
+}
