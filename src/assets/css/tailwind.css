@@ -4,7 +4,11 @@
 @tailwind variants;
 
 @layer base {
-
+    :root {
+        --md-outlined-icon-button-container-shape: 4px;
+        --md-filled-icon-button-container-shape: 4px;
+        --md-icon-button-state-layer-shape: 4px;
+    }
 }
 
 @layer components {
@@ -15,10 +19,7 @@
     }
     
     .md-icon {
-        --md-filled-tonal-icon-button-container-shape: 20px;
-    }
-    .md-icon:hover {
-        
+        user-select: none;
     }
     .icon-filled {
         font-variation-settings: 'FILL' 1;
