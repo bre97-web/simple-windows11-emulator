@@ -1,5 +1,5 @@
 <template>
-    <div class="title-large tertiary-text">
+    <div class="title-large surface-text">
         <slot></slot>
     </div>
 </template>
