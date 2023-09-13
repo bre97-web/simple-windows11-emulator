@@ -16,13 +16,13 @@ export default defineConfig({
       template: {
         compilerOptions: {
           isCustomElement: (tag: string): boolean =>
-            tag.startsWith('md') || tag.startsWith('lit')
+            tag.startsWith('md') || tag.startsWith('lit') || tag.startsWith('fluent')
         }
       }
     }),
     vueJsx({
       isCustomElement: (tag: string): boolean =>
-        tag.startsWith('md') || tag.startsWith('lit')
+        tag.startsWith('md') || tag.startsWith('lit') || tag.startsWith('fluent')
     })
   ],
   base: BaseName.base,
