@@ -8,7 +8,7 @@
         <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">
             <div
                 class="relative z-0"
-                :class="[isExpanded ? 'opacity-100' : 'opacity-0']"
+                :class="[isExpanded ? 'opacity-100' : 'opacity-0 pointer-events-none']"
             >
                 <fluent-menu class="absolute bottom-10 right-0 w-32 z-0">
                     <fluent-menu-item>Sleep</fluent-menu-item>

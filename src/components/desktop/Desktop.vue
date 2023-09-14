@@ -1,6 +1,5 @@
 <template>
-    <div class="full-screen ">
-
+    <div class="wallpaper full-screen relative overflow-clip ">
     </div>
 </template>
 

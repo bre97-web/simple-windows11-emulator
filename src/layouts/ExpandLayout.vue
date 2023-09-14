@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div>
         <slot name="actions" :isExpanded="isExpanded" :setIsExpanded="setIsExpanded"></slot>
         <slot name="expanded-content" :isExpanded="isExpanded" :setIsExpanded="setIsExpanded"></slot>
     </div>

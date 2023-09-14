@@ -1,9 +1,12 @@
 <template>
-    <div class="w-full max-w-full h-16 bg-red-100">
+    <div class="w-full max-w-full h-12 window-border">
 
         <!-- No need gap -->
-        <FlexLayout class="items-center justify-center h-full w-full px-4 py-2">
+        <FlexLayout class="relative z-0 back-blur items-center justify-between h-full w-full p-1">
 
+            <div class="flex-none w-28"></div>
+
+            <!-- StartButton -->
             <ExpandLayout class="relative h-full aspect-square">
                 
                 <!-- Open the starts panel -->
@@ -20,11 +23,11 @@
                 <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">
 
                     <div
-                        class="full-screen fixed top-0 left-0 grid justify-center items-end pb-20"
+                        class="full-screen fixed top-0 left-0 grid justify-center items-end pb-16"
                         :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none -z-[1]']"
                     >
 
-                        <fluent-card class="relative backdrop-blur-md bottom-0 w-auto mx-auto max-w-2xl rounded-xl h-[32rem] max-h-[32rem]">
+                        <fluent-card class="relative bottom-0 w-auto mx-auto max-w-2xl rounded-xl min-h-min h-auto max-h-[32rem] back-blur bg-transparent">
 
                             <!-- Content in here -->
                             <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between h-full">
@@ -53,7 +56,13 @@
                 </template>
             </ExpandLayout>
 
+            <div class="flex-none w-28 h-full">
+                <Naviagtion></Naviagtion>
+            </div>
+
         </FlexLayout>
+
+
     </div>
 </template>
 
@@ -63,6 +72,7 @@ import Search from './Search.vue';
 import PinnedApps from './PinnedApps.vue';
 import SimpleUserProfile from './SimpleUserProfile.vue';
 import ShutdownMenu from './ShutdownMenu.vue';
+import Naviagtion from '@/components/control/Navigation.vue';
 
 
 
