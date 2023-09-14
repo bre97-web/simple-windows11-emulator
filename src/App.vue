@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="relative max-h-screen h-screen w-screen"
-        :style="systemStyles"
-    >
+    <div class="relative max-h-screen h-screen w-screen">
 
         <lock-screen v-if="user.activityState.isLocked"></lock-screen>
         <template v-else>
@@ -18,16 +15,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
 import LockScreen from './components/lock-screen/LockScreen.vue';
 import { useUserStore } from './store/UserStore';
 import StartsBar from '@/components/starts/StartsBar.vue'
 import { useSystemStore } from './store/SystemStore';
 
 const system = useSystemStore()
-const systemStyles = computed(() => ({
-    filter: 'brightness(' + (system.bright / 100) + ')'
-}))
+watch(() => system.bright, () => {
+    document.body.style.filter = 'brightness(' + (system.bright / 100) + ');'
+})
 
 const user = useUserStore()
 
