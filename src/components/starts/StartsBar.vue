@@ -2,12 +2,12 @@
     <div class="w-full max-w-full h-12 window-border">
 
         <!-- No need gap -->
-        <FlexLayout class="relative z-0 back-blur items-center justify-between h-full w-full p-1">
+        <FlexLayout class="relative z-0 back-blur items-center justify-between h-full w-full overflow-clip p-1">
 
-            <div class="flex-none w-28"></div>
+            <div class="flex-none w-1/4 flex justify-start"></div>
 
             <!-- StartButton -->
-            <ExpandLayout class="relative h-full aspect-square">
+            <ExpandLayout class="relative flex items-center justify-center w-1/4 flex-grow h-full aspect-square">
                 
                 <!-- Open the starts panel -->
                 <template v-slot:actions="{ isExpanded, setIsExpanded}">
@@ -56,7 +56,7 @@
                 </template>
             </ExpandLayout>
 
-            <div class="flex-none w-28 h-full">
+            <div class="flex-none w-1/4 h-full flex justify-end">
                 <Naviagtion></Naviagtion>
             </div>
 
