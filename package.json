@@ -20,10 +20,8 @@
     "build:src": "wireit",
     "preview": "wireit",
     "preview:src": "wireit",
-    "publish:npm": "node ./scripts/publish-to-npm.js && npx prettier --write package.json",
-    "publish:gpr": "node ./scripts/publish-to-gpr.js && npx prettier --write package.json",
-    "publish:firebase": "node ./scripts/publish-to-firebase.js && npx prettier --write publish.config.json",
-    "publish:github": "node ./scripts/publish-to-github.js && npx prettier --write publish.config.json",
+    "publish:firebase": "node ./scripts/publish-to-firebase.js && npx prettier --write publish.json",
+    "publish:github": "node ./scripts/publish-to-github.js && npx prettier --write publish.json",
     "format:json": "npx prettier --write package.json",
     "format:ts": "tsc --pretty",
     "test": "exit 0"

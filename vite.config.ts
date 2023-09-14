@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import publish from './publish.json'
 
 export default defineConfig({
   resolve: {
@@ -24,7 +25,7 @@ export default defineConfig({
         tag.startsWith('md') || tag.startsWith('lit') || tag.startsWith('fluent')
     })
   ],
-  base: '/simple-windows11-emulator',
+  base: publish.base,
   root: './src',
   build: {
     outDir: '../docs',
