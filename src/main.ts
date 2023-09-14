@@ -17,8 +17,8 @@ import '@/assets/css/theme.css'
  * Google's Material Design
  */
 import '@material/web/all'
-import 'material-symbols/outlined.css'
-import '@fontsource/roboto/unicode.json'
+import 'material-symbols'
+import '@fontsource/roboto'
 
 /**
  * Global Components.
