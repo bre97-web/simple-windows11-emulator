@@ -1,0 +1,96 @@
+{
+  "../node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff": {
+    "file": "assets/roboto-cyrillic-400-normal-adba67d2.woff",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2": {
+    "file": "assets/roboto-cyrillic-400-normal-495d38d4.woff2",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff": {
+    "file": "assets/roboto-cyrillic-ext-400-normal-0a32035a.woff",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2": {
+    "file": "assets/roboto-cyrillic-ext-400-normal-b7ef2cd1.woff2",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff": {
+    "file": "assets/roboto-greek-400-normal-076b9dc1.woff",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2": {
+    "file": "assets/roboto-greek-400-normal-daf51ab5.woff2",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff": {
+    "file": "assets/roboto-latin-400-normal-a9fdbefa.woff",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2": {
+    "file": "assets/roboto-latin-400-normal-f6734f81.woff2",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff": {
+    "file": "assets/roboto-latin-ext-400-normal-c2b94086.woff",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2": {
+    "file": "assets/roboto-latin-ext-400-normal-3c23eb02.woff2",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff": {
+    "file": "assets/roboto-vietnamese-400-normal-d2390f1a.woff",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff"
+  },
+  "../node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2": {
+    "file": "assets/roboto-vietnamese-400-normal-77b24796.woff2",
+    "src": "../node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2"
+  },
+  "../node_modules/material-symbols/material-symbols-outlined.woff2": {
+    "file": "assets/material-symbols-outlined-87ff410a.woff2",
+    "src": "../node_modules/material-symbols/material-symbols-outlined.woff2"
+  },
+  "../node_modules/material-symbols/material-symbols-rounded.woff2": {
+    "file": "assets/material-symbols-rounded-d6790df5.woff2",
+    "src": "../node_modules/material-symbols/material-symbols-rounded.woff2"
+  },
+  "../node_modules/material-symbols/material-symbols-sharp.woff2": {
+    "file": "assets/material-symbols-sharp-b4865767.woff2",
+    "src": "../node_modules/material-symbols/material-symbols-sharp.woff2"
+  },
+  "assets/imgs/windows-11-minimalism-material-minimal-hd-wallpaper.jpg": {
+    "file": "assets/windows-11-minimalism-material-minimal-hd-wallpaper-c0e1067a.jpg",
+    "src": "assets/imgs/windows-11-minimalism-material-minimal-hd-wallpaper.jpg"
+  },
+  "index.css": {
+    "file": "assets/index-dd2072e3.css",
+    "src": "index.css"
+  },
+  "index.html": {
+    "assets": [
+      "assets/windows-11-minimalism-material-minimal-hd-wallpaper-c0e1067a.jpg",
+      "assets/material-symbols-outlined-87ff410a.woff2",
+      "assets/material-symbols-rounded-d6790df5.woff2",
+      "assets/material-symbols-sharp-b4865767.woff2",
+      "assets/roboto-cyrillic-ext-400-normal-b7ef2cd1.woff2",
+      "assets/roboto-cyrillic-ext-400-normal-0a32035a.woff",
+      "assets/roboto-cyrillic-400-normal-495d38d4.woff2",
+      "assets/roboto-cyrillic-400-normal-adba67d2.woff",
+      "assets/roboto-greek-400-normal-daf51ab5.woff2",
+      "assets/roboto-greek-400-normal-076b9dc1.woff",
+      "assets/roboto-vietnamese-400-normal-77b24796.woff2",
+      "assets/roboto-vietnamese-400-normal-d2390f1a.woff",
+      "assets/roboto-latin-ext-400-normal-3c23eb02.woff2",
+      "assets/roboto-latin-ext-400-normal-c2b94086.woff",
+      "assets/roboto-latin-400-normal-f6734f81.woff2",
+      "assets/roboto-latin-400-normal-a9fdbefa.woff"
+    ],
+    "css": [
+      "assets/index-dd2072e3.css"
+    ],
+    "file": "assets/index-9591a6c0.js",
+    "isEntry": true,
+    "src": "index.html"
+  }
+}

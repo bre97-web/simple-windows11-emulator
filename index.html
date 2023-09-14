@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Windows11 Emulator</title>
+
+    <style>
+        .boot-frame {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: black;
+        }
+        .boot-frame > div {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 100%;
+        }
+        .boot-frame > div > div {
+            position: relative;
+            z-index: 1;
+            width: 8.25rem;
+            height: 8.25rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .boot-frame > div > div > div {
+            position: absolute;
+            background-color: rgb(59 130 246);
+            border-radius: 4px;
+            width: 4rem;
+            aspect-ratio: 1 / 1;
+        }
+    </style>
+    
+  <script type="module" crossorigin src="/simple-windows11-emulator/assets/index-9591a6c0.js"></script>
+  <link rel="stylesheet" href="/simple-windows11-emulator/assets/index-dd2072e3.css">
+</head>
+<body>
+
+    <div id="bootFrameRef" class="boot-frame">
+        <div>
+            <div>
+                <div style="top: 0; left: 0;"></div>
+                <div style="top: 0; right: 0;"></div>
+                <div style="bottom: 0; left: 0;"></div>
+                <div style="bottom: 0; right: 0;"></div>
+            </div>
+            
+            <fluent-progress-ring></fluent-progress-ring>
+        </div>
+    </div>
+
+    <div id="app"></div>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => document.getElementById('bootFrameRef').remove(), 250)
+        })
+    </script>
+</body>
+</html>
