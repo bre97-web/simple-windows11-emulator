@@ -31,6 +31,19 @@
         scale: 1.25;
     }
 
+    .brightness::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, var(--system-bright));
+        pointer-events: none;
+        z-index: 999;
+    }
+
 
     .element-border,
     .window-border {
@@ -56,12 +69,6 @@
     .icon-filled {
         font-variation-settings: 'FILL' 1;
         animation: icon-fill 0.15s ease-in;
-    }
-
-    .disabled-force {
-        pointer-events: none;
-        filter: grayscale(1);
-        user-select: none;
     }
 
 
