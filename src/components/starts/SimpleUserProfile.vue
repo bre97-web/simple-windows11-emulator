@@ -22,7 +22,7 @@
                 <div
                     v-show="isExpanded"
                     @click="setIsExpanded(false)"
-                    class="fixed full-screen top-0 right-0 -z-[1]"
+                    class="fixed full-screen bottom-0 right-0 -z-[1]"
                 ></div>
             </div>
         </template>

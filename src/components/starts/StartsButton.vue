@@ -21,10 +21,10 @@
                 :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
             >
 
-                <fluent-card class="relative back-blur bottom-0 w-auto mx-auto max-w-2xl rounded-xl min-h-min h-auto max-h-[32rem] bg-transparent">
+                <fluent-card class="relative backdrop-blur-[28px] bg-white/[0.85] bottom-0 w-auto mx-auto max-w-2xl rounded-xl overflow-auto max-h-[32rem]">
 
                     <!-- Content in here -->
-                    <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between h-full">
+                    <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between h-full overflow-auto">
                         <FlexLayout class="flex-grow flex-col gap-4">
                             <Search></Search>
                             <PinnedApps></PinnedApps>

@@ -1,12 +1,14 @@
 <template>
-    <FlexLayout class="flex-none gap-2 transition-all">
+    <GridLayout class="grid-cols-3 gap-2 transition-all">
         <NavigationButton icon="wifi"></NavigationButton>
         <NavigationButton icon="bluetooth"></NavigationButton>
         <NavigationButton icon="airplane"></NavigationButton>
-    </FlexLayout>
+        <NightLightNavigationButton></NightLightNavigationButton>
+    </GridLayout>
 </template>
 
 <script setup lang="ts">
 import NavigationButton from '@/components/control/NavigationButton.vue'
+import NightLightNavigationButton from '@/components/control/night-light/NightLightNavigationButton.vue'
 
 </script>

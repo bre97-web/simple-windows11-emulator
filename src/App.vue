@@ -1,7 +1,10 @@
 <template>
     <div
-        class="relative max-h-screen h-full w-screen brightness overflow-clip"
-        :style="{ '--system-bright': 100 - system.bright + '%' }"
+        class="relative max-h-screen h-full w-screen brightness nightlight overflow-clip"
+        :style="{
+            '--system-bright': 100 - system.bright + '%',
+            '--system-nightlight-enabled': system.nightlight ? '35%' : '0',
+        }"
     >
 
         <lock-screen v-if="!user.activityState.isLocked"></lock-screen>
