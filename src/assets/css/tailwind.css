@@ -31,6 +31,10 @@
         scale: 1.25;
     }
 
+    .brightness {
+        filter: brightness(var(--system-bright));
+    }
+
 
     .element-border,
     .window-border {

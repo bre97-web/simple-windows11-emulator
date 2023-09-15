@@ -1,6 +1,7 @@
 <template>
     <div
-        class="relative max-h-screen h-screen w-screen"
+        class="relative max-h-screen h-screen w-screen overflow-clip brightness"
+        :style="{'--system-bright': system.bright + '%'}"
     >
 
         <lock-screen v-if="!user.activityState.isLocked"></lock-screen>
@@ -17,16 +18,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import LockScreen from './components/lock-screen/LockScreen.vue';
 import { useUserStore } from './store/UserStore';
 import StartsBar from '@/components/starts/StartsBar.vue'
 import { useSystemStore } from './store/SystemStore';
 
 const system = useSystemStore()
-watch(() => system.bright, (value) => {
-    document.documentElement.style.filter = 'brightness(' + (value) + '%)'
-}, { immediate: true })
 
 const user = useUserStore()
 
