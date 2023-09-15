@@ -23,10 +23,10 @@
 
                 <div
                     class="full-screen fixed top-0 left-0 grid justify-end items-end pb-16 pr-2"
-                    :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none -z-[1]']"
+                    :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
                 >
 
-                    <fluent-card class="relative backdrop-blur-3xl back-blur bg-transparent w-full max-w-2xl rounded-xl h-[16rem] max-h-[24rem]">
+                    <fluent-card class="relative back-blur bg-transparent w-full max-w-2xl rounded-xl h-[16rem] max-h-[24rem]">
 
                         <!-- Content in here -->
                         <FlexLayout class="flex-col p-4 gap-8 justify-between h-full">
@@ -39,8 +39,8 @@
                     <!-- z-index set need near relative or fixed -->
                     <div
                         @click="setIsExpanded(false)"
-                        class="fixed left-0 bottom-0 w-screen h-screen"
-                        :class="[isExpanded ? 'opacity-100 -z-[1]' : 'opacity-0 select-none pointer-events-none -z-[1]']"
+                        class="fixed left-0 bottom-0 w-screen h-screen -z-[1]"
+                        v-show="isExpanded"
                     ></div>
                 </div>
             </template>
