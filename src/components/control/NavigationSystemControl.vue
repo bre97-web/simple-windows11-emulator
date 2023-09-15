@@ -4,6 +4,7 @@
             <md-icon class="relative -top-2">light</md-icon>
             <fluent-slider
                 @change="setSystemBright"
+                id="systemBrightnessSliderRef"
                 :value="system.bright"
                 min="30"
                 max="100"

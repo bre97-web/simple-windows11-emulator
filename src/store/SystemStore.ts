@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useSystemStore = defineStore('system_store', {
     state: () => ({
-        bright: 100
+        bright: 100 as number
     }),
     actions: {
         setBright(e: number) {

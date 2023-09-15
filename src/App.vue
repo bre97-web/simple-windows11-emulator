@@ -1,7 +1,9 @@
 <template>
-    <div class="relative max-h-screen h-screen w-screen">
+    <div
+        class="relative max-h-screen h-screen w-screen"
+    >
 
-        <lock-screen v-if="user.activityState.isLocked"></lock-screen>
+        <lock-screen v-if="!user.activityState.isLocked"></lock-screen>
         <template v-else>
             <div>
                 <router-view></router-view>
@@ -22,9 +24,9 @@ import StartsBar from '@/components/starts/StartsBar.vue'
 import { useSystemStore } from './store/SystemStore';
 
 const system = useSystemStore()
-watch(() => system.bright, () => {
-    document.body.style.filter = 'brightness(' + (system.bright / 100) + ');'
-})
+watch(() => system.bright, (value) => {
+    document.documentElement.style.filter = 'brightness(' + (value) + '%)'
+}, { immediate: true })
 
 const user = useUserStore()
 
