@@ -2,8 +2,8 @@
     <div class="relative full-screen overflow-clip">
 
         <div
-            :class="[isTyped ? 'blur-[28px] scale-125 brightness-75' : '']"
-            class="absolute full-screen transition-all lock-screen-wallpaper "
+            :class="[isTyped ? 'blur-[16px] scale-125 brightness-75' : '']"
+            class="absolute full-screen transition-all duration-500 lock-screen-wallpaper "
         ></div>
 
         <ScreenSaver
@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-import ScreenSaver from './ScreenSaver.vue';
-import Login from './Login.vue';
+import ScreenSaver from '@/components/lock-screen/internal/ScreenSaver.vue';
+import Login from '@/components/lock-screen/internal/Login.vue';
 
 const isTyped = ref(false)
 const setIsTyped = (e: boolean) => {

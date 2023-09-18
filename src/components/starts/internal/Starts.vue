@@ -3,14 +3,7 @@
                 
         <!-- Open the starts panel -->
         <template v-slot:actions="{ isExpanded, setIsExpanded}">
-            <div
-                @click="setIsExpanded(!isExpanded)"
-                class="rounded-md hover:border hover:bg-white/75 transition-all h-full aspect-square"
-            >
-                <md-icon class="active:scale-75 active:icon-filled w-full h-full grid place-content-center">
-                    window
-                </md-icon>
-            </div>
+            <StartsButton @set-is-expanded="setIsExpanded" :is-expanded="isExpanded"></StartsButton>
         </template>
 
         <!-- the Starts Panel -->
@@ -21,22 +14,19 @@
                 :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
             >
 
-                <fluent-card class="relative backdrop-blur-[28px] bg-white/[0.85] bottom-0 w-auto mx-auto max-w-2xl rounded-xl overflow-auto max-h-[32rem]">
-
-                    <!-- Content in here -->
-                    <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between h-full overflow-auto">
-                        <FlexLayout class="flex-grow flex-col gap-4">
+                <fluent-card class="relative backdrop-blur-[28px] bg-white/[0.85] bottom-0 w-auto mx-auto max-w-3xl overflow-auto max-h-[32rem]">
+                    <FlexLayout class="flex-col justify-between h-full">
+                        <!-- Content in here -->
+                        <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between overflow-auto">
                             <Search></Search>
                             <PinnedApps></PinnedApps>
                         </FlexLayout>
-                        
-                        <div class="flex-none space-y-4">
-                            <fluent-divider class="bg-black/5 flex-none h-[1px]"></fluent-divider>
-                            <FlexLayout class="justify-between items-center">
-                                <SimpleUserProfile></SimpleUserProfile>
-                                <ShutdownMenu></ShutdownMenu>
-                            </FlexLayout>
-                        </div>
+
+                        <!-- Account and shutdown button -->
+                        <FlexLayout class="justify-between items-center bg-black/5 px-8 py-2 border-t border-black/20">
+                            <SimpleUserProfile></SimpleUserProfile>
+                            <ShutdownMenu></ShutdownMenu>
+                        </FlexLayout>
                     </FlexLayout>
                 </fluent-card>
 
@@ -56,6 +46,7 @@ import Search from './Search.vue';
 import PinnedApps from './PinnedApps.vue';
 import SimpleUserProfile from './SimpleUserProfile.vue';
 import ShutdownMenu from './ShutdownMenu.vue';
+import StartsButton from './StartsButton.vue';
 </script>
 
 <style scoped>

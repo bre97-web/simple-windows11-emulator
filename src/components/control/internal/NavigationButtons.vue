@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import NavigationButton from '@/components/control/NavigationButton.vue'
+import NavigationButton from '@/components/control/internal/NavigationButton.vue'
 import NightLightNavigationButton from '@/components/control/night-light/NightLightNavigationButton.vue'
 
 </script>

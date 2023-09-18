@@ -4,18 +4,7 @@
             
             <!-- Open the starts panel -->
             <template v-slot:actions="{ isExpanded, setIsExpanded}">
-                <div
-                    @click="setIsExpanded(!isExpanded)"
-                    class="rounded-md hover:border hover:bg-white/75 transition-all h-full px-2"
-                >
-                    <div class="w-full h-full grid place-content-center">
-                        <FlexLayout class="gap-2 active:scale-75 active:icon-filled transition-all">
-                            <md-icon>wifi</md-icon>
-                            <md-icon class="hidden md:block">bluetooth</md-icon>
-                            <md-icon class="hidden md:block">power</md-icon>
-                        </FlexLayout>
-                    </div>
-                </div>
+                <NavigationToggleButton @set-is-expanded="setIsExpanded" :is-expanded="isExpanded"></NavigationToggleButton>
             </template>
 
             <!-- the Starts Panel -->
@@ -26,7 +15,7 @@
                     :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
                 >
 
-                    <fluent-card class="relative backdrop-blur-[28px] bg-white/[0.85] w-full max-w-2xl rounded-xl overflow-auto max-h-[24rem]">
+                    <fluent-card class="relative backdrop-blur-[28px] bg-white/[0.85] w-full max-w-2xl overflow-auto max-h-[24rem]">
 
                         <!-- Content in here -->
                         <FlexLayout class="flex-col p-4 gap-8 justify-between h-full">
@@ -51,8 +40,9 @@
 </template>
 
 <script setup lang="ts">
-import NavigationButtons from '@/components/control/NavigationButtons.vue'
-import NavigationSystemControl from './NavigationSystemControl.vue';
+import NavigationButtons from '@/components/control/internal/NavigationButtons.vue'
+import NavigationToggleButton from '@/components/control/internal/NavigationToggleButton.vue'
+import NavigationSystemControl from '@/components/control/internal/NavigationSystemControl.vue';
 import DateAndTimeButton from '@/components/control/date-time/DateAndTimeButton.vue';
 
 </script>

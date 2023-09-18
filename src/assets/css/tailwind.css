@@ -5,28 +5,43 @@
 
 @layer base {
     :root {
-        --md-outlined-icon-button-container-shape: 4px;
-        --md-filled-icon-button-container-shape: 4px;
-        --md-icon-button-state-layer-shape: 4px;
+
+        /**
+         * Default Border-Radius 
+         */
+        --fluent-shape: 4px;
+        --fluent-container-shape: 8px;
+
+        /**
+         * Custom Material Icon radius is 4px
+         */
+        --md-outlined-icon-button-container-shape: var(--fluent-container-shape);
+        --md-filled-icon-button-container-shape: var(--fluent-container-shape);
+        --md-icon-button-state-layer-shape: var(--fluent-shape);
+
+        --windows-wallpaper-url: url('../imgs/windows-11-minimalism-material-minimal-hd-wallpaper.jpg');
     }
 }
 
 @layer components {
-    .elevation {
-        --md-elevation-level: 3;
-        transition-duration: 250ms;
-        transition-timing-function: ease-in-out;
+
+    .windows-starts-icon-special-shape {
+        border-radius: 2px;
+    }
+    .shape {
+        border-radius: var(--fluent-shape);
+    }
+    .shape-container {
+        border-radius: var(--fluent-container-shape);
     }
 
-    .wallpaper {
-        background-image: url('../imgs/windows-11-minimalism-material-minimal-hd-wallpaper.jpg');
+    .wallpaper,
+    .lock-screen-wallpaper {
+        background-image: var(--windows-wallpaper-url);
         background-position: center;
         background-size: cover;
     }
     .lock-screen-wallpaper {
-        background-image: url('../imgs/windows-11-minimalism-material-minimal-hd-wallpaper.jpg');
-        background-position: center;
-        background-size: cover;
         animation: scale-from-full-to-125 0.5s cubic-bezier(.54,.01,.44,.9);
         scale: 1.25;
     }
@@ -42,11 +57,10 @@
         height: 100vh;
         background-color: rgba(0, 0, 0, var(--system-bright));
         pointer-events: none;
-        z-index: 999;
+        user-select: none;
+        z-index: 9999;
     }
-
-    /* .nightlight,  */
-    .nightlight::before {
+    .nightlight::after {
         content: '';
         transition: all 0.5s cubic-bezier(.54,.01,.44,.9);
         position: fixed;
@@ -55,15 +69,10 @@
         display: block;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(255, 174, 0, var(--system-nightlight-enabled));
+        background-color: rgba(255, 175, 0, var(--system-nightlight-enabled));
         pointer-events: none;
-        z-index: 999;
-    }
-
-    .element-border,
-    .window-border {
-        border-top: 1.5px solid;
-        border-color: rgb(0 0 0 / 0.15);
+        user-select: none;
+        z-index: 9999;
     }
 
     .back-blur::after {

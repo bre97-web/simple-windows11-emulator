@@ -1,11 +1,9 @@
 <template>
-    <div
-        class="relative max-h-screen h-full w-screen brightness nightlight overflow-clip"
-        :style="{
-            '--system-bright': 100 - system.getSystemBrightness + '%',
-            '--system-nightlight-enabled': system.getSystemIsNightlight ? '35%' : '0',
-        }"
-    >
+    <div class="relative max-h-screen h-full w-screen overflow-clip">
+
+        <!-- Global Screen Effects -->
+        <div class="brightness" :style="{'--system-bright': 100 - system.getSystemBrightness + '%'}"></div>
+        <div class="nightlight" :style="{'--system-nightlight-enabled': system.getSystemIsNightlight ? '35%' : '0',}"></div>
 
         <lock-screen v-if="system.getSystemIsLocked"></lock-screen>
 
@@ -17,7 +15,7 @@
             </div>
 
             <nav class="fixed bottom-0 left-0 w-full h-12">
-                    <StartsBar></StartsBar>
+                <StartsBar></StartsBar>
             </nav>
         </template>
         

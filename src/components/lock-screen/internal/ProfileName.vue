@@ -1,5 +1,5 @@
 <template>
-    <div class="drop-shadow-md shadow-black text-4xl text-black/25">
+    <div class="drop-shadow-md shadow-black text-4xl text-white">
         {{ user.accountState.name }}
     </div>
 </template>
