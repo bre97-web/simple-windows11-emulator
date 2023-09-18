@@ -5,16 +5,16 @@
         <div class="brightness" :style="{'--system-bright': 100 - system.getSystemBrightness + '%'}"></div>
         <div class="nightlight" :style="{'--system-nightlight-enabled': system.getSystemIsNightlight ? '35%' : '0',}"></div>
 
-        <lock-screen v-if="system.getSystemIsLocked"></lock-screen>
+        <lock-screen v-if="!system.getSystemIsLocked"></lock-screen>
 
         <template v-else>
             <div class="flex-grow h-full max-h-screen overflow-clip">
-                <router-view></router-view>
+                <!-- <router-view></router-view> -->
                 
                 <Desktop></Desktop>
             </div>
 
-            <nav class="fixed bottom-0 left-0 w-full h-12">
+            <nav class="fixed bottom-0 z-[1] left-0 w-full h-12">
                 <StartsBar></StartsBar>
             </nav>
         </template>

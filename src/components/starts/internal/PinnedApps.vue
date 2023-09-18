@@ -3,7 +3,7 @@
         <div class="app shape relative">
             <md-ripple></md-ripple>
 
-            <div class="w-full h-full active:scale-75 transition-all">
+            <div @click="openNewWindow" class="w-full h-full active:scale-75 transition-all">
                 <FlexLayout class="flex-col items-center justify-around pt-2">
                     <div class="h-8">
                         <md-icon>settings</md-icon>
@@ -46,6 +46,15 @@
 </template>
 
 <script setup lang="ts">
+import { useWindow } from '@/components/exe/Window'
+import Settings from '@/components/exe/settings/Settings.vue'
+/**
+ * Test
+ */
+const openNewWindow = () => {
+    const window = useWindow('Settings', Settings)
+    window.instance.mount()
+}
 
 </script>
 
@@ -56,4 +65,4 @@
     height: 4.5rem;
     aspect-ratio: 1.125 / 1;
 }
-</style>
+</style>@/components/exe/Window
