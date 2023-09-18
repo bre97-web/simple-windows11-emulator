@@ -16,7 +16,7 @@
                 :class="[isExpanded ? 'opacity-100' : 'opacity-0 pointer-events-none']"
             >
                 <fluent-menu class="absolute bottom-10 right-0 w-32 z-0">
-                    <fluent-menu-item @click="user.logout">Sign-out</fluent-menu-item>
+                    <fluent-menu-item @click="logout">Sign-out</fluent-menu-item>
                     <fluent-menu-item>Lock</fluent-menu-item>
                 </fluent-menu>
                 <div
@@ -30,10 +30,14 @@
 </template>
 
 <script setup lang="ts">
+import { useSystemStore } from '@/store/SystemStore';
 import { useUserStore } from '@/store/UserStore';
 
-
+const system = useSystemStore()
 const user = useUserStore()
-</script>
 
-<style scoped></style>
+const logout = () => {
+    user.setIsLogout(true)
+    system.setIsLocked(true)
+}
+</script>

@@ -1,6 +1,6 @@
 <template>
     <NavigationButton
-        @click="system.toggleNightlight"
+        @click="system.toggleIsNightlight"
         icon="light"
     ></NavigationButton>
 </template>

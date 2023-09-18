@@ -6,13 +6,15 @@ export const useUserStore = defineStore('user_store', {
             name: 't',
             password: 'p',
         },
-        activityState: {
-            isLocked: true
-        }
+        isLogout: true,
     }),
+    getters: {
+        getUserAccountState: (state) => state.accountState,
+        getUserIsLogout: (state) => state.isLogout,
+    },
     actions: {
-        logout() {
-            this.activityState.isLocked = true
+        setIsLogout(e: boolean) {
+            this.isLogout = e
         }
     },
     persist: true,

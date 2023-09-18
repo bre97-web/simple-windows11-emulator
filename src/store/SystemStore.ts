@@ -2,19 +2,28 @@ import { defineStore } from "pinia";
 
 export const useSystemStore = defineStore('system_store', {
     state: () => ({
-        bright: 100 as number,
-        nightlight: false,
+        brightness: 100 as number,
+        isNightlight: false,
+        isLocked: true,
     }),
+    getters: {
+        getSystemBrightness: (state) => state.brightness, 
+        getSystemIsNightlight: (state) => state.isNightlight,
+        getSystemIsLocked: (state) => state.isLocked,
+    },
     actions: {
-        setBright(e: number) {
-            this.bright = e
+        setBrightness(e: number) {
+            this.brightness = e
         },
-        setNightlight(e: boolean) {
-            this.nightlight = e
+        setIsNightlight(e: boolean) {
+            this.isNightlight = e
         },
-        toggleNightlight() {
-            this.nightlight = !this.nightlight
-        }
+        toggleIsNightlight() {
+            this.isNightlight = !this.isNightlight
+        },
+        setIsLocked(e: boolean) {
+            this.isLocked = e
+        },
     },
     persist: true,
 })

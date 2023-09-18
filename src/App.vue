@@ -2,12 +2,12 @@
     <div
         class="relative max-h-screen h-full w-screen brightness nightlight overflow-clip"
         :style="{
-            '--system-bright': 100 - system.bright + '%',
-            '--system-nightlight-enabled': system.nightlight ? '35%' : '0',
+            '--system-bright': 100 - system.getSystemBrightness + '%',
+            '--system-nightlight-enabled': system.getSystemIsNightlight ? '35%' : '0',
         }"
     >
 
-        <lock-screen v-if="!user.activityState.isLocked"></lock-screen>
+        <lock-screen v-if="system.getSystemIsLocked"></lock-screen>
 
         <template v-else>
             <div class="flex-grow h-full max-h-screen overflow-clip">
@@ -38,10 +38,12 @@ const system = useSystemStore()
 const user = useUserStore()
 
 onMounted(() => {
-    user.logout()
+    user.setIsLogout(true)
+    system.setIsLocked(true)
 })
 
 onUnmounted(() => {
-    user.logout()
+    user.setIsLogout(true)
+    system.setIsLocked(true)
 })
 </script>

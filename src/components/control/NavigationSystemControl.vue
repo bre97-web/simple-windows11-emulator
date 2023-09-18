@@ -5,7 +5,7 @@
             <fluent-slider
                 @change="setSystemBright"
                 id="systemBrightnessSliderRef"
-                :value="system.bright"
+                :value="system.getSystemBrightness"
                 min="30"
                 max="100"
             ></fluent-slider>
@@ -24,6 +24,6 @@ import { useSystemStore } from '@/store/SystemStore';
 const system = useSystemStore()
 
 const setSystemBright = (e: Event) => {
-    system.setBright((e.target as EventTarget & Slider).valueAsNumber)
+    system.setBrightness((e.target as EventTarget & Slider).valueAsNumber)
 }
 </script>

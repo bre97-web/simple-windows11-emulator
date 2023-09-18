@@ -20,7 +20,7 @@
     
         <div v-if="!state.pending">
             <LabelLarge v-if="state.isError">Typed password is incorrect</LabelLarge>
-            <LabelLarge v-else-if="user.activityState.isLocked && !state.isError && state.typed">Welcome</LabelLarge>
+            <LabelLarge v-else-if="system.getSystemIsLocked && state.isTyped">Welcome</LabelLarge>
         </div>
         <fluent-progress-ring v-else></fluent-progress-ring>
     </div>
@@ -32,36 +32,44 @@ import { useUserStore } from '@/store/UserStore';
 import { Input } from '@/types/Input'
 import ProfileAvatar from './ProfileAvatar.vue';
 import ProfileName from './ProfileName.vue';
+import { useSystemStore } from '@/store/SystemStore';
 
-
+const system = useSystemStore()
 const user = useUserStore()
 
 const state = reactive({
     password: '',
     pending: false,
     isError: false,
-    typed: false
+    isTyped: false
 })
 const setPending = async (e: boolean) => {
     state.pending = e
 }
-const delay = async (event: () => void) => new Promise(async () => await setTimeout(() => {
+const setIsError = async (e:boolean) => {
+    state.isError = e
+} 
+const setIsTyped = async (e: boolean) => {
+    state.isTyped = e
+}
+const delay = async (event: () => void) =>  await new Promise(() => setTimeout(() => {
     event()
 }, 500))
 
 const login = async () => {
-    state.typed = true
-    state.pending = true
-    state.isError = false
+    setIsTyped(true)
+    setPending(true)
+    setIsError(false)
 
     if(state.password === user.accountState.password) {
         await delay(() => {
-            user.activityState.isLocked = false
             setPending(false)
+            user.setIsLogout(false)
+            system.setIsLocked(false)
         })
     }
     await delay(() => {
-        state.isError = true
+        setIsError(true)
         setPending(false)
     })
 }
