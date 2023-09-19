@@ -11,7 +11,7 @@
     @mouseout="() => {
       emits('unfocus')
     }"
-    class="select-none fixed transition-all active:transition-none"
+    class="select-none fixed leadin-animation transition-all active:transition-none"
     :style="{
       'left' : props.windowState.value.maximize ? '0' : props.windowState.value.position.x + 'px',
       'top' : props.windowState.value.maximize ? '0' : props.windowState.value.position.y + 'px',
@@ -117,3 +117,24 @@ const swapZIndex = () => {
   
 }
 </script>
+
+<style lang="css" scoped>
+
+.leadin-animation {
+  animation: leadin 0.15s cubic-bezier(.54,.01,.44,.9);
+}
+
+@keyframes leadin {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+    scale: 0.90;
+    transform-origin: center;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+    scale: 1;
+  }
+}
+</style>
