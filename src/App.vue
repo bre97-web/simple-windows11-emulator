@@ -5,7 +5,7 @@
         <div class="brightness" :style="{'--system-bright': 100 - system.getSystemBrightness + '%'}"></div>
         <div class="nightlight" :style="{'--system-nightlight-enabled': system.getSystemIsNightlight ? '35%' : '0',}"></div>
 
-        <lock-screen v-if="!system.getSystemIsLocked"></lock-screen>
+        <lock-screen v-if="system.getSystemIsLocked"></lock-screen>
 
         <template v-else>
             <div class="flex-grow h-full max-h-screen overflow-clip">

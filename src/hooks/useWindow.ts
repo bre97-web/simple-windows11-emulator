@@ -4,7 +4,7 @@ import WindowTemplate from '@/hooks/internal/WindowTemplate.vue'
 /**
  * Create el
  */
-const createMountRoot = () => document.body.appendChild(document.createElement('div'))
+const createMountRoot = () => document.getElementById('window-workspace').appendChild(document.createElement('div'))
 
 /**
  * Create a Vue instant
@@ -42,6 +42,7 @@ export function useWindow(props: {}, slot: any): {
      * Vue component instance
      */
     // @ts-ignore
+    
     const instance = createWindowApp(h(WindowTemplate, {}, {
         default: () => h(slot),
     }))
