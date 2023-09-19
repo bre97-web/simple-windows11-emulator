@@ -41,6 +41,7 @@ export function useWindow(props: {}, slot: any): {
     /**
      * Vue component instance
      */
+    // @ts-ignore
     const instance = createWindowApp(h(WindowTemplate, {}, {
         default: () => h(slot),
     }))
