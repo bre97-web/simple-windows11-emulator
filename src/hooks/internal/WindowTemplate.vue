@@ -43,7 +43,13 @@
               </div>
             </div>
 
-            <div @click="emits('close')" class="w-full h-full icon-has-hover">
+            <div
+              @click="() => {
+                process.killProcess(process.getProcessByProcessId(props.windowState.value.processId))
+                emits('close')
+              }"
+              class="w-full h-full icon-has-hover"
+            >
               <div class="icon icon-has-active px-2 md:px-4 h-full">
                 <md-icon>Close</md-icon>
               </div>
@@ -80,6 +86,7 @@ const props = defineProps<{
       y: number
     }
     activeZIndex: number
+    processId: number
   }>
 }>()
 const emits = defineEmits<{
@@ -103,15 +110,9 @@ const cleanOtherWindowsActive = () => {
 }
 const swapZIndex = () => {
   if(process.getAllProcesses.length === 1) return 
-
-  const currentWindowZIndex = process.getAllProcesses.filter(e => props.windowState.value.activeZIndex === e.instance._component.props['windowState']['value']['activeZIndex'])[0].instance._component.props['windowState']['value']['activeZIndex']
-
+  const currentWindowZIndex = process.getProcessByProcessId(props.windowState.value.processId).instance._component.props['windowState']['value']['activeZIndex']
   const zIndexList: number[] = process.getAllProcesses.map(e => e.instance._component.props['windowState']['value']['activeZIndex'])
-
   const max = zIndexList.reduce((last, cur) => last > cur ? last : cur)
-
-  console.log(currentWindowZIndex, max);
-  
 
   process.swapZIndex(currentWindowZIndex, max)
   

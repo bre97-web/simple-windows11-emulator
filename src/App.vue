@@ -2,7 +2,7 @@
     <div class="relative max-h-screen h-full w-screen overflow-clip">
 
 
-        <lock-screen v-if="system.getSystemIsLocked"></lock-screen>
+        <lock-screen v-if="!system.getSystemIsLocked"></lock-screen>
 
         <template v-else>
             <div class="flex-grow h-full max-h-screen overflow-clip">

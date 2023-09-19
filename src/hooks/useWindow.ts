@@ -56,7 +56,8 @@ export function useWindow(props: {}, slot: any): {
             x: 0,
             y: 0,
         },
-        activeZIndex: 0
+        activeZIndex: 0,
+        processId: 0
     })
 
     instance.instance._component.props = {
