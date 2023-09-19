@@ -46,14 +46,18 @@
 </template>
 
 <script setup lang="ts">
-import { useWindow } from '@/components/exe/Window'
 import Settings from '@/components/exe/settings/Settings.vue'
+import { useProcessStore } from '@/store/ProcessStore';
+
 /**
  * Test
  */
+const process = useProcessStore()
 const openNewWindow = () => {
-    const window = useWindow('Settings', Settings)
-    window.instance.mount()
+    const window = process.createNewProcess({
+        title: 'Settings Demo'
+    }, Settings)
+    window.mount()
 }
 
 </script>
@@ -65,4 +69,4 @@ const openNewWindow = () => {
     height: 4.5rem;
     aspect-ratio: 1.125 / 1;
 }
-</style>@/components/exe/Window
+</style>

@@ -28,7 +28,7 @@
     </div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import { ref } from 'vue'
 

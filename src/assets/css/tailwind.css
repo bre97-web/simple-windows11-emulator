@@ -162,6 +162,12 @@
         opacity: 100%;
         animation: settings-lead-in 0.15s cubic-bezier(.54,.01,.44,.9);
     }
+
+
+    #app ~ div {
+        /* position: relative; */
+        /* z-index: 0; */
+    }
 }
 
 @layer utilities {

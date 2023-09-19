@@ -14,7 +14,7 @@
                 <Desktop></Desktop>
             </div>
 
-            <nav class="fixed bottom-0 z-[1] left-0 w-full h-12">
+            <nav class="fixed bottom-0 z-[9999] left-0 w-full h-12">
                 <StartsBar></StartsBar>
             </nav>
         </template>
