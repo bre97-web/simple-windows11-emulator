@@ -61,6 +61,9 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
+/**
+ * Core
+ */
 const app = createApp(App)
 app
     .component('DisplayLarge', DisplayLarge)
@@ -86,3 +89,11 @@ app
     .component('GridLayout', GridLayout)
 app.use(pinia).use(Router)
 app.mount('#app')
+
+
+import ScreenMask from '@/ScreenMask.vue'
+/**
+ * Screen Brightness and nightlight
+ */
+const screenMask = createApp(ScreenMask)
+screenMask.mount('#screen-mask')
