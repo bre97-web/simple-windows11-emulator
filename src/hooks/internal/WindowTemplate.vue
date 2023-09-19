@@ -11,17 +11,17 @@
     @mouseout="() => {
       emits('unfocus')
     }"
-    class="select-none  max-h-screen fixed"
+    class="select-none fixed transition-all active:transition-none"
     :style="{
       'left' : props.windowState.value.maximize ? '0' : props.windowState.value.position.x + 'px',
       'top' : props.windowState.value.maximize ? '0' : props.windowState.value.position.y + 'px',
       'width': props.windowState.value.maximize ? '100%' : 'auto',
       'height': props.windowState.value.maximize ? '100%' : 'auto',
-      'z-index': props.windowState.value.activeZIndex + 1000
+      'z-index': props.windowState.value.activeZIndex + 1000,
     }"
     :class="[props.windowState.value.active ? 'shadow-xl' : '']"
   >
-    <div class="shape-container overflow-clip border-[1.5px] border-black/20">
+    <div class="shape-container h-full w-full overflow-clip border-[1.5px] border-black/20">
 
       <header class="select-none w-full h-8 bg-white/75 backdrop-blur-xl">
         <div class="w-full h-full flex items-center justify-between">
