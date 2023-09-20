@@ -14,7 +14,6 @@ export const useProcessStore = defineStore('process_store', {
         processId: 0
     }),
     getters: {
-        // @ts-ignore
         getAllProcesses: (state): Process[] => state.processes,
         getProcessByProcessId: (state) => (id: number): Process => state.processes.filter(e => id === e.instance._component.props['windowState']['value']['processId'])[0]
     },
@@ -22,13 +21,11 @@ export const useProcessStore = defineStore('process_store', {
         createNewProcess(props: {}, slot: any) {
             let process = useWindow(props, slot)
             process.instance._component.props['windowState']['value']['activeZIndex'] = this.processId
-            process.instance._component.props['windowState']['value']['processId'] = this.processId ++
-            // @ts-ignore
+            process.instance._component.props['windowState']['value']['processId'] = this.processId++
             this.processes.push(process)
             return process
         },
         setProcesses(e: Process[]) {
-            // @ts-ignore
             this.processes = e
         },
         cleanFocus() {
@@ -44,8 +41,8 @@ export const useProcessStore = defineStore('process_store', {
             })
         },
         swapZIndex(x: number, y: number) {
-            const a = this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === x )[0]
-            const b = this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === y )[0]
+            const a = this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === x)[0]
+            const b = this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === y)[0]
 
             this.processes[this.processes.indexOf(a)].instance._component.props['windowState']['value']['activeZIndex'] = y
             this.processes[this.processes.indexOf(b)].instance._component.props['windowState']['value']['activeZIndex'] = x
