@@ -2,7 +2,7 @@
     <fluent-button
         @click="() => {
             if(props.currentProcess !== null) {
-                process.killProcess(props.currentProcess)
+                process.killProcessByProcessId(props.currentProcess.getProcessStateInstance().process.processId)
             }
         }"
         appearance="neutral"
@@ -10,7 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { useProcessStore, Process } from '@/store/ProcessStore'
+import { Process } from '@/hooks/useWindow';
+import { useProcessStore } from '@/store/ProcessStore'
 
 const process = useProcessStore()
 

@@ -16,33 +16,24 @@
                 <TabPanels as="div" class="bg-white shape-container w-full h-full">
                     <TabPanel as="ul" class="p-2">
                         <ProcessList
-                            @on-set-current-process="setCurrentProcess"
+                            @set-current-process="setCurrentProcess"
                             :current-process="currentProcess"
                         >
                             <template v-slot="{ e }">
-                                <h1>{{ e.instance._component.props['title'] }}</h1>
+                                <h1>{{ e.getProcessStateInstance().window.info.title }}</h1>
                             </template>
                         </ProcessList>
                     </TabPanel>
                     
                     <TabPanel as="ul" class="p-2">
-                        <li
-                            v-for="e in process.getAllProcesses"
-                            :key="e.instance._component.props['activeZIndex']"
-                            @click="currentProcess = e"
-                            class="transition-all active:bg-white px-4 py-2 shape flex gap-2 overflow-auto"
-                            :class="[e === currentProcess ? 'bg-blue-500/25 hover:bg-blue-500/50' : 'hover:bg-white/75']"
-                        >
-
-                        </li>
                         <ProcessList
-                            @on-set-current-process="setCurrentProcess"
+                            @set-current-process="setCurrentProcess"
                             :current-process="currentProcess"
                         >
                             <template v-slot="{ e }">
-                                <h1>{{ e.instance._component.props['title'] }}</h1>
+                                <h1>{{ e.getProcessStateInstance().window.info.title }}</h1>
                                 <fluent-divider class="w-[1px] h-6 bg-black/10"></fluent-divider>
-                                <h1>{{ e.instance._component.props['windowState']['value'][''] }}</h1>
+                                <h1>{{ e.getProcessStateInstance().process.processId }}</h1>
                             </template>
                         </ProcessList>
                     </TabPanel>
@@ -55,23 +46,23 @@
 </template>
 
 <script setup lang="ts">
-import { Process, useProcessStore } from '@/store/ProcessStore';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import { ref } from 'vue';
 import KillProcessButton from './internal/KillProcessButton.vue';
 import ProcessList from './internal/ProcessList.vue';
+import { Process } from '@/hooks/useWindow';
 
-const process = useProcessStore()
-
-const currentProcess = ref<Process | any>(null)
+const currentProcess = ref(null)
 const setCurrentProcess = (e: Process) => {
     currentProcess.value = e
 }
 </script>
 
 <style scoped>
+
 fluent-listbox,
 fluent-option {
     outline: none;
 }
+
 </style>

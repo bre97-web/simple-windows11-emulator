@@ -2,11 +2,11 @@
     <ul class="h-full w-fit flex gap-1 select-none">
         <Button
             v-for="e in process.getAllProcesses"
-            :key="e.instance._component.props['windowState']['value']['processId']"
-            @click="process.setRunningInBackground(e, !e.instance._component.props['windowState']['value']['runningInBackground'])"
+            :key="e.getProcessStateInstance().process.processId"
+            @click="process.setMinimize(e, !e.getProcessStateInstance().accessibility.minimize)"
         >
             <p>
-                {{ e.instance._component.props['windowState']['value']['processId'] }}
+                {{ e.getProcessStateInstance().process.processId }}
             </p>
         </Button>
     </ul>
@@ -18,7 +18,3 @@ import Button from '@/components/starts/internal/Button.vue';
 
 const process = useProcessStore()
 </script>
-
-<style scoped>
-
-</style>

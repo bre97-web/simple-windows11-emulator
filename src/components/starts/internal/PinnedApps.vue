@@ -65,9 +65,7 @@ import { useProcessStore } from '@/store/ProcessStore';
  */
 const process = useProcessStore()
 const openNewWindow = (title: string, slot: any) => {
-    const window = process.createNewProcess({
-        title: title
-    }, slot)
+    const window = process.createNewProcess(title, slot)
     window.mount()
 }
 

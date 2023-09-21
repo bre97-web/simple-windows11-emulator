@@ -12,17 +12,17 @@
       emits('unfocus')
     }"
     class="select-none fixed leadin-animation transition-all active:transition-none"
-    :style="{
-      'left' : props.windowState.value.maximize ? '0' : props.windowState.value.position.x + 'px',
-      'top' : props.windowState.value.maximize ? '0' : props.windowState.value.position.y + 'px',
-      'width': props.windowState.value.maximize ? '100%' : 'auto',
-      'height': props.windowState.value.maximize ? '100%' : 'auto',
-      'z-index': props.windowState.value.activeZIndex + 1000,
-    }"
     :class="[
-      props.windowState.value.active ? 'shadow-xl' : '',
-      props.windowState.value.runningInBackground ? 'opacity-0 scale-0 select-none pointer-events-none -z-[99999]' : ''
+      props.getProcessStateInstance().accessibility.active ? 'shadow-xl' : '',
+      props.getProcessStateInstance().accessibility.minimize ? 'opacity-0 scale-0 select-none pointer-events-none -z-[99999]' : ''
     ]"
+    :style="{
+      'left' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.x + 'px',
+      'top' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.y + 'px',
+      'width': props.getProcessStateInstance().accessibility.maximize ? '100%' : 'auto',
+      'height': props.getProcessStateInstance().accessibility.maximize ? '100%' : 'auto',
+      'z-index': props.getProcessStateInstance().window.info.activeZIndex + 1000,
+    }"
   >
     <div class="shape-container h-full w-full overflow-clip border-[1.5px] border-black/20">
 
@@ -31,7 +31,7 @@
           <h1
             @mousedown="emits('gragwindow', $event)"
             class="h-full px-2 flex items-center w-full min-w-[32px] text-ellipsis overflow-clip"
-          >{{ props.title }}</h1>
+          >{{ props.getProcessStateInstance().window.info.title }}</h1>
 
           <nav class="w-fit h-full flex items-center justify-end">
             <div @click="emits('minimize')" class="w-full h-full icon-has-hover">
@@ -48,7 +48,7 @@
 
             <div
               @click="() => {
-                process.killProcess(process.getProcessByProcessId(props.windowState.value.processId))
+                process.killProcessByProcessId(props.getProcessStateInstance().process.processId)
                 emits('close')
               }"
               class="w-full h-full icon-has-hover"
@@ -72,25 +72,10 @@
 
 <script setup lang="ts">
 import { useProcessStore } from '@/store/ProcessStore';
-import { Ref } from 'vue';
+import { ProcessState } from '../useProcessState';
 
-/**
- * Windows Props and Emits
- */
 const props = defineProps<{
-  title: string
-  windowState: Ref<{
-    focus: boolean
-    active: boolean
-    maximize: boolean
-    runningInBackground: boolean
-    position: {
-      x: number
-      y: number
-    }
-    activeZIndex: number
-    processId: number
-  }>
+  getProcessStateInstance: () => ProcessState
 }>()
 const emits = defineEmits<{
   (event: 'close'): void
@@ -107,15 +92,17 @@ const emits = defineEmits<{
 const process = useProcessStore()
 
 const cleanOtherWindowsFocus = () => {
+  if(process.getAllProcesses.length <= 1) return 
   process.cleanFocus()
 }
 const cleanOtherWindowsActive = () => {
+  if(process.getAllProcesses.length <= 1) return 
   process.cleanActive()
 }
 const swapZIndex = () => {
-  if(process.getAllProcesses.length === 1) return 
-  const currentWindowZIndex = process.getProcessByProcessId(props.windowState.value.processId).instance._component.props['windowState']['value']['activeZIndex']
-  const zIndexList: number[] = process.getAllProcesses.map(e => e.instance._component.props['windowState']['value']['activeZIndex'])
+  if(process.getAllProcesses.length <= 1) return 
+  const currentWindowZIndex = props.getProcessStateInstance().window.info.activeZIndex
+  const zIndexList: number[] = process.getAllProcesses.map(e => e.getProcessStateInstance().window.info.activeZIndex)
   const max = zIndexList.reduce((last, cur) => last > cur ? last : cur)
 
   process.swapZIndex(currentWindowZIndex, max)
@@ -142,4 +129,5 @@ const swapZIndex = () => {
     scale: 1;
   }
 }
+
 </style>
