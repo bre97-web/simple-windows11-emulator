@@ -35,7 +35,6 @@
         border-radius: var(--fluent-container-shape);
     }
 
-
     .wallpaper,
     .lock-screen-wallpaper {
         background-image: var(--windows-wallpaper-url);

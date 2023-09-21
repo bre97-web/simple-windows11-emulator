@@ -12,6 +12,10 @@ export type InfoProperties = {
     activeZIndex: number
 
 }
+export type SizeProperties = {
+    width: number
+    height: number
+}
 export type WindowProperties = {
 
     /**
@@ -20,6 +24,8 @@ export type WindowProperties = {
     info: InfoProperties
 
     position: PositionProperties
+
+    size: SizeProperties
 
 }
 export type PositionProperties = {
@@ -82,6 +88,10 @@ export function useProcessState(
             x: number,
             y: number
         },
+        size?: {
+            width: number,
+            height: number,
+        },
     },
     accessibilityProps: {
         maximizable?: boolean
@@ -108,6 +118,10 @@ export function useProcessState(
             position: {
                 x: windowProps.position?.x || 0,
                 y: windowProps.position?.y || 0,
+            },
+            size: {
+                width: windowProps.size?.width || 400,
+                height: windowProps.size?.height || 300,
             },
         },
         accessibility: {

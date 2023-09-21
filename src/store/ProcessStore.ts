@@ -29,7 +29,16 @@ export const useProcessStore = defineStore('process_store', {
 
             const process = useWindow(() => processState.value, {
                 onClose: () => process.unmount(),
-                onMaximize: () => processState.value.accessibility.maximize = !processState.value.accessibility.maximize,
+                onMaximize: () => {
+                    processState.value.accessibility.maximize = !processState.value.accessibility.maximize                    
+
+                    if(processState.value.accessibility.maximize) {
+                        const windowRef: HTMLElement = process.instance._container.children.item(0) as HTMLElement
+                        processState.value.window.size.width = parseInt(windowRef.style.width.replace('px', ''))
+                        processState.value.window.size.height = parseInt(windowRef.style.height.replace('px', ''))
+                        console.log(processState.value.window.size);
+                    }
+                },
                 onMinimize: () => processState.value.accessibility.minimize = true,
                 onFocus: () => processState.value.accessibility.focus = true,
                 onUnfocus: () => processState.value.accessibility.focus = false,
