@@ -10,7 +10,7 @@
                 <!-- StartButton -->
                 <Starts></Starts>
 
-                <RunningInBackgroundList></RunningInBackgroundList>
+                <MinimizeApps></MinimizeApps>
             </div>
             
             <div class="flex-none w-1/4 h-full flex justify-end">
@@ -25,6 +25,6 @@
 <script setup lang="ts">
 import Starts from '@/components/starts/internal/Starts.vue';
 import Naviagtion from '@/components/control/Navigation.vue';
-import RunningInBackgroundList from './internal/RunningInBackgroundList.vue';
+import MinimizeApps from './internal/MinimizeApps.vue';
 
 </script>

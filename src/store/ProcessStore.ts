@@ -14,7 +14,7 @@ export const useProcessStore = defineStore('process_store', {
         getProcessByProcessId: (state) => (id: number): Process => state.processes.filter(e => id === e.getProcessStateInstance().process.processId)[0],
     },
     actions: {
-        createNewProcess({title , icon = 'bug'}: {
+        createNewProcess({title , icon = 'bug_report'}: {
             title: string,
             icon?: string
         }, slot: any) {

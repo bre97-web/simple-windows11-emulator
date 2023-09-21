@@ -3,7 +3,7 @@
         <div class="app shape relative">
             <md-ripple></md-ripple>
 
-            <div @click="openNewWindow('Settings Demo', Settings)" class="w-full h-full active:scale-75 transition-all">
+            <div @click="openNewWindow(Settings, 'Settings Demo', 'settings')" class="w-full h-full active:scale-75 transition-all">
                 <FlexLayout class="flex-col items-center justify-around pt-2">
                     <div class="h-8">
                         <md-icon>settings</md-icon>
@@ -16,7 +16,7 @@
         <div class="app shape relative">
             <md-ripple></md-ripple>
 
-            <div @click="openNewWindow('Task Manager', Manager)" class="w-full h-full active:scale-75 transition-all">
+            <div @click="openNewWindow(Manager, 'Task Manager', 'manager')" class="w-full h-full active:scale-75 transition-all">
                 <FlexLayout class="flex-col items-center justify-around pt-2">
                     <div class="h-8">
                         <md-icon>developer_board</md-icon>
@@ -64,8 +64,11 @@ import { useProcessStore } from '@/store/ProcessStore';
  * Test
  */
 const process = useProcessStore()
-const openNewWindow = (title: string, slot: any) => {
-    const window = process.createNewProcess(title, slot)
+const openNewWindow = (slot: any, title: string, icon = 'bug_report') => {
+    const window = process.createNewProcess({
+        title,
+        icon
+    }, slot)
     window.mount()
 }
 

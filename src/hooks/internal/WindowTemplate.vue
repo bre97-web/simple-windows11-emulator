@@ -28,10 +28,10 @@
 
       <header class="select-none w-full h-8 bg-white/75 backdrop-blur-xl">
         <div class="w-full h-full flex items-center justify-between">
-          <h1
-            @mousedown="emits('gragwindow', $event)"
-            class="h-full px-2 flex items-center w-full min-w-[32px] text-ellipsis overflow-clip"
-          >{{ props.getProcessStateInstance().window.info.title }}</h1>
+          <div class="h-full px-2 flex gap-1 items-center justify-start w-full min-w-[32px] text-ellipsis overflow-clip">
+            <md-icon class="scale-75">{{ props.getProcessStateInstance().window.info.icon }}</md-icon>
+            <h1 class="w-full" @mousedown="emits('gragwindow', $event)">{{ props.getProcessStateInstance().window.info.title }}</h1>
+          </div>
 
           <nav class="w-fit h-full flex items-center justify-end">
             <div @click="emits('minimize')" class="w-full h-full icon-has-hover">
