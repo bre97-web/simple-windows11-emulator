@@ -5,8 +5,8 @@
                 <KillProcessButton :current-process="currentProcess"></KillProcessButton>
             </FlexLayout>
 
-            <TabGroup as="div" class="flex w-full h-full">
-                <TabList as="fluent-listbox" class="p-0 m-0 gap-0.5 transition-all">
+            <TabGroup as="div" class="flex w-full h-full gap-1">
+                <TabList as="fluent-listbox" class="gap-1 transition-all">
                     <Tab as="fluent-option" value="processes" selected>Processes</Tab>
                     <Tab as="fluent-option" value="details">Details</Tab>
                 </TabList>
@@ -53,5 +53,9 @@ const setCurrentProcess = (e: Process) => {
 fluent-listbox,
 fluent-option {
     outline: none;
+    padding-top: 0;
+}
+fluent-option {
+    margin: 0;
 }
 </style>

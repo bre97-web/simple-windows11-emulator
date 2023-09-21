@@ -106,6 +106,11 @@
         background-color: rgb(255 255 255 / 0.75);
     }
 
+    .icon-has-hover:hover[type="error"],
+    .icon-has-hover:hover [type="error"] {
+        background-color: var(--md-sys-color-error-container);
+    }
+
     .md-icon {
         user-select: none;
     }
@@ -113,6 +118,8 @@
         font-variation-settings: 'FILL' 1;
         animation: icon-fill 0.15s ease-in;
     }
+
+
 
 
     .full-screen {

@@ -32,19 +32,21 @@
         <div class="w-full h-full flex items-center justify-between">
           <div
             @mousedown="emits('gragwindow', $event)"
-            class="h-full px-2 flex gap-1 items-center justify-start w-full min-w-[32px] text-ellipsis overflow-clip"
+            class="h-full flex items-center justify-start w-full text-ellipsis overflow-clip"
           >
-            <md-icon class="scale-75">{{ props.getProcessStateInstance().window.info.icon }}</md-icon>
-            <h1 class="w-full">{{ props.getProcessStateInstance().window.info.title }}</h1>
+            <div class="flex-none h-full aspect-square scale-75 grid place-content-center">
+              <md-icon>{{ props.getProcessStateInstance().window.info.icon }}</md-icon>
+            </div>
+            <h1 class="w-full whitespace-nowrap overflow-clip">{{ props.getProcessStateInstance().window.info.title }}</h1>
           </div>
 
-          <nav class="w-fit h-full flex items-center justify-end">
+          <nav class="flex-none w-fit h-full flex items-center justify-end">
             <div
               v-if="props.getProcessStateInstance().accessibility.minimizable"
               @click="emits('minimize')"
               class="w-full h-full icon-has-hover"
             >
-              <div class="icon icon-has-active px-2 md:px-4 h-full">
+              <div class="icon icon-has-active px-2 h-full scale-75">
                 <md-icon>minimize</md-icon>
               </div>
             </div>
@@ -54,7 +56,7 @@
               @click="emits('maximize')"
               class="w-full h-full icon-has-hover"
             >
-              <div class="icon icon-has-active px-2 md:px-4 h-full">
+              <div class="icon icon-has-active px-2 h-full scale-75">
                 <md-icon>check_box_outline_blank</md-icon>
               </div>
             </div>
@@ -62,11 +64,11 @@
             <div
               @click="() => {
                 process.killProcessByProcessId(props.getProcessStateInstance().process.processId)
-                emits('close')
               }"
               class="w-full h-full icon-has-hover"
+              type="error"
             >
-              <div class="icon icon-has-active px-2 md:px-4 h-full">
+              <div class="icon icon-has-active px-2 h-full scale-75">
                 <md-icon>Close</md-icon>
               </div>
             </div>
