@@ -1,5 +1,5 @@
 <template>
-    <div class="headline-large surface-text">
+    <div class="headline-large">
         <slot></slot>
     </div>
 </template>
