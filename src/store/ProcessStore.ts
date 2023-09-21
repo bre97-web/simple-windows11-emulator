@@ -3,9 +3,54 @@ import { defineStore } from "pinia";
 import { App } from "vue";
 
 export type Process = {
+
+    /**
+     * Mount process and render a window
+     */
     mount: () => void
+
+    /**
+     * Kill the process and close the window
+     */
     unmount: () => void
+
     instance: App<Element>
+}
+
+export type WindowState = {
+
+    /**
+     * ?
+     */
+    focus: boolean
+
+    /**
+     * It is active while mousedown
+     */
+    active: boolean
+
+    /**
+     * Window maximize
+     */
+    maximize: boolean
+
+    runningInBackground: boolean
+
+    position: {
+        x: number
+        y: number
+    }
+
+    /**
+     * z-index
+     */
+    activeZIndex: number
+
+    /**
+     * Unique process id
+     */
+    processId: number
+
 }
 
 export const useProcessStore = defineStore('process_store', {
@@ -15,7 +60,8 @@ export const useProcessStore = defineStore('process_store', {
     }),
     getters: {
         getAllProcesses: (state): Process[] => state.processes,
-        getProcessByProcessId: (state) => (id: number): Process => state.processes.filter(e => id === e.instance._component.props['windowState']['value']['processId'])[0]
+        getAllProcessByRunningInBackground: (state): Process[] => state.processes.filter(e => e.instance._component.props['windowState']['value']['runningInBackground']),
+        getProcessByProcessId: (state) => (id: number): Process => state.processes.filter(e => id === e.instance._component.props['windowState']['value']['processId'])[0],
     },
     actions: {
         createNewProcess(props: {}, slot: any) {
@@ -41,15 +87,15 @@ export const useProcessStore = defineStore('process_store', {
             })
         },
         swapZIndex(x: number, y: number) {
-            const a = this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === x)[0]
-            const b = this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === y)[0]
-
-            this.processes[this.processes.indexOf(a)].instance._component.props['windowState']['value']['activeZIndex'] = y
-            this.processes[this.processes.indexOf(b)].instance._component.props['windowState']['value']['activeZIndex'] = x
+            this.processes[this.processes.indexOf(this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === x)[0])].instance._component.props['windowState']['value']['activeZIndex'] = y
+            this.processes[this.processes.indexOf(this.processes.filter(e => e.instance._component.props['windowState']['value']['activeZIndex'] === y)[0])].instance._component.props['windowState']['value']['activeZIndex'] = x
         },
         killProcess(e: Process) {
             e.unmount()
             this.processes.splice(this.processes.indexOf(e), 1)
+        },
+        setRunningInBackground(target: Process, value: boolean) {
+            target.instance._component.props['windowState']['value']['runningInBackground'] = value
         },
 
     }

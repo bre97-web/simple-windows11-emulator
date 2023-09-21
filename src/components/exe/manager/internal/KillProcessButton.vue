@@ -15,6 +15,6 @@ import { useProcessStore, Process } from '@/store/ProcessStore'
 const process = useProcessStore()
 
 const props = defineProps<{
-    currentProcess: Process
+    currentProcess: Process | null
 }>()
 </script>

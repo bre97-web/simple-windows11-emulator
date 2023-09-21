@@ -1,5 +1,6 @@
 import { App, Component, ComputedOptions, MethodOptions, createApp, h, ref } from "vue"
 import WindowTemplate from '@/hooks/internal/WindowTemplate.vue'
+import { WindowState } from "@/store/ProcessStore"
 
 /**
  * Create el
@@ -42,12 +43,11 @@ export function useWindow(props: {}, slot: any): {
      * Vue component instance
      */
     // @ts-ignore
-    
     const instance = createWindowApp(h(WindowTemplate, {}, {
         default: () => h(slot),
     }))
 
-    const windowState = ref({
+    const windowState = ref<WindowState>({
         focus: false,
         active: false,
         maximize: false,
@@ -74,6 +74,9 @@ export function useWindow(props: {}, slot: any): {
                 windowRef.style.left = windowState.value.position.x + 'px'
                 windowRef.style.top = windowState.value.position.y + 'px'
             }
+        },
+        onMinimize: () => {
+            windowState.value.runningInBackground = true
         },
         onFocus: () => {
             windowState.value.focus = true

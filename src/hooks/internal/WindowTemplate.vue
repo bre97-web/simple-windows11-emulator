@@ -19,7 +19,10 @@
       'height': props.windowState.value.maximize ? '100%' : 'auto',
       'z-index': props.windowState.value.activeZIndex + 1000,
     }"
-    :class="[props.windowState.value.active ? 'shadow-xl' : '']"
+    :class="[
+      props.windowState.value.active ? 'shadow-xl' : '',
+      props.windowState.value.runningInBackground ? 'opacity-0 scale-0 select-none pointer-events-none -z-[99999]' : ''
+    ]"
   >
     <div class="shape-container h-full w-full overflow-clip border-[1.5px] border-black/20">
 
@@ -31,7 +34,7 @@
           >{{ props.title }}</h1>
 
           <nav class="w-fit h-full flex items-center justify-end">
-            <div class="w-full h-full icon-has-hover">
+            <div @click="emits('minimize')" class="w-full h-full icon-has-hover">
               <div class="icon icon-has-active px-2 md:px-4 h-full">
                 <md-icon>minimize</md-icon>
               </div>
@@ -92,6 +95,7 @@ const props = defineProps<{
 const emits = defineEmits<{
   (event: 'close'): void
   (event: 'maximize'): void
+  (event: 'minimize'): void
   (event: 'focus'): void
   (event: 'unfocus'): void
   (event: 'active'): void

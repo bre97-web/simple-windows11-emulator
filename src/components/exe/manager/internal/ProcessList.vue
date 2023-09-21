@@ -1,7 +1,7 @@
 <template>
     <li
         v-for="e in process.getAllProcesses"
-        :key="e.instance._component.props['activeZIndex']"
+        :key="e.instance._component.props['windowState']['value']['activeZIndex']"
         @click="emits('onSetCurrentProcess', e)"
         class="transition-all active:bg-white px-4 py-2 shape flex gap-2 overflow-auto"
         :class="[e === props.currentProcess ? 'bg-blue-500/25 hover:bg-blue-500/50' : 'hover:bg-white/75']"
@@ -16,7 +16,7 @@ import { useProcessStore, Process } from '@/store/ProcessStore'
 const process = useProcessStore()
 
 const props = defineProps<{
-    currentProcess: Process
+    currentProcess: Process | null
 }>()
 const emits = defineEmits<{
     (event: 'onSetCurrentProcess', e: Process): void
