@@ -27,28 +27,45 @@ export const useProcessStore = defineStore('process_store', {
                 },
             ))
 
+            const updateWidthAndHeight = () => {
+                const windowRef: HTMLElement = process.instance._container.children.item(0) as HTMLElement
+                if(windowRef.style.width.includes('%') || windowRef.style.height.includes('%')) {
+                    return 
+                }
+                processState.value.window.size.width = parseInt(windowRef.style.width)
+                processState.value.window.size.height = parseInt(windowRef.style.height)
+                console.log(processState.value.window.size);
+                
+            }
+
             const process = useWindow(() => processState.value, {
                 onClose: () => process.unmount(),
-                onMaximize: () => {
+                onMaximize: () => {                 
                     processState.value.accessibility.maximize = !processState.value.accessibility.maximize                    
-
-                    if(processState.value.accessibility.maximize) {
-                        const windowRef: HTMLElement = process.instance._container.children.item(0) as HTMLElement
-                        processState.value.window.size.width = parseInt(windowRef.style.width.replace('px', ''))
-                        processState.value.window.size.height = parseInt(windowRef.style.height.replace('px', ''))
-                        console.log(processState.value.window.size);
-                    }
                 },
-                onMinimize: () => processState.value.accessibility.minimize = true,
-                onFocus: () => processState.value.accessibility.focus = true,
-                onUnfocus: () => processState.value.accessibility.focus = false,
-                onActive: () => processState.value.accessibility.active = true,
-                onInactive: () => processState.value.accessibility.active = false,
+                onChangeWindowSize: () => updateWidthAndHeight(),
+                onMinimize: () => {
+                    updateWidthAndHeight()
+                    processState.value.accessibility.minimize = true
+                },
+                onFocus: () => {
+                    processState.value.accessibility.focus = true
+                },
+                onUnfocus: () => {
+                    updateWidthAndHeight()
+                    processState.value.accessibility.focus = false
+                },
+                onActive: () => {
+                    processState.value.accessibility.active = true
+                },
+                onInactive: () => {
+                    processState.value.accessibility.active = false
+                },
                 onGragwindow: (e: MouseEvent) => {
                     if(processState.value.accessibility.maximize) return false
-        
+
                     const windowRef: HTMLElement = process.instance._container.children.item(0) as HTMLElement
-        
+                    
                     // 计算鼠标距离弹出框内的位置
                     const position = {
                         x: e.clientX - windowRef.offsetLeft,
@@ -65,11 +82,11 @@ export const useProcessStore = defineStore('process_store', {
                         currentDisPostion.x = e.clientX - position.x
                         currentDisPostion.y = e.clientY - position.y
         
-                        if (currentDisPostion.x < 0) {
-                            currentDisPostion.x = 0
-                        } else if (currentDisPostion.x > document.documentElement.clientWidth - windowRef.offsetWidth) {
-                            currentDisPostion.x = document.documentElement.clientWidth - windowRef.offsetWidth
-                        }
+                        // if (currentDisPostion.x < 0) {
+                        //     currentDisPostion.x = 0
+                        // } else if (currentDisPostion.x > document.documentElement.clientWidth - windowRef.offsetWidth) {
+                        //     currentDisPostion.x = document.documentElement.clientWidth - windowRef.offsetWidth
+                        // }
         
                         // if(currentDialogDisY < 0) {
                         //   currentDialogDisY = 0
@@ -91,6 +108,7 @@ export const useProcessStore = defineStore('process_store', {
                 }
             }, slot)
             
+
             
             this.processes.push(process)
             return process
@@ -112,6 +130,7 @@ export const useProcessStore = defineStore('process_store', {
             })
         },
         swapZIndex(x: number, y: number) {
+            if(x === y) return
             if(this.processes.length <= 1) return 
             const target = {
                 x: (this.processes as Process[]).filter(e => e.getProcessStateInstance().window.info.activeZIndex === x)[0],

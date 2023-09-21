@@ -127,8 +127,8 @@ export function useProcessState(
         accessibility: {
             maximizable: accessibilityProps.maximizable,
             minimizable: accessibilityProps.minimizable,
-            focus: true,
-            active: true,
+            focus: false,
+            active: false,
             maximize: false,
             minimize: false,
         },

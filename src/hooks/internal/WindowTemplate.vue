@@ -1,9 +1,10 @@
 <template>
   <div
+    ref="windowRef"
     @mousedown="() => {
-      cleanOtherWindowsFocus()
+      process.cleanActive()
+      process.cleanFocus()
       emits('focus')
-      cleanOtherWindowsActive()
       emits('active')
       swapZIndex()
     }"
@@ -13,24 +14,28 @@
     }"
     class="select-none fixed leadin-animation resize overflow-hidden transition-all active:transition-none"
     :class="[
-      props.getProcessStateInstance().accessibility.active ? 'shadow-xl' : '',
-      props.getProcessStateInstance().accessibility.minimize ? 'opacity-0 scale-0 select-none pointer-events-none -z-[99999]' : ''
+      props.getProcessStateInstance().accessibility.active ? 'shadow-lg' : '',
+      props.getProcessStateInstance().accessibility.minimize ? 'opacity-0 scale-0 translate-y-full select-none pointer-events-none -z-[99999]' : '',
     ]"
     :style="{
       'left' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.x + 'px',
       'top' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.y + 'px',
       'width': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.width + 'px',
-      'height': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.height + 'px',
+      'height': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.height + 'px',  
       'z-index': props.getProcessStateInstance().window.info.activeZIndex + 1000,
+      'padding-bottom': props.getProcessStateInstance().accessibility.maximize ? '3rem' : '0',
     }"
   >
-    <div class="shape-container w-full h-full overflow-clip border-[1.5px] border-black/20">
+    <FlexLayout class="shape-container w-full h-full flex-col overflow-clip border-[1.5px] border-black/20">
 
-      <header class="select-none w-full h-8 bg-white/75 backdrop-blur-xl">
+      <header class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-xl">
         <div class="w-full h-full flex items-center justify-between">
-          <div class="h-full px-2 flex gap-1 items-center justify-start w-full min-w-[32px] text-ellipsis overflow-clip">
+          <div
+            @mousedown="emits('gragwindow', $event)"
+            class="h-full px-2 flex gap-1 items-center justify-start w-full min-w-[32px] text-ellipsis overflow-clip"
+          >
             <md-icon class="scale-75">{{ props.getProcessStateInstance().window.info.icon }}</md-icon>
-            <h1 class="w-full" @mousedown="emits('gragwindow', $event)">{{ props.getProcessStateInstance().window.info.title }}</h1>
+            <h1 class="w-full">{{ props.getProcessStateInstance().window.info.title }}</h1>
           </div>
 
           <nav class="w-fit h-full flex items-center justify-end">
@@ -70,10 +75,10 @@
         </div>
       </header>
 
-      <main class="h-full backdrop-blur-xl bg-white/75 overflow-auto">
+      <main class="relative w-full h-full backdrop-blur-xl bg-white/75 overflow-auto">
         <slot></slot>
       </main>
-    </div>
+    </FlexLayout>
 
   </div>
 </template>
@@ -94,19 +99,12 @@ const emits = defineEmits<{
   (event: 'active'): void
   (event: 'inactive'): void
   (event: 'gragwindow', e: MouseEvent): boolean
+  (event: 'changeWindowSize'): void
 }>()
 
 
 const process = useProcessStore()
 
-const cleanOtherWindowsFocus = () => {
-  if(process.getAllProcesses.length <= 1) return 
-  process.cleanFocus()
-}
-const cleanOtherWindowsActive = () => {
-  if(process.getAllProcesses.length <= 1) return 
-  process.cleanActive()
-}
 const swapZIndex = () => {
   if(process.getAllProcesses.length <= 1) return 
   const currentWindowZIndex = props.getProcessStateInstance().window.info.activeZIndex
@@ -114,7 +112,6 @@ const swapZIndex = () => {
   const max = zIndexList.reduce((last, cur) => last > cur ? last : cur)
 
   process.swapZIndex(currentWindowZIndex, max)
-  
 }
 </script>
 

@@ -1,35 +1,27 @@
 <template>
-    <div class="p-1 space-y-1 h-full">
-        <div class="bg-white/50 w-full p-4 shape-container">
-            <div class="w-full h-full flex justify-end items-center">
+    <PageLayout>
+        <FlexLayout class="flex-col gap-1 h-full">
+            <FlexLayout class="justify-end items-center bg-white/50 w-full p-2 shape-container">
                 <KillProcessButton :current-process="currentProcess"></KillProcessButton>
-            </div>
-        </div>
+            </FlexLayout>
 
-        <div class="flex w-full h-full">
             <TabGroup as="div" class="flex w-full h-full">
                 <TabList as="fluent-listbox" class="p-0 m-0 gap-0.5 transition-all">
                     <Tab as="fluent-option" value="processes" selected>Processes</Tab>
                     <Tab as="fluent-option" value="details">Details</Tab>
                 </TabList>
 
-                <TabPanels as="div" class="bg-white shape-container w-full h-full">
-                    <TabPanel as="ul" class="p-2">
-                        <ProcessList
-                            @set-current-process="setCurrentProcess"
-                            :current-process="currentProcess"
-                        >
+                <TabPanels as="div" class="bg-white/75 shape-container w-full h-full">
+                    <TabPanel as="ul" class="p-2 h-full">
+                        <ProcessList @set-current-process="setCurrentProcess" :current-process="currentProcess">
                             <template v-slot="{ e }">
                                 <h1>{{ e.getProcessStateInstance().window.info.title }}</h1>
                             </template>
                         </ProcessList>
                     </TabPanel>
-                    
-                    <TabPanel as="ul" class="p-2">
-                        <ProcessList
-                            @set-current-process="setCurrentProcess"
-                            :current-process="currentProcess"
-                        >
+
+                    <TabPanel as="ul" class="p-2 h-full">
+                        <ProcessList @set-current-process="setCurrentProcess" :current-process="currentProcess">
                             <template v-slot="{ e }">
                                 <h1>{{ e.getProcessStateInstance().window.info.title }}</h1>
                                 <fluent-divider class="w-[1px] h-6 bg-black/10"></fluent-divider>
@@ -40,9 +32,8 @@
                 </TabPanels>
             </TabGroup>
 
-        </div>
-    </div>
-
+        </FlexLayout>
+    </PageLayout>
 </template>
 
 <script setup lang="ts">
@@ -59,10 +50,8 @@ const setCurrentProcess = (e: Process) => {
 </script>
 
 <style scoped>
-
 fluent-listbox,
 fluent-option {
     outline: none;
 }
-
 </style>
