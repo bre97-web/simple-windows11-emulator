@@ -33,16 +33,13 @@
     "@fluentui/web-components": "^2.5.16",
     "@fontsource/roboto": "^5.0.8",
     "@headlessui/vue": "^1.7.15",
-    "@material/web": "^1.0.0-pre.17",
     "autoprefixer": "^10.4.15",
-    "lit": "^2.8.0",
     "material-symbols": "^0.10.4",
     "moment": "^2.29.4",
     "pinia": "^2.1.6",
     "pinia-plugin-persistedstate": "^3.2.0",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
-    "tslib": "^2.6.1",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
