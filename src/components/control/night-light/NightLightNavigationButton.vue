@@ -1,13 +1,13 @@
 <template>
-    <NavigationButton
+    <IconButton
+        has-hover
+        has-active
         @click="system.toggleIsNightlight"
-        icon="light"
-        :class="{'bg-blue-500/75': system.getSystemIsNightlight}"
-    ></NavigationButton>
+        :class="{'bg-primary-500': system.getSystemIsNightlight}"
+    >light</IconButton>
 </template>
 
 <script setup lang="ts">
-import NavigationButton from '@/components/control/internal/NavigationButton.vue'
 import { useSystemStore } from '@/store/SystemStore';
 
 const system = useSystemStore()

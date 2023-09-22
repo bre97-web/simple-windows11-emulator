@@ -5,7 +5,7 @@
                 @click="setIsExpanded(!isExpanded)"
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-[4px] hover:bg-black/5"
             >
-                <div class="rounded-full w-8 h-8 bg-red-500"></div>
+                <div class="rounded-full w-8 h-8 bg-white/75"></div>
                 <span class="max-w-[12rem] overflow-clip text-ellipsis">{{ user.getUserAccountState.name }}</span>
             </div>
         </template>

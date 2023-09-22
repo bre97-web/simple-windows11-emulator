@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-8">
         <FlexLayout class="gap-4">
-            <md-icon class="relative -top-2">light</md-icon>
+            <Icon class="relative -top-2">light</Icon>
             <fluent-slider
                 @change="setSystemBright"
                 id="systemBrightnessSliderRef"
@@ -11,7 +11,7 @@
             ></fluent-slider>
         </FlexLayout>
         <FlexLayout class="gap-4">
-            <md-icon class="relative -top-2">volume_up</md-icon>
+            <Icon class="relative -top-2">volume_up</Icon>
             <fluent-slider value="00"></fluent-slider>
         </FlexLayout>
     </div>

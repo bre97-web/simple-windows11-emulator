@@ -1,22 +1,16 @@
 <template>
-    <GridLayout class="relative gap-1 grid-cols-4 md:grid-cols-6 grid-rows-auto overflow-y-auto h-40 pt-2 items-start">
-        <div
+    <GridLayout class="relative gap-2 grid-cols-4 md:grid-cols-6 grid-rows-auto overflow-y-auto h-40 items-start">
+        <IconButton
+            has-hover
+            has-active
+            @click="openNewWindow(e.slot, e.title, e.icon)" 
             v-for="e in getAppList()"
             :key="e.slot"
-            @click="openNewWindow(e.slot, e.title, e.icon)" 
-            class="app shape relative"
+            class="h-16 w-24"
         >
-            <md-ripple></md-ripple>
-
-            <div class="w-full h-full active:scale-75 transition-all">
-                <FlexLayout class="flex-col items-center justify-around pt-2">
-                    <div class="h-8">
-                        <md-icon>{{ e.icon }}</md-icon>
-                    </div>
-                    <LabelSmall class="select-none">{{ e.label }}</LabelSmall>
-                </FlexLayout>
-            </div>
-        </div>
+            <Icon>{{ e.icon }}</Icon>
+            <LabelSmall class="select-none mt-2">{{ e.label }}</LabelSmall>
+        </IconButton>
 
     </GridLayout>
 </template>
@@ -38,12 +32,3 @@ const openNewWindow = (slot: any, title: string, icon = 'bug_report') => {
 }
 
 </script>
-
-<style scoped>
-
-.app {
-    /* width: 3.5rem; */
-    height: 4.5rem;
-    aspect-ratio: 1.125 / 1;
-}
-</style>

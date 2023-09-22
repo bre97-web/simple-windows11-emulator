@@ -2,7 +2,7 @@
     <div class="relative full-screen overflow-clip">
 
         <div
-            :class="[isTyped ? 'blur-[16px] scale-125 brightness-75' : '']"
+            :class="[isTyped ? 'blur scale-125 brightness-75' : '']"
             class="absolute full-screen transition-all duration-500 lock-screen-wallpaper "
         ></div>
 

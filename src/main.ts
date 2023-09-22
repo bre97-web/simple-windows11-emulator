@@ -16,7 +16,6 @@ import '@/assets/css/theme.css'
 /**
  * Google's Material Design
  */
-import '@material/web/all'
 import 'material-symbols'
 import '@fontsource/roboto'
 
@@ -51,6 +50,8 @@ import PageLayout from './layouts/PageLayout.vue'
 import StickyLayout from './layouts/StickyLayout.vue'
 import GridLayout from './layouts/GridLayout.vue'
 
+import Icon from '@/components/icon/Icon.vue'
+import IconButton from '@/components/icon/IconButton.vue'
 
 /**
  * Pinia
@@ -87,6 +88,8 @@ app
     .component('PageLayout', PageLayout)
     .component('StickyLayout', StickyLayout)
     .component('GridLayout', GridLayout)
+    .component('Icon', Icon)
+    .component('IconButton', IconButton)
 app.use(pinia).use(Router)
 app.mount('#app')
 

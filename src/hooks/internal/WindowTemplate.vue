@@ -26,16 +26,16 @@
       'padding-bottom': props.getProcessStateInstance().accessibility.maximize ? '3rem' : '0',
     }"
   >
-    <FlexLayout class="shape-container w-full h-full flex-col overflow-clip border-[1.5px] border-black/20">
+    <FlexLayout class="rounded-container w-full h-full flex-col overflow-clip border">
 
-      <header class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-xl">
+      <header class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-lg">
         <div class="w-full h-full flex items-center justify-between">
           <div
             @mousedown="emits('gragwindow', $event)"
             class="h-full flex items-center justify-start w-full text-ellipsis overflow-clip"
           >
             <div class="flex-none h-full aspect-square scale-75 grid place-content-center">
-              <md-icon>{{ props.getProcessStateInstance().window.info.icon }}</md-icon>
+              <Icon>{{ props.getProcessStateInstance().window.info.icon }}</Icon>
             </div>
             <h1 class="w-full whitespace-nowrap overflow-clip">{{ props.getProcessStateInstance().window.info.title }}</h1>
           </div>
@@ -47,7 +47,7 @@
               class="w-full h-full icon-has-hover"
             >
               <div class="icon icon-has-active px-2 h-full scale-75">
-                <md-icon>minimize</md-icon>
+                <Icon>minimize</Icon>
               </div>
             </div>
 
@@ -57,7 +57,7 @@
               class="w-full h-full icon-has-hover"
             >
               <div class="icon icon-has-active px-2 h-full scale-75">
-                <md-icon>check_box_outline_blank</md-icon>
+                <Icon>check_box_outline_blank</Icon>
               </div>
             </div>
 
@@ -69,7 +69,7 @@
               type="error"
             >
               <div class="icon icon-has-active px-2 h-full scale-75">
-                <md-icon>Close</md-icon>
+                <Icon>Close</Icon>
               </div>
             </div>
 
@@ -77,7 +77,7 @@
         </div>
       </header>
 
-      <main class="relative w-full h-full backdrop-blur-xl bg-white/75 overflow-auto">
+      <main class="relative w-full h-full backdrop-blur-lg bg-white/75 overflow-auto">
         <slot></slot>
       </main>
     </FlexLayout>

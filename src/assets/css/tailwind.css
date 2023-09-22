@@ -28,12 +28,6 @@
     .windows-starts-icon-special-shape {
         border-radius: 2px;
     }
-    .shape {
-        border-radius: var(--fluent-shape);
-    }
-    .shape-container {
-        border-radius: var(--fluent-container-shape);
-    }
 
     .wallpaper,
     .lock-screen-wallpaper {
@@ -93,35 +87,6 @@
         background-color: rgba(250, 250, 250, 0.8);   
     }
     
-
-    .icon {
-        aspect-ratio: auto;
-        display: grid;
-        place-content: center;
-    }
-    .icon-has-active:active {
-        scale: 0.75;
-    }
-    .icon-has-hover:hover {
-        background-color: rgb(255 255 255 / 0.75);
-    }
-
-    .icon-has-hover:hover[type="error"],
-    .icon-has-hover:hover [type="error"] {
-        background-color: var(--md-sys-color-error-container);
-    }
-
-    .md-icon {
-        user-select: none;
-    }
-    .icon-filled {
-        font-variation-settings: 'FILL' 1;
-        animation: icon-fill 0.15s ease-in;
-    }
-
-
-
-
     .full-screen {
         position: relative;
         width: 100vw;
@@ -175,13 +140,7 @@
 }
 
 @layer utilities {
-    @keyframes icon-fill {
-        from {
-            font-variation-settings: 'FILL' 0;
-        } to {
-            font-variation-settings: 'FILL' 1;
-        }
-    }
+
     @keyframes scale-from-full-to-125 {
         from {
             scale: 1;

@@ -33,6 +33,9 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import StickyLayout from '@/layouts/StickyLayout.vue'
 import GridLayout from '@/layouts/GridLayout.vue'
 
+import Icon from '@/components/icon/Icon.vue'
+import IconButton from '@/components/icon/IconButton.vue'
+
 
 export type Process = {
 
@@ -85,6 +88,9 @@ const createWindowApp = (container: Component<any, any, any, ComputedOptions, Me
     .component('PageLayout', PageLayout)
     .component('StickyLayout', StickyLayout)
     .component('GridLayout', GridLayout)
+    .component('Icon', Icon)
+    .component('IconButton', IconButton)
+
     const mount = () => {
         instance.mount(el)
     }

@@ -3,7 +3,7 @@
         <FlexLayout class="flex-col h-full w-full gap-2 items-center justify-center">
             <video
                 ref="cameraVideoRef"
-                class="shape-container h-full aspect-square "
+                class="rounded-container h-full aspect-square "
             ></video>
             <fluent-button
                 type="button"

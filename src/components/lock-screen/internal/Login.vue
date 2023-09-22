@@ -6,14 +6,16 @@
     
         <form class="flex items-center relative">
 
-            <fluent-text-field autofocus type="password"
+            <fluent-text-field
+                autofocus
+                type="password"
                 @input="(e: Event) => state.password = (e.target as EventTarget & Input).value" appearance="filled"
                 @keyup.enter="login"
                 placeholder="Password"
             ></fluent-text-field>
 
             <fluent-button @click="login" class="absolute right-0 z-[1] p-0.5 grid place-content-center">
-                <span class="material-symbols-outlined md-icon">arrow_forward</span>
+                <Icon>arrow_forward</Icon>
             </fluent-button>
 
         </form>

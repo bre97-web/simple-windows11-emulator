@@ -10,7 +10,7 @@
         }"
         class="relative left-0 full-screen grid justify-center select-none"
     >
-        <div class="text-center mt-16">
+        <div class="text-center mt-16 text-white">
             <DisplayLarge>
                 <Time format="HH:mm"></Time>
             </DisplayLarge>

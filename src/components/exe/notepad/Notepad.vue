@@ -5,7 +5,7 @@
                 <TitleLarge>Notepad Beta</TitleLarge>
             </header>
 
-            <div class="w-full h-full shape overflow-clip">
+            <div class="w-full h-full rounded overflow-clip">
                 <fluent-text-area
                     autofocus
                     placeholder="Notepad beta, type here."

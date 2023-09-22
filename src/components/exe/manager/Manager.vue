@@ -1,7 +1,7 @@
 <template>
     <PageLayout>
         <FlexLayout class="flex-col gap-1 h-full">
-            <FlexLayout class="justify-end items-center bg-white/50 w-full p-2 shape-container">
+            <FlexLayout class="justify-end items-center bg-white/50 w-full p-2 rounded-container">
                 <KillProcessButton :current-process="currentProcess"></KillProcessButton>
             </FlexLayout>
 
@@ -11,7 +11,7 @@
                     <Tab as="fluent-option" value="details">Details</Tab>
                 </TabList>
 
-                <TabPanels as="div" class="bg-white/75 shape-container w-full h-full">
+                <TabPanels as="div" class="bg-white/75 rounded-container w-full h-full">
                     <TabPanel as="ul" class="p-2 h-full">
                         <ProcessList @set-current-process="setCurrentProcess" :current-process="currentProcess">
                             <template v-slot="{ e }">

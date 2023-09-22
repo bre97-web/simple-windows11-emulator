@@ -19,7 +19,7 @@ const useApp = (label: string, icon: string, slot: any, title: string): WindowAp
 
 const appsList = [
     useApp('Settings', 'settings', Settings, 'Settings Demo'),
-    useApp('Task Manager', 'manager', Manager, 'Task Manager Demo'),
+    useApp('Task Manager', 'man', Manager, 'Task Manager Demo'),
     useApp('NotePad', 'note', Notepad, 'Notepad Demo'),
     useApp('Camera', 'camera', Camera, 'Camera Demo'),
 ]

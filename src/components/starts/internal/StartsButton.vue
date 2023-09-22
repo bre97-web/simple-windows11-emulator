@@ -1,6 +1,6 @@
 <template>
     <div
-        class="shape hover:bg-white/75 h-full aspect-square overflow-clip"
+        class="rounded hover:bg-white/75 h-full aspect-square overflow-clip"
     >
         <div
             @click="emits('setIsExpanded', !props.isExpanded)"

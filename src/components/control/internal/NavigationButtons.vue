@@ -1,14 +1,13 @@
 <template>
-    <GridLayout class="grid-cols-3 gap-2 transition-all">
-        <NavigationButton icon="wifi"></NavigationButton>
-        <NavigationButton icon="bluetooth"></NavigationButton>
-        <NavigationButton icon="airplane"></NavigationButton>
-        <NightLightNavigationButton></NightLightNavigationButton>
+    <GridLayout class="grid-cols-3 gap-2">
+        <IconButton class="px-8 py-4" has-hover has-active>wifi</IconButton>
+        <IconButton class="px-8 py-4" has-hover has-active>bluetooth</IconButton>
+        <IconButton class="px-8 py-4" has-hover has-active>air</IconButton>
+        <NightLightNavigationButton class="px-8 py-4"></NightLightNavigationButton>
     </GridLayout>
 </template>
 
 <script setup lang="ts">
-import NavigationButton from '@/components/control/internal/NavigationButton.vue'
 import NightLightNavigationButton from '@/components/control/night-light/NightLightNavigationButton.vue'
 
 </script>

@@ -10,7 +10,7 @@
                         v-slot="{ selected }"
                     >
                         <div :data-active="selected" @click="currentLabel = e.label" class="outline-none">
-                            <md-icon>{{ e.icon }}</md-icon>
+                            <Icon>{{ e.icon }}</Icon>
                             {{ e.label }}
                         </div>
                     </Tab>
@@ -18,7 +18,7 @@
 
                 <TabPanels as="div" class="flex flex-col w-full h-full">
                     <h1 class="text-3xl font-semibold mb-4">{{ currentLabel }}</h1>
-                    <div class="bg-white/75 w-full h-full shape-container">
+                    <div class="bg-white/75 w-full h-full rounded-container">
                         <TabPanel>1</TabPanel>
                         <TabPanel>2</TabPanel>
                         <TabPanel>3</TabPanel>

@@ -5,9 +5,13 @@
             :key="e.getProcessStateInstance().process.processId"
             @click="process.setMinimize(e, !e.getProcessStateInstance().accessibility.minimize)"    
         >
-            <Button :id="'process' + e.getProcessStateInstance().process.processId">
-                <md-icon >{{ e.getProcessStateInstance().window.info.icon }}</md-icon>
-            </Button>
+            <IconButton
+                has-hover
+                has-active
+                :id="'process' + e.getProcessStateInstance().process.processId"
+            >
+                {{ e.getProcessStateInstance().window.info.icon }}
+            </IconButton>
             <fluent-tooltip
                 position="top"
                 :anchor="'process' + e.getProcessStateInstance().process.processId"
@@ -18,7 +22,6 @@
 
 <script setup lang="ts">
 import { useProcessStore } from '@/store/ProcessStore';
-import Button from '@/components/starts/internal/Button.vue';
 
 const process = useProcessStore()
 </script>
