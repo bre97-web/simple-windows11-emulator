@@ -40,6 +40,9 @@
         background-image: var(--windows-wallpaper-url);
         background-position: center;
         background-size: cover;
+        pointer-events: none;
+        user-select: none;
+        z-index: -9999;
     }
     .lock-screen-wallpaper {
         animation: scale-from-full-to-125 0.5s cubic-bezier(.54,.01,.44,.9);
@@ -75,6 +78,9 @@
         z-index: 9999;
     }
 
+    /**
+     * Only used in the StartsBar component
+     */
     .back-blur::after {
         content: '';
         position: absolute;
@@ -84,9 +90,27 @@
         height: 100%;
         z-index: -1;
         backdrop-filter: blur(28px);
-        background-color: rgba(255, 255, 255, 0.80);   
+        background-color: rgba(250, 250, 250, 0.8);   
     }
     
+
+    .icon {
+        aspect-ratio: auto;
+        display: grid;
+        place-content: center;
+    }
+    .icon-has-active:active {
+        scale: 0.75;
+    }
+    .icon-has-hover:hover {
+        background-color: rgb(255 255 255 / 0.75);
+    }
+
+    .icon-has-hover:hover[type="error"],
+    .icon-has-hover:hover [type="error"] {
+        background-color: var(--md-sys-color-error-container);
+    }
+
     .md-icon {
         user-select: none;
     }
@@ -94,6 +118,8 @@
         font-variation-settings: 'FILL' 1;
         animation: icon-fill 0.15s ease-in;
     }
+
+
 
 
     .full-screen {
@@ -109,6 +135,43 @@
         min-height: 50px;
         border-radius: 9999px;
     }
+
+
+
+    .setting-list > div {
+        border-radius: 4px;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        position: relative;
+    }
+    .setting-list > div:hover {
+        background-color: rgb(255 255 255 / 0.75);
+    }
+    .setting-list > div[data-active="true"] {
+        background-color: rgb(255 255 255 / 0.75) !important;
+    }
+    .setting-list > div[data-active="true"]::after {
+        content: '';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background-color: blue;
+        width: 8px;
+        border-radius: 9999px;
+        scale: 50%;
+        opacity: 100%;
+        animation: settings-lead-in 0.15s cubic-bezier(.54,.01,.44,.9);
+    }
+
 }
 
 @layer utilities {
@@ -124,6 +187,15 @@
             scale: 1;
         } to {
             scale: 1.25;
+        }
+    }
+    @keyframes settings-lead-in {
+        from {
+            left: -2%;
+            opacity: 0;
+        } to {
+            left: 0;
+            opacity: 100%;
         }
     }
 }

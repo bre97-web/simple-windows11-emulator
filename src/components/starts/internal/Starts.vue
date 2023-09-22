@@ -1,5 +1,5 @@
 <template>
-    <ExpandLayout class="relative flex items-center justify-center w-1/4 flex-grow h-full aspect-square">
+    <ExpandLayout class="relative flex items-center justify-center max-w-fit flex-grow h-full aspect-square">
                 
         <!-- Open the starts panel -->
         <template v-slot:actions="{ isExpanded, setIsExpanded}">

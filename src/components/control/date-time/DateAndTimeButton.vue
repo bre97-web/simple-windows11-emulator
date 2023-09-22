@@ -1,6 +1,6 @@
 <template>
     <div class="relative hover:bg-white/75 shape">
-        <FlexLayout class="w-full h-full active:scale-75 transition-all px-2 flex flex-col items-end justify-around text-end">
+        <FlexLayout class="select-none w-full h-full active:scale-75 transition-all px-2 flex flex-col items-end justify-around text-end">
             <LabelMedium>{{ time }}</LabelMedium>
             <LabelSmall>{{ date }}</LabelSmall>
         </FlexLayout>

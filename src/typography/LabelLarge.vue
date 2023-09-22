@@ -1,5 +1,5 @@
 <template>
-    <div class="label-large on-surface-variant-text">
+    <div class="label-large">
         <slot></slot>
     </div>
 </template>

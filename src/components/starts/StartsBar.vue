@@ -6,8 +6,12 @@
 
             <div class="flex-none w-1/4 flex justify-start"></div>
 
-            <!-- StartButton -->
-            <Starts></Starts>
+            <div class="flex-none relative w-2/4 h-full duration-1000 transition-all flex gap-1 justify-center items-center overflow-auto">
+                <!-- StartButton -->
+                <Starts></Starts>
+
+                <MinimizeApps></MinimizeApps>
+            </div>
             
             <div class="flex-none w-1/4 h-full flex justify-end">
                 <Naviagtion></Naviagtion>
@@ -21,5 +25,6 @@
 <script setup lang="ts">
 import Starts from '@/components/starts/internal/Starts.vue';
 import Naviagtion from '@/components/control/Navigation.vue';
+import MinimizeApps from './internal/MinimizeApps.vue';
 
 </script>

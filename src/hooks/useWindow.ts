@@ -1,24 +1,6 @@
-// Vue
-import { createApp } from 'vue'
-import App from '@/App.vue'
-
-/**
- * Vue-Router
- */
-import Router from '@/router/index'
-
-/**
- * Tailwindcss
- */
-import '@/assets/css/tailwind.css'
-import '@/assets/css/theme.css'
-
-/**
- * Google's Material Design
- */
-import '@material/web/all'
-import 'material-symbols'
-import '@fontsource/roboto'
+import { App, Component, ComputedOptions, MethodOptions, createApp, h } from "vue"
+import WindowTemplate from '@/hooks/internal/WindowTemplate.vue'
+import { ProcessState } from "./useProcessState"
 
 /**
  * Global Components.
@@ -44,28 +26,44 @@ import BodySmall from '@/typography/BodySmall.vue'
  * Global Components.
  * Those components are layouts.
  */
-import ExpandLayout from './layouts/ExpandLayout.vue'
-import FixedLayout from './layouts/FixedLayout.vue'
-import FlexLayout from './layouts/FlexLayout.vue'
-import PageLayout from './layouts/PageLayout.vue'
-import StickyLayout from './layouts/StickyLayout.vue'
-import GridLayout from './layouts/GridLayout.vue'
+import ExpandLayout from '@/layouts/ExpandLayout.vue'
+import FixedLayout from '@/layouts/FixedLayout.vue'
+import FlexLayout from '@/layouts/FlexLayout.vue'
+import PageLayout from '@/layouts/PageLayout.vue'
+import StickyLayout from '@/layouts/StickyLayout.vue'
+import GridLayout from '@/layouts/GridLayout.vue'
 
+
+export type Process = {
+
+    /**
+     * Mount process and render a window
+     */
+    mount: () => void
+
+    /**
+     * Kill the process and close the window
+     */
+    unmount: () => void
+
+    instance: App<Element>
+
+    getProcessStateInstance: () => ProcessState
+}
 
 /**
- * Pinia
+ * Create el
  */
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
+const createMountRoot = () => document.getElementById('window-workspace').appendChild(document.createElement('div'))
 
 /**
- * Core
+ * Create a Vue instant
  */
-const app = createApp(App)
-app
+const createWindowApp = (container: Component<any, any, any, ComputedOptions, MethodOptions>) => {
+    const el = createMountRoot()
+    const instance: App<Element> = createApp(container)
+
+    instance
     .component('DisplayLarge', DisplayLarge)
     .component('DisplayMedium', DisplayMedium)
     .component('DisplaySmall', DisplaySmall)
@@ -87,13 +85,41 @@ app
     .component('PageLayout', PageLayout)
     .component('StickyLayout', StickyLayout)
     .component('GridLayout', GridLayout)
-app.use(pinia).use(Router)
-app.mount('#app')
+    const mount = () => {
+        instance.mount(el)
+    }
+    const unmount = () => {
+        if (instance) {
+            instance.unmount()
+        }
+        el.remove()
+    }
 
+    return {
+        mount,
+        unmount,
+        instance
+    }
 
-import ScreenMask from '@/ScreenMask.vue'
-/**
- * Screen Brightness and nightlight
- */
-const screenMask = createApp(ScreenMask)
-screenMask.mount('#screen-mask')
+}
+
+export function useWindow(getProcessStateInstance: () => ProcessState, props: {}, slot: any): Process {
+    /**
+     * Vue component instance: * Vue component instance
+     */
+    // @ts-ignore
+    const instance = createWindowApp(h(WindowTemplate, {}, {
+        default: () => h(slot),
+    }))
+
+    instance.instance._component.props = {
+        ...props,
+        getProcessStateInstance,
+    }
+
+    return {
+        ...instance,
+        getProcessStateInstance
+    }
+}
+

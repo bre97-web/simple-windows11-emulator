@@ -1,5 +1,5 @@
 <template>
-    <div class="display-small surface-text">
+    <div class="display-small">
         <slot></slot>
     </div>
 </template>
