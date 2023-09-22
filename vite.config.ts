@@ -15,14 +15,12 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag: string): boolean =>
-            tag.startsWith('md') || tag.startsWith('lit') || tag.startsWith('fluent')
+          isCustomElement: (tag: string): boolean => tag.startsWith('fluent')
         }
       }
     }),
     vueJsx({
-      isCustomElement: (tag: string): boolean =>
-        tag.startsWith('md') || tag.startsWith('lit') || tag.startsWith('fluent')
+      isCustomElement: (tag: string): boolean => tag.startsWith('fluent')
     })
   ],
   base: publish.base,
