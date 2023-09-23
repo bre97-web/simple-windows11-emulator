@@ -1,17 +1,9 @@
 <template>
   <div
     ref="windowRef"
-    @mousedown="() => {
-      process.cleanActive()
-      process.cleanFocus()
-      emits('focus')
-      emits('active')
-      swapZIndex()
-    }"
+    @mousedown="focusAndActive"
     @mouseover="emits('focus')"
-    @mouseout="() => {
-      emits('unfocus')
-    }"
+    @mouseout="emits('unfocus')"
     class="select-none fixed leadin-animation resize overflow-hidden transition-all active:transition-none"
     :class="[
       props.getProcessStateInstance().accessibility.active ? 'shadow-lg' : '',
@@ -22,13 +14,13 @@
       'top' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.y + 'px',
       'width': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.width + 'px',
       'height': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.height + 'px',  
-      'z-index': props.getProcessStateInstance().window.info.activeZIndex + 1000,
-      'padding-bottom': props.getProcessStateInstance().accessibility.maximize ? '3rem' : '0',
+      'z-index': props.getProcessStateInstance().accessibility.fullscreen ? '9999' : props.getProcessStateInstance().window.info.activeZIndex + 100,
+      'padding-bottom': props.getProcessStateInstance().accessibility.maximize ? props.getProcessStateInstance().accessibility.fullscreen ? '0' : '3rem' : '0',
     }"
   >
     <FlexLayout class="rounded-container w-full h-full flex-col overflow-clip border">
 
-      <header class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-lg">
+      <header v-show="!props.getProcessStateInstance().accessibility.fullscreen" class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-lg">
         <div class="w-full h-full flex items-center justify-between">
           <div
             @mousedown="emits('gragwindow', $event)"
@@ -41,38 +33,34 @@
           </div>
 
           <nav class="flex-none w-fit h-full flex items-center justify-end">
-            <div
+            <IconButton
               v-if="props.getProcessStateInstance().accessibility.minimizable"
               @click="emits('minimize')"
-              class="w-full h-full icon-has-hover"
+              has-hover
+              has-active
             >
-              <div class="icon icon-has-active px-2 h-full scale-75">
-                <Icon>minimize</Icon>
-              </div>
-            </div>
+              <Icon class="scale-75">minimize</Icon>
+            </IconButton>
 
-            <div
+            <IconButton
               v-if="props.getProcessStateInstance().accessibility.maximizable"
               @click="emits('maximize')"
-              class="w-full h-full icon-has-hover"
+              has-hover
+              has-active
             >
-              <div class="icon icon-has-active px-2 h-full scale-75">
-                <Icon>check_box_outline_blank</Icon>
-              </div>
-            </div>
+              <Icon class="scale-75">check_box_outline_blank</Icon>
+            </IconButton>
 
-            <div
+            <IconButton
               @click="() => {
                 process.killProcessByProcessId(props.getProcessStateInstance().process.processId)
               }"
-              class="w-full h-full icon-has-hover"
+              has-hover
+              has-active
               type="error"
             >
-              <div class="icon icon-has-active px-2 h-full scale-75">
-                <Icon>Close</Icon>
-              </div>
-            </div>
-
+              <Icon class="scale-75">close</Icon>
+            </IconButton>
           </nav>
         </div>
       </header>
@@ -88,6 +76,7 @@
 <script setup lang="ts">
 import { useProcessStore } from '@/store/ProcessStore';
 import { ProcessState } from '../useProcessState';
+import { onMounted, onUnmounted } from 'vue';
 
 const props = defineProps<{
   getProcessStateInstance: () => ProcessState
@@ -100,12 +89,23 @@ const emits = defineEmits<{
   (event: 'unfocus'): void
   (event: 'active'): void
   (event: 'inactive'): void
+  (event: 'fullscreen'): void
+  (event: 'unFullscreen'): void
   (event: 'gragwindow', e: MouseEvent): boolean
   (event: 'changeWindowSize'): void
 }>()
 
 
 const process = useProcessStore()
+
+
+const focusAndActive = () => {
+  process.cleanActive()
+  process.cleanFocus()
+  emits('focus')
+  emits('active')
+  swapZIndex()
+}
 
 const swapZIndex = () => {
   if(process.getAllProcesses.length <= 1) return 
@@ -115,6 +115,45 @@ const swapZIndex = () => {
 
   process.swapZIndex(currentWindowZIndex, max)
 }
+
+var keys: string[] = []
+const toggleFullscreen = (e: KeyboardEvent) => {
+  if(!props.getProcessStateInstance().accessibility.active) {
+    return 
+  }
+
+  if(keys.length === 0) {
+    keys[0] = e.code
+    return 
+  } else if(keys.length === 1) {
+    keys[1] = e.code
+  } else if(e.code !== keys[1]) {
+    keys.shift()
+    keys[1] = e.code
+  }
+
+  keys = Array.from(new Set(keys))
+  
+  if(keys.length !== 2) {
+    return 
+  }
+  
+  if(['ShiftLeft', 'ShiftRight'].includes(keys[0]) && keys[1] === 'KeyK') {
+    if(props.getProcessStateInstance().accessibility.fullscreen) {
+      emits('unFullscreen')
+    } else {
+      emits('fullscreen')
+    }
+  }
+}
+
+onMounted(() => {
+  focusAndActive()
+  document.addEventListener('keyup', toggleFullscreen)
+})
+onUnmounted(() => {
+  document.removeEventListener('keyup', toggleFullscreen)
+})
 </script>
 
 <style lang="css" scoped>

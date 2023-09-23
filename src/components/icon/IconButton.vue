@@ -3,6 +3,7 @@
         :class="[
             props.hasHover ? 'icon-has-hover' : '',
             props.hasShape ? 'rounded overflow-clip' : '',
+            props.type === 'default' ? 'hover:bg-white/75' : 'hover:bg-error-500/75'
         ]"
         class="p-2"
     >
@@ -25,11 +26,13 @@ const props = withDefaults(defineProps<{
     hasActive?: boolean
     hasFilled?: boolean
     hasShape?: boolean
+    type?: "default" | "error"
 }>(), {
     hasHover: false,
     hasActive: false,
     hasFilled: false,
     hasShape: true,
+    type: "default"
 })
 </script>
 
@@ -54,11 +57,6 @@ const props = withDefaults(defineProps<{
 
 .icon-has-hover:hover {
     background-color: rgb(255 255 255 / 0.75);
-}
-
-.icon-has-hover:hover[type="error"],
-.icon-has-hover:hover [type="error"] {
-    background-color: var(--md-sys-color-error-container);
 }
 
 .icon-has-filled {

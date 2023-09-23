@@ -52,6 +52,8 @@ export type AccessibilityProperties = {
      */
     active: boolean
 
+    fullscreen: boolean
+
 }
 export type ProcessProperties = {
 
@@ -96,9 +98,11 @@ export function useProcessState(
     accessibilityProps: {
         maximizable?: boolean
         minimizable?: boolean
+        fullscreen?: boolean
     } = {
         maximizable: true,
-        minimizable: true
+        minimizable: true,
+        fullscreen: false,
     },
     processProps: {
         runningInBackground?: boolean,
@@ -131,6 +135,7 @@ export function useProcessState(
             active: false,
             maximize: false,
             minimize: false,
+            fullscreen: accessibilityProps.fullscreen,
         },
         process: {
             runningInBackground: processProps.runningInBackground,

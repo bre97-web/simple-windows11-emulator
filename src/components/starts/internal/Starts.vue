@@ -3,7 +3,10 @@
                 
         <!-- Open the starts panel -->
         <template v-slot:actions="{ isExpanded, setIsExpanded}">
-            <StartsButton @set-is-expanded="setIsExpanded" :is-expanded="isExpanded"></StartsButton>
+            <StartsButton
+                @set-is-expanded="setIsExpanded"
+                :is-expanded="isExpanded"
+            ></StartsButton>
         </template>
 
         <!-- the Starts Panel -->
@@ -19,7 +22,7 @@
                         <!-- Content in here -->
                         <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between overflow-auto">
                             <Search></Search>
-                            <PinnedApps></PinnedApps>
+                            <PinnedApps @click="setIsExpanded(false)"></PinnedApps>
                         </FlexLayout>
 
                         <!-- Account and shutdown button -->

@@ -1,12 +1,12 @@
 <template>
-    <GridLayout class="relative gap-2 grid-cols-4 md:grid-cols-6 grid-rows-auto overflow-y-auto h-40 items-start">
+    <GridLayout class="relative pointer-events-none gap-2 grid-cols-4 md:grid-cols-6 grid-rows-auto overflow-y-auto h-40 items-start">
         <IconButton
             has-hover
             has-active
             @click="openNewWindow(e.slot, e.title, e.icon)" 
             v-for="e in getAppList()"
             :key="e.slot"
-            class="h-16 w-24"
+            class="h-16 w-24 pointer-events-auto"
         >
             <Icon>{{ e.icon }}</Icon>
             <LabelSmall class="select-none mt-2">{{ e.label }}</LabelSmall>

@@ -55,7 +55,7 @@
         background-color: rgba(0, 0, 0, var(--system-bright));
         pointer-events: none;
         user-select: none;
-        z-index: 9999;
+        z-index: 99999;
     }
     .nightlight::after {
         content: '';
@@ -69,7 +69,7 @@
         background-color: rgba(255, 175, 0, var(--system-nightlight-enabled));
         pointer-events: none;
         user-select: none;
-        z-index: 9999;
+        z-index: 99999;
     }
 
     /**

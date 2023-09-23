@@ -34,8 +34,6 @@ export const useProcessStore = defineStore('process_store', {
                 }
                 processState.value.window.size.width = parseInt(windowRef.style.width)
                 processState.value.window.size.height = parseInt(windowRef.style.height)
-                console.log(processState.value.window.size);
-                
             }
 
             const process = useWindow(() => processState.value, {
@@ -60,6 +58,14 @@ export const useProcessStore = defineStore('process_store', {
                 },
                 onInactive: () => {
                     processState.value.accessibility.active = false
+                },
+                onFullscreen: () => {
+                    processState.value.accessibility.maximize = true
+                    processState.value.accessibility.fullscreen = true
+                },
+                onUnFullscreen: () => {
+                    processState.value.accessibility.maximize = false
+                    processState.value.accessibility.fullscreen = false
                 },
                 onGragwindow: (e: MouseEvent) => {
                     if(processState.value.accessibility.maximize) return false
