@@ -4,16 +4,18 @@
         <!-- No need gap -->
         <FlexLayout class="relative w-full h-full items-center justify-between overflow-clip">
 
-            <div class="flex-none w-1/4 flex justify-start"></div>
+            <div class="hidden flex-initial w-1/4 md:block h-full self-start overflow-auto"></div>
 
-            <div class="flex-none relative w-2/4 h-full duration-1000 transition-all flex gap-1 justify-center items-center overflow-auto">
-                <!-- StartButton -->
-                <Starts></Starts>
-
-                <MinimizeApps></MinimizeApps>
+            <div class="relative h-full flex-1 duration-1000 transition-all overflow-clip">
+                <FlexLayout class="h-full items-center justify-start md:justify-center gap-1">
+                    <!-- StartButton -->
+                    <Starts></Starts>
+                    
+                    <MinimizeApps></MinimizeApps>
+                </FlexLayout>
             </div>
             
-            <div class="flex-none w-1/4 h-full flex justify-end">
+            <div class="flex-none w-fit md:w-1/4 h-full flex justify-end">
                 <Naviagtion></Naviagtion>
             </div>
 

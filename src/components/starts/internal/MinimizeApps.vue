@@ -1,5 +1,5 @@
 <template>
-    <ul class="relative h-full w-fit flex gap-1 select-none">
+    <ul class="relative h-full flex gap-1 select-none overflow-auto">
         <div
             v-for="e in process.getAllProcesses"
             :key="e.getProcessStateInstance().process.processId"

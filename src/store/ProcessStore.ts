@@ -157,6 +157,8 @@ export const useProcessStore = defineStore('process_store', {
         setMinimize(target: Process, value: boolean) {
             target.getProcessStateInstance().accessibility.minimize = value
         },
-
+        setAllProcessMinimize() {
+            (this.processes as Process[]).map(e => e.getProcessStateInstance().accessibility.minimize = true)
+        }
     }
 })

@@ -35,7 +35,7 @@
             </template>
         </ExpandLayout>
 
-        <DateAndTimeButton></DateAndTimeButton>
+        <DateAndTimeButton class="hidden xs:block"></DateAndTimeButton>
     </FlexLayout>
 </template>
 
