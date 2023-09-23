@@ -2,7 +2,7 @@
     <div class="relative max-h-screen h-full w-screen overflow-clip">
 
 
-        <lock-screen v-if="system.getSystemIsLocked"></lock-screen>
+        <lock-screen v-if="!system.getSystemIsLocked"></lock-screen>
 
         <template v-else>
             <div class="flex-grow h-full max-h-screen overflow-clip">
@@ -20,21 +20,22 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
-import LockScreen from './components/lock-screen/LockScreen.vue';
-import { useUserStore } from './store/UserStore';
+import { onBeforeMount, onBeforeUnmount } from 'vue';
+import LockScreen from '@/components/lock-screen/LockScreen.vue';
+import { useUserStore } from '@/store/UserStore';
 import StartsBar from '@/components/starts/StartsBar.vue'
-import Desktop from './components/desktop/Desktop.vue';
-import { useSystemStore } from './store/SystemStore';
+import Desktop from '@/components/desktop/Desktop.vue';
+import { useSystemStore } from '@/store/SystemStore';
 
 const system = useSystemStore()
 const user = useUserStore()
 
-onMounted(() => {
+onBeforeMount(() => {
     user.setIsLogout(true)
+    system.setNeedShutdown(false)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
     user.setIsLogout(true)
 })
 </script>

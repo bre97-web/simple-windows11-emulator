@@ -113,7 +113,7 @@ export const useProcessStore = defineStore('process_store', {
             this.processes.push(process)
             return process
         },
-        cleanProcesses() {
+        killAllProcesses() {
             (this.processes as Process[]).map(e => e.instance.unmount())
             this.processes = []
         },

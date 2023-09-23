@@ -10,7 +10,7 @@
             >
                 <fluent-menu class="absolute bottom-10 right-0 w-32 z-0">
                     <fluent-menu-item>Sleep</fluent-menu-item>
-                    <fluent-menu-item>Shut down</fluent-menu-item>
+                    <fluent-menu-item @click="system.setNeedShutdown(true)">Shut down</fluent-menu-item>
                     <fluent-menu-item>Restart</fluent-menu-item>
                 </fluent-menu>
                 <div
@@ -24,7 +24,9 @@
 </template>
 
 <script setup lang="ts">
+import { useSystemStore } from '@/store/SystemStore';
 
+const system = useSystemStore()
 </script>
 
 <style scoped></style>

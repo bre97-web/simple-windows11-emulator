@@ -1,10 +1,10 @@
 <template>
     <div class="fixed full-screen top-0 right-0 bg-black">
-        <FlexLayout class="flex-col gap-8 items-center justify-center h-full w-full">
-            <TitleLarge class="text-white">{{ props.message }}</TitleLarge>
+        <div class="flex flex-col gap-8 items-center justify-center h-full w-full">
+            <h1 class="text-white font-bold text-xl">{{ props.message }}</h1>
 
             <fluent-progress-ring></fluent-progress-ring>
-        </FlexLayout>
+        </div>
     </div>
 </template>
 

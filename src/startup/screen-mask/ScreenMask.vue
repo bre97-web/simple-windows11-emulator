@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
-import { useSystemStore } from './store/SystemStore';
+import { useSystemStore } from '@/store/SystemStore';
 
 const system = useSystemStore()
 
