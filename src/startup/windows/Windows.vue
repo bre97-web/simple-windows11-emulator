@@ -32,6 +32,7 @@ const user = useUserStore()
 
 onBeforeMount(() => {
     user.setIsLogout(true)
+    system.setIsShutdown(false)
     system.setNeedShutdown(false)
 })
 

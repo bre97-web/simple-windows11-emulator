@@ -6,12 +6,14 @@ export const useSystemStore = defineStore('system_store', {
         isNightlight: false,
         isLocked: true,
         needShutdown: false,
+        isShutdown: false,
     }),
     getters: {
         getSystemBrightness: (state) => state.brightness, 
         getSystemIsNightlight: (state) => state.isNightlight,
         getSystemIsLocked: (state) => state.isLocked,
         getSystemNeedShutdown: (state) => state.needShutdown,
+        getSystemIsShutdown: (state) => state.isShutdown,
     },
     actions: {
         setBrightness(e: number) {
@@ -28,6 +30,9 @@ export const useSystemStore = defineStore('system_store', {
         },
         setNeedShutdown(e: boolean) {
             this.needShutdown = e
+        },
+        setIsShutdown(e: boolean) {
+            this.isShutdown = e
         },
     },
     persist: true,

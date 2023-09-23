@@ -22,7 +22,7 @@
                         <!-- Content in here -->
                         <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between overflow-auto">
                             <Search></Search>
-                            <PinnedApps @click="setIsExpanded(false)"></PinnedApps>
+                            <PinnedApps @close-starts-menu="setIsExpanded(false)"></PinnedApps>
                         </FlexLayout>
 
                         <!-- Account and shutdown button -->

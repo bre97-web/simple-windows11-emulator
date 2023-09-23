@@ -45,23 +45,22 @@ ScreenMaskApp.mount('#window-screen-mask')
  * Listenning to 'shutdown' of system settings
 */
 import { useSystemStore } from '@/store/SystemStore'
-import { useProcessStore } from '@/store/ProcessStore'
-
 import ShutdownApp from '@/startup/shutdown'
-
 import { watch } from 'vue'
 const system = useSystemStore()
-const process = useProcessStore()
+
 watch(() => system.needShutdown, () => {
     WindowsApp.unmount()
     ScreenMaskApp.unmount()
     
-    process.killAllProcesses()
     ShutdownApp.mount('#window')
-
-    setTimeout(() => {
-        document.documentElement.style.backgroundColor = '#000'
-        document.body.remove()
-        ShutdownApp.unmount()
-    }, 500)
+})
+watch(() => system.isShutdown, () => {
+    if(system.isShutdown) {
+        setTimeout(() => {
+            document.documentElement.style.backgroundColor = '#000'
+            document.body.remove()
+            ShutdownApp.unmount()
+        }, 500)
+    }
 })
