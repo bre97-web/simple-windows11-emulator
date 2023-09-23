@@ -4,17 +4,18 @@
     @mousedown="focusAndActive"
     @mouseover="emits('focus')"
     @mouseout="emits('unfocus')"
-    class="select-none fixed leadin-animation resize overflow-hidden transition-all active:transition-none"
+    class="select-none fixed leadin-animation overflow-hidden transition-all active:transition-none"
     :class="[
       props.getProcessStateInstance().accessibility.active ? 'shadow-lg' : '',
       props.getProcessStateInstance().accessibility.minimize ? 'opacity-0 scale-0 translate-y-full select-none pointer-events-none -z-[99999]' : '',
+      props.getProcessStateInstance().accessibility.fullscreen ? '' : 'resize',
     ]"
     :style="{
       'left' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.x + 'px',
       'top' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.y + 'px',
       'width': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.width + 'px',
       'height': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.height + 'px',  
-      'z-index': props.getProcessStateInstance().accessibility.fullscreen ? '9999' : props.getProcessStateInstance().window.info.activeZIndex + 100,
+      'z-index': props.getProcessStateInstance().accessibility.fullscreen ? '999' : props.getProcessStateInstance().window.info.activeZIndex + 10,
       'padding-bottom': props.getProcessStateInstance().accessibility.maximize ? props.getProcessStateInstance().accessibility.fullscreen ? '0' : '3rem' : '0',
     }"
   >

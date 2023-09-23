@@ -10,7 +10,12 @@
                 <Desktop></Desktop>
             </div>
 
-            <nav class="fixed bottom-0 z-[999] left-0 w-full h-12">
+            <nav
+                class="fixed bottom-0 left-0 w-full h-12"
+                :style="{
+                    zIndex: system.getSystemStarts.isOpening ? '99999' : '999',
+                }"
+            >
                 <StartsBar></StartsBar>
             </nav>
         </template>
@@ -34,6 +39,10 @@ onBeforeMount(() => {
     user.setIsLogout(true)
     system.setIsShutdown(false)
     system.setNeedShutdown(false)
+    system.setStarts({
+        ...system.getSystemStarts,
+        isOpenning: false
+    })
 })
 
 onBeforeUnmount(() => {

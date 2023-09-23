@@ -35,7 +35,13 @@
 
                 <!-- z-index set need near relative or fixed -->
                 <div
-                    @click="setIsExpanded(false)"
+                    @click="() => {
+                        system.setStarts({
+                            ...system.getSystemStarts,
+                            isOpening: !isExpanded
+                        })
+                        setIsExpanded(false)
+                    }"
                     class="fixed left-0 bottom-0 w-screen h-screen -z-[1]"
                     v-show="isExpanded"
                 ></div>
@@ -50,6 +56,10 @@ import PinnedApps from './PinnedApps.vue';
 import SimpleUserProfile from './SimpleUserProfile.vue';
 import ShutdownMenu from './ShutdownMenu.vue';
 import StartsButton from './StartsButton.vue';
+import { useSystemStore } from '@/store/SystemStore';
+
+const system = useSystemStore()
+ 
 </script>
 
 <style scoped>

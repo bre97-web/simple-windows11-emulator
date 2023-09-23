@@ -3,7 +3,13 @@
         class="rounded hover:bg-white/75 h-full aspect-square overflow-clip"
     >
         <div
-            @click="emits('setIsExpanded', !props.isExpanded)"
+            @click="() => {
+                system.setStarts({
+                    ...system.getSystemStarts,
+                    isOpening: !props.isExpanded
+                })
+                emits('setIsExpanded', !props.isExpanded)
+            }"
             class="w-full h-full transition-all active:scale-75 grid place-content-center"
         >
             <div
@@ -20,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { useSystemStore } from '@/store/SystemStore';
+import { onMounted } from 'vue';
 
 const props = defineProps<{
     isExpanded: boolean
@@ -27,6 +35,20 @@ const props = defineProps<{
 const emits = defineEmits<{
     (event: 'setIsExpanded', e: boolean): void,
 }>()
+
+const system = useSystemStore()
+
+onMounted(() => {
+    document.addEventListener('keyup', (e: KeyboardEvent) => {
+        if(e.code === 'Space') {
+            system.setStarts({
+                ...system.getSystemStarts,
+                isOpening: !props.isExpanded
+            })
+            emits('setIsExpanded', !props.isExpanded)          
+        }
+    })
+})
 </script>
 
 <style scoped>
