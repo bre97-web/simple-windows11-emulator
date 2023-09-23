@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { useProcessStore } from '@/store/ProcessStore';
-import { ProcessState } from '../useProcessState';
+import { ProcessState } from '@/hooks/useProcessState';
 import { onMounted, onUnmounted } from 'vue';
 
 const props = defineProps<{
@@ -119,9 +119,7 @@ const swapZIndex = () => {
 
 var keys: string[] = []
 const toggleFullscreen = (e: KeyboardEvent) => {
-  if(!props.getProcessStateInstance().accessibility.active) {
-    return 
-  }
+  if(!props.getProcessStateInstance().accessibility.active) return 
 
   if(keys.length === 0) {
     keys[0] = e.code
@@ -135,17 +133,24 @@ const toggleFullscreen = (e: KeyboardEvent) => {
 
   keys = Array.from(new Set(keys))
   
-  if(keys.length !== 2) {
-    return 
-  }
-  
-  if(['ShiftLeft', 'ShiftRight'].includes(keys[0]) && keys[1] === 'KeyK') {
+  if(keys.length !== 2) return 
+  if(!['ShiftLeft', 'ShiftRight'].includes(keys[0])) return
+
+  if(keys[1] === 'KeyK') {
     if(props.getProcessStateInstance().accessibility.fullscreen) {
       emits('unFullscreen')
     } else {
       emits('fullscreen')
     }
+  } else if(keys[1] === 'ArrowUp') {
+    emits('maximize')
+  } else if(keys[1] === 'ArrowDown') {
+    emits('minimize')
+  } else if(keys[1] === 'F4') {
+    emits('close')
   }
+
+  keys = []
 }
 
 onMounted(() => {
