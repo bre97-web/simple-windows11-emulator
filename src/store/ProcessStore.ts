@@ -145,6 +145,18 @@ export const useProcessStore = defineStore('process_store', {
             target.x.getProcessStateInstance().window.info.activeZIndex = y
             target.y.getProcessStateInstance().window.info.activeZIndex = x
         },
+        setTopZIndex(target: Process) {
+            if(this.processes.length <= 1) return
+            const arr = Object.assign([], this.processes)
+            const sorted = (arr as Process[]).sort((x, y) => y.getProcessStateInstance().window.info.activeZIndex - x.getProcessStateInstance().window.info.activeZIndex)
+
+            const x = sorted.filter(e => e === target)[0]
+            const y = sorted[0]
+            const temp = x.getProcessStateInstance().window.info.activeZIndex
+            x.getProcessStateInstance().window.info.activeZIndex = y.getProcessStateInstance().window.info.activeZIndex
+            y.getProcessStateInstance().window.info.activeZIndex = temp
+            
+        },
         killProcessByProcessId(processId: number) {
             if(this.processes.length === 0) return 
             const target = (this.processes as Process[]).filter(e => processId === e.getProcessStateInstance().process.processId)[0]

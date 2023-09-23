@@ -3,7 +3,14 @@
         <div
             v-for="e in process.getAllProcesses"
             :key="e.getProcessStateInstance().process.processId"
-            @click="process.setMinimize(e, !e.getProcessStateInstance().accessibility.minimize)"    
+            @click="() => {
+                process.setMinimize(e, !e.getProcessStateInstance().accessibility.minimize)
+                process.cleanActive()
+                process.cleanFocus()
+                e.getProcessStateInstance().accessibility.active = true
+                e.getProcessStateInstance().accessibility.focus = true
+                process.setTopZIndex(e)
+            }"
         >
             <IconButton
                 has-hover

@@ -96,25 +96,14 @@ const emits = defineEmits<{
   (event: 'changeWindowSize'): void
 }>()
 
-
 const process = useProcessStore()
-
 
 const focusAndActive = () => {
   process.cleanActive()
   process.cleanFocus()
   emits('focus')
   emits('active')
-  swapZIndex()
-}
-
-const swapZIndex = () => {
-  if(process.getAllProcesses.length <= 1) return 
-  const currentWindowZIndex = props.getProcessStateInstance().window.info.activeZIndex
-  const zIndexList: number[] = process.getAllProcesses.map(e => e.getProcessStateInstance().window.info.activeZIndex)
-  const max = zIndexList.reduce((last, cur) => last > cur ? last : cur)
-
-  process.swapZIndex(currentWindowZIndex, max)
+  process.setTopZIndex(process.getProcessByProcessId(props.getProcessStateInstance().process.processId))
 }
 
 var keys: string[] = []
