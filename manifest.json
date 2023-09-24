@@ -64,7 +64,7 @@
     "src": "assets/imgs/windows-11-minimalism-material-minimal-hd-wallpaper.jpg"
   },
   "index.css": {
-    "file": "assets/index-beadb286.css",
+    "file": "assets/index-1776fd38.css",
     "src": "index.css"
   },
   "index.html": {
@@ -87,9 +87,9 @@
       "assets/roboto-latin-400-normal-a9fdbefa.woff"
     ],
     "css": [
-      "assets/index-beadb286.css"
+      "assets/index-1776fd38.css"
     ],
-    "file": "assets/index-8f5fad23.js",
+    "file": "assets/index-baa055fb.js",
     "isEntry": true,
     "src": "index.html"
   }
