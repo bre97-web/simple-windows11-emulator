@@ -2,6 +2,7 @@ import Settings from '@/components/exe/settings/Settings.vue'
 import Manager from '@/components/exe/manager/Manager.vue'
 import Notepad from '@/components/exe/notepad/Notepad.vue'
 import Camera from '@/components/exe/camera/Camera.vue'
+import { useProcessStore } from '@/store/ProcessStore'
 
 export type WindowAppDescription = {
     label: string
@@ -26,4 +27,13 @@ const appsList = [
 
 export function getAppList() {
     return appsList
+}
+
+export function createNewWindow(slot: any, title: string, icon = 'bug_report') {
+    const process = useProcessStore()
+    const window = process.createNewProcess({
+        title,
+        icon
+    }, slot)
+    window.mount()
 }

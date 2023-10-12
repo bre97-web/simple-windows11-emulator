@@ -5,7 +5,7 @@
             has-active
             @click="() => {
                 emits('closeStartsMenu')
-                openNewWindow(props.app.slot, props.app.title, props.app.icon)
+                createNewWindow(props.app.slot, props.app.title, props.app.icon)
             }"
             :key="props.app.slot"
         >
@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { WindowAppDescription } from '@/scripts/apps';
-import { useProcessStore } from '@/store/ProcessStore';
+import { createNewWindow } from '@/scripts/apps';
 
 const props = defineProps<{
     app: WindowAppDescription
@@ -30,17 +30,6 @@ const emits = defineEmits<{
     (event: 'closeStartsMenu'): void
 }>()
 
-/**
- * Test
- */
-const process = useProcessStore()
-const openNewWindow = (slot: any, title: string, icon = 'bug_report') => {
-    const window = process.createNewProcess({
-        title,
-        icon
-    }, slot)
-    window.mount()
-}
 </script>
 
 <style scoped>

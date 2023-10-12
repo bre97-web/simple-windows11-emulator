@@ -34,9 +34,9 @@
         background-image: var(--windows-wallpaper-url);
         background-position: center;
         background-size: cover;
-        pointer-events: none;
+        /* pointer-events: none; */
         user-select: none;
-        z-index: -9999;
+        z-index: 0;
     }
     .lock-screen-wallpaper {
         animation: scale-from-full-to-125 0.5s cubic-bezier(.54,.01,.44,.9);

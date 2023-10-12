@@ -5,7 +5,7 @@
             has-active
             @click="() => {
                 emits('closeStartsMenu')
-                openNewWindow(e.slot, e.title, e.icon)
+                createNewWindow(e.slot, e.title, e.icon)
             }"
             v-for="e in getAppList()"
             :key="e.slot"
@@ -22,22 +22,10 @@
 
 <script setup lang="ts">
 import { getAppList } from '@/scripts/apps'
-import { useProcessStore } from '@/store/ProcessStore';
+import { createNewWindow } from '@/scripts/apps';
 
 const emits = defineEmits<{
     (event: 'closeStartsMenu'): void
 }>()
-
-/**
- * Test
- */
-const process = useProcessStore()
-const openNewWindow = (slot: any, title: string, icon = 'bug_report') => {
-    const window = process.createNewProcess({
-        title,
-        icon
-    }, slot)
-    window.mount()
-}
 
 </script>
