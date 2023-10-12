@@ -1,11 +1,11 @@
 <template>
-    <div class="relative max-h-screen h-full w-screen overflow-clip">
+    <div class="relative max-h-[100svh] h-[100svh] w-screen overflow-clip">
 
 
         <lock-screen v-if="!system.getSystemIsLocked"></lock-screen>
 
         <template v-else>
-            <div class="flex-grow h-full max-h-screen overflow-clip">
+            <div class="flex-grow h-full max-h-[100svh] overflow-clip">
                 <!-- <router-view></router-view> -->
                 <Desktop></Desktop>
             </div>
