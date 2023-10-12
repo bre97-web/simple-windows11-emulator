@@ -1,28 +1,30 @@
 <template>
-    <GridLayout class="relative gap-2 grid-cols-4 md:grid-cols-6 grid-rows-auto overflow-y-auto h-40 items-start">
+    <div class="relative overflow-clip text-ellipsis w-full h-full">
         <IconButton
             has-hover
             has-active
             @click="() => {
                 emits('closeStartsMenu')
-                openNewWindow(e.slot, e.title, e.icon)
+                openNewWindow(props.app.slot, props.app.title, props.app.icon)
             }"
-            v-for="e in getAppList()"
-            :key="e.slot"
-            class="h-16 w-24"
+            :key="props.app.slot"
         >
-            <div class="p-2 grid place-content-center">
-                <Icon>{{ e.icon }}</Icon>
-                <LabelSmall class="select-none mt-2">{{ e.label }}</LabelSmall>
+            <div class="flex flex-row items-center gap-2 p-2">
+                <Icon>{{ props.app.icon }}</Icon>
+                <LabelLarge class="select-none">{{ props.app.label }}</LabelLarge>
             </div>
         </IconButton>
 
-    </GridLayout>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { getAppList } from '@/scripts/apps'
+import { WindowAppDescription } from '@/scripts/apps';
 import { useProcessStore } from '@/store/ProcessStore';
+
+const props = defineProps<{
+    app: WindowAppDescription
+}>()
 
 const emits = defineEmits<{
     (event: 'closeStartsMenu'): void
@@ -39,5 +41,8 @@ const openNewWindow = (slot: any, title: string, icon = 'bug_report') => {
     }, slot)
     window.mount()
 }
-
 </script>
+
+<style scoped>
+
+</style>

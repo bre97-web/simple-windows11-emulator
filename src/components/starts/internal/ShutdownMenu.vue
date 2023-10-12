@@ -1,11 +1,17 @@
 <template>
-    <ExpandLayout>
+    <ExpandLayout class="relative">
         <template v-slot:actions="{ isExpanded, setIsExpanded }">
-            <IconButton has-hover has-active @click="setIsExpanded(!isExpanded)">power_settings_new</IconButton>
+            <IconButton has-hover has-active @click="setIsExpanded(!isExpanded)">
+                <div class="h-full aspect-square p-2">
+                    <Icon>
+                        power_settings_new
+                    </Icon>
+                </div>
+            </IconButton>
         </template>
         <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">
             <div
-                class="relative z-0"
+                class="fixed z-0"
                 :class="[isExpanded ? 'opacity-100' : 'opacity-0 pointer-events-none']"
             >
                 <fluent-menu class="absolute bottom-10 right-0 w-32 z-0">
@@ -16,7 +22,7 @@
                 <div
                     v-show="isExpanded"
                     @click="setIsExpanded(false)"
-                    class="fixed full-screen bottom-0 right-0 -z-[1]"
+                    class="fixed w-screen h-screen bottom-0 right-0 -z-[1]"
                 ></div>
             </div>
         </template>

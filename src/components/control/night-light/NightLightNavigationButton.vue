@@ -4,7 +4,13 @@
         has-active
         @click="system.toggleIsNightlight"
         :class="{'bg-primary-500': system.getSystemIsNightlight}"
-    >light</IconButton>
+    >
+        <div class="px-8 py-4">
+            <Icon>
+                light
+            </Icon>
+        </div>
+    </IconButton>
 </template>
 
 <script setup lang="ts">

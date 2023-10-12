@@ -1,7 +1,7 @@
 <template>
     <div
         @click="emits('setIsExpanded', !props.isExpanded)"
-        class="rounded-container hover:bg-white/75 transition-all w-full h-full"
+        class="rounded hover:bg-white/75 transition-all w-full h-full"
     >
         <div class="w-full h-full active:scale-75 transition-all px-2">
             <div class="w-full h-full grid place-content-center">

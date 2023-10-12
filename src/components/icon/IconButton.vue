@@ -5,9 +5,8 @@
             props.hasShape ? 'rounded overflow-clip' : '',
             props.type === 'default' ? 'hover:bg-white/75' : 'hover:bg-error-500/75'
         ]"
-        class="p-2"
     >
-        <Icon
+        <div
             :class="[
                 props.hasActive ? 'icon-has-active' : '',
                 props.hasFilled ? 'icon-has-filled' : '',
@@ -15,7 +14,7 @@
             class="transition-all"
         >
             <slot></slot>
-        </Icon>
+        </div>
     </div>
 </template>
 
@@ -39,8 +38,6 @@ const props = withDefaults(defineProps<{
 <style scoped>
 .icon {
     aspect-ratio: auto;
-    display: grid;
-    place-content: center;
 }
 
 .material-symbols-outlined {

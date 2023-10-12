@@ -16,8 +16,13 @@
                 has-hover
                 has-active
                 :id="'process' + e.getProcessStateInstance().process.processId"
+                class="h-full aspect-square"
             >
-                {{ e.getProcessStateInstance().window.info.icon }}
+                <div class="h-full aspect-square grid">
+                    <Icon>
+                        {{ e.getProcessStateInstance().window.info.icon }}
+                    </Icon>
+                </div>
             </IconButton>
             <fluent-tooltip
                 position="top"

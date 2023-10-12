@@ -17,20 +17,55 @@
                 :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
             >
 
-                <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] bottom-0 w-auto mx-auto max-w-3xl overflow-auto max-h-[32rem]">
-                    <FlexLayout class="flex-col justify-between h-full">
-                        <!-- Content in here -->
-                        <FlexLayout class="flex-col px-8 py-4 pt-8 gap-8 justify-between overflow-auto">
-                            <Search></Search>
-                            <PinnedApps @close-starts-menu="setIsExpanded(false)"></PinnedApps>
+                <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] bottom-0 w-screen mx-auto max-w-2xl overflow-auto max-h-[32rem]">
+                    
+                    <!-- Here -->
+                    <div class="start-panel-content-aera">
+                        <Search class="px-8 pt-8 row-span-1"></Search>
+                        
+                        <!-- Content and List in here -->
+                        <FlexLayout
+                            class="w-full flex-col px-8 gap-4 overflow-auto"
+                            style="grid-row: span 10 / span 10;"
+                        >
+                            <TablePanel class="w-full relative overflow-x-clip">
+                                <template v-slot:app-one="{ currentPage, setCurrentPage }">
+                                    <div class="w-full absolute top-0 space-y-2 table-transition" :class="[currentPage !== 'page-one' ? '-left-[200%]' : 'left-0']">
+                                        <FlexLayout class="justify-between items-center px-4">
+                                            <LabelLarge>Pinned</LabelLarge>
+                                            <ApplicationListButton
+                                                @click="setCurrentPage('page-two')"
+                                                class="self-end"    
+                                                label="All Apps"
+                                                icon="arrow_forward"
+                                            ></ApplicationListButton>
+                                        </FlexLayout>
+                                        <PinnedApps @close-starts-menu="setIsExpanded(false)"></PinnedApps>
+                                    </div>
+                                </template>
+                                <template v-slot:app-two="{ currentPage, setCurrentPage }">
+                                    <div class="w-full absolute top-0 space-y-2 table-transition" :class="[currentPage !== 'page-two' ? 'left-[200%]' : 'left-0']">
+                                        <FlexLayout class="justify-between items-center px-4">
+                                            <LabelLarge>All Apps</LabelLarge>
+                                            <ApplicationListButton
+                                                @click="setCurrentPage('page-one')" 
+                                                label="Back"
+                                                icon="arrow_back"
+                                            ></ApplicationListButton>
+                                        </FlexLayout>
+                                        <ApplicationList @close-starts-menu="setIsExpanded(false)"></ApplicationList>
+                                    </div>
+                                </template>
+                            </TablePanel>
                         </FlexLayout>
-
+                        
                         <!-- Account and shutdown button -->
-                        <FlexLayout class="justify-between items-center bg-black/5 px-8 py-2 border-t">
+                        <FlexLayout class="row-span-1 justify-between items-center bg-black/5 px-8 py-2 border-t">
                             <SimpleUserProfile></SimpleUserProfile>
                             <ShutdownMenu></ShutdownMenu>
                         </FlexLayout>
-                    </FlexLayout>
+                    </div>
+
                 </fluent-card>
 
                 <!-- z-index set need near relative or fixed -->
@@ -56,13 +91,27 @@ import PinnedApps from './PinnedApps.vue';
 import SimpleUserProfile from './SimpleUserProfile.vue';
 import ShutdownMenu from './ShutdownMenu.vue';
 import StartsButton from './StartsButton.vue';
+import ApplicationListButton from '@/components/starts/application-list/ApplicationListButton.vue';
+import ApplicationList from '@/components/starts/application-list/ApplicationList.vue';
 import { useSystemStore } from '@/store/SystemStore';
+import TablePanel from '../table-panel/TablePanel.vue';
 
 const system = useSystemStore()
  
 </script>
 
 <style scoped>
+
+.start-panel-content-aera {
+    display: grid;
+    grid-template-rows: repeat(12, minmax(1fr, 1fr)) !important;
+    height: 100%;
+    width: 100%;
+}
+.start-panel-content-aera .table-transition {
+    transition: all 0.5s cubic-bezier(.16,-0.04,.08,.99);
+}
+
 .active {
     animation: activeAnimate 0.15s linear;
 }
