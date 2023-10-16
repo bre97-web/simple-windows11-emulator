@@ -1,37 +1,16 @@
-/**
- * Vue-Router
- */
 import Router from '@/router/index'
-
-/**
- * Tailwindcss
- */
-import '@/assets/css/tailwind.css'
-import '@/assets/css/theme.css'
-
-/**
- * Google's Material Design
- */
-import 'material-symbols'
-import '@fontsource/roboto'
-
+import '@/scripts/importStyles'
+import '@/scripts/importMaterial'
+import '@/typography/Typo'
 import { registerGlobalComponents } from '@/scripts/registerGlobalComponents'
+import { piniaInstance } from  '@/scripts/createPiniaInstance'
+import { windowsInstance } from '@/scripts/createWindowsVueInstance'
 
-/**
- * Pinia
- */
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
-
-/**
- * Windows
- */
-import WindowsApp from '@/startup/windows'
-registerGlobalComponents(WindowsApp)
-WindowsApp.use(pinia).use(Router)
-WindowsApp.mount('#window')
+windowsInstance
+    .use(piniaInstance)
+    .use(registerGlobalComponents)
+    .use(Router)
+    .mount('#window')
 
 
 /**
@@ -50,7 +29,7 @@ import { watch } from 'vue'
 const system = useSystemStore()
 
 watch(() => system.needShutdown, () => {
-    WindowsApp.unmount()
+    windowsInstance.unmount()
     ScreenMaskApp.unmount()
     
     ShutdownApp.mount('#window')

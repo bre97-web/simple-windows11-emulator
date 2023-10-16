@@ -13,7 +13,7 @@
         >
             <div class="p-2 grid place-content-center">
                 <Icon>{{ e.icon }}</Icon>
-                <LabelSmall class="select-none mt-2">{{ e.label }}</LabelSmall>
+                <md-text type="label-small" class="select-none mt-2">{{ e.label }}</md-text>
             </div>
         </IconButton>
 

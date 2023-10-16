@@ -32,7 +32,7 @@
                                 <template v-slot:app-one="{ currentPage, setCurrentPage }">
                                     <div class="w-full absolute top-0 space-y-2 table-transition" :class="[currentPage !== 'page-one' ? '-left-[200%]' : 'left-0']">
                                         <FlexLayout class="justify-between items-center px-4">
-                                            <LabelLarge>Pinned</LabelLarge>
+                                            <md-text type="label-large">Pinned</md-text>
                                             <ApplicationListButton
                                                 @click="setCurrentPage('page-two')"
                                                 class="self-end"    
@@ -46,7 +46,7 @@
                                 <template v-slot:app-two="{ currentPage, setCurrentPage }">
                                     <div class="w-full absolute top-0 space-y-2 table-transition" :class="[currentPage !== 'page-two' ? 'left-[200%]' : 'left-0']">
                                         <FlexLayout class="justify-between items-center px-4">
-                                            <LabelLarge>All Apps</LabelLarge>
+                                            <md-text type="label-large">All Apps</md-text>
                                             <ApplicationListButton
                                                 @click="setCurrentPage('page-one')" 
                                                 label="Back"

@@ -11,7 +11,7 @@
         >
             <div class="flex flex-row items-center gap-2 p-2">
                 <Icon>{{ props.app.icon }}</Icon>
-                <LabelLarge class="select-none">{{ props.app.label }}</LabelLarge>
+                <md-text type="label-large" class="select-none">{{ props.app.label }}</md-text>
             </div>
         </IconButton>
 

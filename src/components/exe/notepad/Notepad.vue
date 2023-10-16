@@ -2,7 +2,7 @@
     <PageLayout>
         <div class="relative overflow-clip p-2 h-full">
             <header>
-                <TitleLarge>Notepad Beta</TitleLarge>
+                <md-text type="title-large">Notepad Beta</md-text>
             </header>
 
             <div class="w-full h-full rounded overflow-clip">
