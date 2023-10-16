@@ -37,20 +37,27 @@ export const useProcessStore = defineStore('process_store', {
             }
 
             const process = useWindow(() => processState.value, {
+                
+                /**
+                 * Set a class and unmount the instance
+                 */
                 onClose: async () => {
-                    const addHiddenClass = () => new Promise<void>(resolve => {
-                        process.instance._container.children.item(0).classList.remove('open-window')
+                    const addHiddenClass = async () => new Promise<void>(resolve => {
+                        if(process.instance._container.children.item(0).classList.contains('open-window')) {
+                            process.instance._container.children.item(0).classList.remove('open-window')
+                        }
                         process.instance._container.children.item(0).classList.add('hidden-window')
                         setTimeout(() => {
                             resolve()
                         }, 150)
                     })
                     await addHiddenClass()
-                    this.killProcessByProcessId(processState.value.process.processId)
+                    this.removeProcessFromProcessesByProcessId(processState.value.process.processId)
                     process.unmount()
                 },
+
                 onMaximize: () => {                 
-                    processState.value.accessibility.maximize = !processState.value.accessibility.maximize                    
+                    processState.value.accessibility.maximize = !processState.value.accessibility.maximize
                 },
                 onChangeWindowSize: () => updateWidthAndHeight(),
                 onMinimize: () => {
@@ -113,7 +120,6 @@ export const useProcessStore = defineStore('process_store', {
         
                         processState.value.window.position.x = currentDisPostion.x
                         processState.value.window.position.y = currentDisPostion.y
-        
                     }
         
                     document.onmouseup = () => {
@@ -124,8 +130,6 @@ export const useProcessStore = defineStore('process_store', {
                     return false
                 }
             }, slot)
-            
-
             
             this.processes.push(process)
             return process
@@ -168,11 +172,14 @@ export const useProcessStore = defineStore('process_store', {
             y.getProcessStateInstance().window.info.activeZIndex = temp
             
         },
+
+        /**
+         * Call component's props onClose
+         */
         killProcessByProcessId(processId: number) {
             if(this.processes.length === 0) return 
             const target = (this.processes as Process[]).filter(e => processId === e.getProcessStateInstance().process.processId)[0]
-            target.instance.unmount()
-            this.processes.splice(this.processes.indexOf(target), 1)
+            target.instance._component.props['onClose']()
         },
         setRunningInBackground(target: Process, value: boolean) {
             target.getProcessStateInstance().process.runningInBackground = value
@@ -182,6 +189,11 @@ export const useProcessStore = defineStore('process_store', {
         },
         setAllProcessMinimize() {
             (this.processes as Process[]).map(e => e.getProcessStateInstance().accessibility.minimize = true)
-        }
+        },
+        removeProcessFromProcessesByProcessId(processId: number) {
+            if(this.processes.length === 0) return 
+            const target = (this.processes as Process[]).filter(e => processId === e.getProcessStateInstance().process.processId)[0]
+            this.processes.splice(this.processes.indexOf(target), 1)
+        },
     }
 })

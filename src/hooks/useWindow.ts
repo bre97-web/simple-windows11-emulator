@@ -40,8 +40,8 @@ const createWindowApp = (container: Component<any, any, any, ComputedOptions, Me
     const unmount = () => {
         if (instance) {
             instance.unmount()
+            el.remove()
         }
-        el.remove()
     }
 
     return {

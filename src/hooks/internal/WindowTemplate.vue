@@ -4,20 +4,9 @@
     @mousedown="focusAndActive"
     @mouseover="emits('focus')"
     @mouseout="emits('unfocus')"
-    class="select-none fixed  overflow-hidden transition-all active:transition-none"
-    :class="[
-      props.getProcessStateInstance().accessibility.active ? 'shadow-lg' : '',
-      props.getProcessStateInstance().accessibility.minimize ? 'hidden-window ' : 'open-window',
-      props.getProcessStateInstance().accessibility.fullscreen ? '' : 'resize',
-    ]"
-    :style="{
-      'left' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.x + 'px',
-      'top' : props.getProcessStateInstance().accessibility.maximize ? '0' : props.getProcessStateInstance().window.position.y + 'px',
-      'width': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.width + 'px',
-      'height': props.getProcessStateInstance().accessibility.maximize ? '100%' : props.getProcessStateInstance().window.size.height + 'px',  
-      'z-index': props.getProcessStateInstance().accessibility.fullscreen ? '999' : props.getProcessStateInstance().window.info.activeZIndex + 10,
-      'padding-bottom': props.getProcessStateInstance().accessibility.maximize ? props.getProcessStateInstance().accessibility.fullscreen ? '0' : '3rem' : '0',
-    }"
+    class="select-none fixed overflow-hidden transition-all active:transition-none"
+    :class="classes"
+    :style="styles"
   >
     <FlexLayout class="rounded-container w-full h-full flex-col overflow-clip border">
 
@@ -75,7 +64,7 @@
 <script setup lang="ts">
 import { useProcessStore } from '@/store/ProcessStore';
 import { ProcessState } from '@/hooks/useProcessState';
-import { onMounted, onUnmounted } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps<{
   getProcessStateInstance: () => ProcessState
@@ -104,6 +93,26 @@ const focusAndActive = () => {
   process.setTopZIndex(process.getProcessByProcessId(props.getProcessStateInstance().process.processId))
 }
 
+const classes = computed(() => {
+  const instance: ProcessState = props.getProcessStateInstance()
+  return [
+    instance.accessibility.active ? 'shadow-lg' : '',
+    instance.accessibility.minimize ? 'hidden-window ' : 'open-window',
+    instance.accessibility.fullscreen ? '' : 'resize',
+  ]
+})
+const styles = computed(() => {
+  const instance: ProcessState = props.getProcessStateInstance()
+
+  return ({
+    'left' : (instance.accessibility.maximize ? '0' : instance.window.position.x) + 'px',
+    'top' : (instance.accessibility.maximize ? '0' : instance.window.position.y) + 'px',
+    'width': instance.accessibility.maximize ? '100%' : (instance.window.size.width + 'px'),
+    'height': instance.accessibility.maximize ? '100%' : (instance.window.size.height + 'px'),
+    'z-index': instance.accessibility.fullscreen ? '999' : instance.window.info.activeZIndex + 10,
+    'padding-bottom': instance.accessibility.maximize ? instance.accessibility.fullscreen ? '0' : '3rem' : '0',
+  })
+})
 
 var keys: string[] = []
 const toggleFullscreen = (e: KeyboardEvent) => {
