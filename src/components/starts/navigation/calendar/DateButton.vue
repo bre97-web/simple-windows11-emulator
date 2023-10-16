@@ -19,7 +19,7 @@ const updateDateAndTime = () => {
     time.value = moment().format('HH:mm')
 }
 
-var timer: NodeJS.Timeout = undefined
+var timer: NodeJS.Timeout | null = null
 onMounted(() => {
     timer = setInterval(updateDateAndTime, 1000)
 })
