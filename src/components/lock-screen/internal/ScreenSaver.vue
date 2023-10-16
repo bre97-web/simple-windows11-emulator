@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import Time from '@/components/date-time/Time.vue'
+import Time from './Time.vue'
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 
 const props = defineProps<{
