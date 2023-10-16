@@ -1,32 +1,17 @@
 <template>
     <div class="relative wallpaper full-screen overflow-clip">
+
+        <!-- Desktop Application Icons -->
         <ul class="flex flex-col gap-2 flex-wrap p-2">
-            <li v-for="e in app">
-                <IconButton
-                    has-hover
-                    has-active
-                    class="w-fit h-fit"
-                    @click="() => {
-                        createNewWindow(e.slot, e.title, e.icon)
-                    }"
-                >
-                    <div class="grid place-content-center w-16 h-16">
-                        <Icon>{{ e.icon }}</Icon>
-                    </div>
-                </IconButton>
-            </li>
+            <DesktopIcon v-for="(e, index) in app" :e="e" :key="index"></DesktopIcon>
         </ul>
     </div>
 </template>
 
 <script setup lang="ts">
-import { getAppList } from '@/scripts/apps';
-import { createNewWindow } from '@/scripts/apps';
+import { getAppList } from '@/scripts/apps'
+import DesktopIcon from './desktop-icon/DesktopIcon.vue'
 
 const app = getAppList()
 
 </script>
-
-<style scoped>
-
-</style>
