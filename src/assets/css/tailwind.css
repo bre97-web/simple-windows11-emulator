@@ -137,9 +137,80 @@
         animation: settings-lead-in 0.15s cubic-bezier(.54,.01,.44,.9);
     }
 
+
+    .start-panel.active {
+        animation: activeAnimate 0.15s linear;
+    }
+    .start-panel.inactive {
+        animation: inactiveAnimate 0.15s linear;
+        opacity: 0;
+        user-select: none;
+        pointer-events: none;
+    }
+
+    .hidden-window {
+        animation: hiddenWindowAnimate 0.15s cubic-bezier(.54,.01,.44,.9);
+        opacity: 0;
+        user-select: none;
+        pointer-events: none;
+        z-index: -9999;
+    }
+    .open-window {
+        animation: openWindowAnimate 0.15s cubic-bezier(.54,.01,.44,.9);
+    }
+      
+      
+
+
+    
 }
 
 @layer utilities {
+    @keyframes activeAnimate {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    }
+    @keyframes inactiveAnimate {
+        from {
+            transform: translateY(0px);
+        }
+        to {
+            transform: translateY(20px);
+        }
+    }
+
+    @keyframes hiddenWindowAnimate {
+        from {
+            opacity: 1;
+            transform: translateY(0px);
+            scale: 1;
+            transform-origin: center;
+        }
+        to {
+            opacity: 0;
+            transform: translateY(20px);
+            scale: 0.9;
+        }
+    }
+    @keyframes openWindowAnimate {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+          scale: 0.90;
+          transform-origin: center;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0px);
+          scale: 1;
+        }
+    }
 
     @keyframes scale-from-full-to-125 {
         from {

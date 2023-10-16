@@ -9,8 +9,8 @@
 
         <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">
             <div
-                class="full-screen fixed top-0 left-0 grid justify-end items-end pb-16 pr-2"
-                :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
+                class="start-panel full-screen fixed top-0 left-0 grid justify-end items-end pb-14 px-2 transition-all"
+                :class="[isExpanded ? 'active' : 'inactive']"
             >
 
                 <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] w-full max-w-2xl overflow-auto max-h-[24rem]">

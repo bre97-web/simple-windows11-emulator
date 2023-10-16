@@ -4,10 +4,10 @@
     @mousedown="focusAndActive"
     @mouseover="emits('focus')"
     @mouseout="emits('unfocus')"
-    class="select-none fixed leadin-animation overflow-hidden transition-all active:transition-none"
+    class="select-none fixed  overflow-hidden transition-all active:transition-none"
     :class="[
       props.getProcessStateInstance().accessibility.active ? 'shadow-lg' : '',
-      props.getProcessStateInstance().accessibility.minimize ? 'opacity-0 scale-0 translate-y-full select-none pointer-events-none -z-[99999]' : '',
+      props.getProcessStateInstance().accessibility.minimize ? 'hidden-window ' : 'open-window',
       props.getProcessStateInstance().accessibility.fullscreen ? '' : 'resize',
     ]"
     :style="{
@@ -22,7 +22,7 @@
     <FlexLayout class="rounded-container w-full h-full flex-col overflow-clip border">
 
       <header v-show="!props.getProcessStateInstance().accessibility.fullscreen" class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-lg">
-        <div class="w-full h-full flex items-center justify-between">
+        <div class="w-full h-full flex items-center justify-between px-1">
           <div
             @mousedown="emits('gragwindow', $event)"
             class="h-full flex items-center justify-start w-full text-ellipsis overflow-clip"
@@ -53,9 +53,7 @@
             </IconButton>
 
             <IconButton
-              @click="() => {
-                process.killProcessByProcessId(props.getProcessStateInstance().process.processId)
-              }"
+              @click="emits('close')"
               has-hover
               has-active
               type="error"
@@ -106,6 +104,7 @@ const focusAndActive = () => {
   process.setTopZIndex(process.getProcessByProcessId(props.getProcessStateInstance().process.processId))
 }
 
+
 var keys: string[] = []
 const toggleFullscreen = (e: KeyboardEvent) => {
   if(!props.getProcessStateInstance().accessibility.active) return 
@@ -150,25 +149,3 @@ onUnmounted(() => {
   document.removeEventListener('keyup', toggleFullscreen)
 })
 </script>
-
-<style lang="css" scoped>
-
-.leadin-animation {
-  animation: leadin 0.15s cubic-bezier(.54,.01,.44,.9);
-}
-
-@keyframes leadin {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-    scale: 0.90;
-    transform-origin: center;
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0px);
-    scale: 1;
-  }
-}
-
-</style>

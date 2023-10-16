@@ -13,8 +13,8 @@
         <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">
 
             <div
-                class="full-screen fixed top-0 left-0 grid justify-center items-end pb-16"
-                :class="[isExpanded ? 'active opacity-100' : 'opacity-0 select-none pointer-events-none']"
+                class="start-panel full-screen fixed top-0 left-0 grid justify-center items-end pb-14 px-2 transition-all"
+                :class="[isExpanded ? 'active' : 'inactive']"
             >
 
                 <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] bottom-0 w-screen mx-auto max-w-2xl overflow-auto max-h-[32rem]">
@@ -112,21 +112,4 @@ const system = useSystemStore()
     transition: all 0.5s cubic-bezier(.16,-0.04,.08,.99);
 }
 
-.active {
-    animation: activeAnimate 0.15s linear;
-}
-.inactive {
-    animation: activeAnimate 0.15s linear reverse;
-}
-
-@keyframes activeAnimate {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0px);
-        opacity: 1;
-    }
-}
 </style>

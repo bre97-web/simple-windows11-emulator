@@ -37,7 +37,18 @@ export const useProcessStore = defineStore('process_store', {
             }
 
             const process = useWindow(() => processState.value, {
-                onClose: () => process.unmount(),
+                onClose: async () => {
+                    const addHiddenClass = () => new Promise<void>(resolve => {
+                        process.instance._container.children.item(0).classList.remove('open-window')
+                        process.instance._container.children.item(0).classList.add('hidden-window')
+                        setTimeout(() => {
+                            resolve()
+                        }, 150)
+                    })
+                    await addHiddenClass()
+                    this.killProcessByProcessId(processState.value.process.processId)
+                    process.unmount()
+                },
                 onMaximize: () => {                 
                     processState.value.accessibility.maximize = !processState.value.accessibility.maximize                    
                 },
