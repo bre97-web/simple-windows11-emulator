@@ -11,10 +11,8 @@
             :key="e.slot"
             class="h-16 w-24"
         >
-            <div class="p-2 grid place-content-center">
-                <Icon>{{ e.icon }}</Icon>
-                <md-text type="label-small" class="select-none mt-2">{{ e.label }}</md-text>
-            </div>
+            <Icon>{{ e.icon }}</Icon>
+            <p class="text-rm-1 select-none mt-2 overflow-clip text-ellipsis whitespace-nowrap text-center">{{ e.label }}</p>
         </IconButton>
 
     </GridLayout>

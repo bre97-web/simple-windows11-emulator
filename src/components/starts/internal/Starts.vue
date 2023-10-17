@@ -17,7 +17,7 @@
                 :class="[isExpanded ? 'active' : 'inactive']"
             >
 
-                <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] bottom-0 w-screen mx-auto max-w-2xl overflow-auto max-h-[32rem]">
+                <fluent-card class="relative backdrop-blur-lg bg-white/80 dark:bg-black/80 bottom-0 w-screen mx-auto max-w-2xl overflow-auto max-h-[32rem]">
                     
                     <!-- Here -->
                     <div class="start-panel-content-aera">
@@ -32,7 +32,7 @@
                                 <template v-slot:app-one="{ currentPage, setCurrentPage }">
                                     <div class="w-full absolute top-0 space-y-2 table-transition" :class="[currentPage !== 'page-one' ? '-left-[200%]' : 'left-0']">
                                         <FlexLayout class="justify-between items-center px-4">
-                                            <md-text type="label-large">Pinned</md-text>
+                                            <h1 class="text-rp-1">Pinned</h1>
                                             <ApplicationListButton
                                                 @click="setCurrentPage('page-two')"
                                                 class="self-end"    
@@ -46,7 +46,7 @@
                                 <template v-slot:app-two="{ currentPage, setCurrentPage }">
                                     <div class="w-full absolute top-0 space-y-2 table-transition" :class="[currentPage !== 'page-two' ? 'left-[200%]' : 'left-0']">
                                         <FlexLayout class="justify-between items-center px-4">
-                                            <md-text type="label-large">All Apps</md-text>
+                                            <h1 class="text-rp-1">All Apps</h1>
                                             <ApplicationListButton
                                                 @click="setCurrentPage('page-one')" 
                                                 label="Back"

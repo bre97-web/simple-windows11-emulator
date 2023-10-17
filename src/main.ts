@@ -5,6 +5,7 @@ import '@/typography/Typo'
 import { registerGlobalComponents } from '@/scripts/registerGlobalComponents'
 import { piniaInstance } from  '@/scripts/createPiniaInstance'
 import { windowsInstance } from '@/scripts/createWindowsVueInstance'
+import { initFluentDesignBaseColor } from './components/fluent-ui/fluent-components'
 
 windowsInstance
     .use(piniaInstance)
@@ -12,6 +13,7 @@ windowsInstance
     .use(Router)
     .mount('#window')
 
+initFluentDesignBaseColor()
 
 /**
  * Screen Brightness and nightlight

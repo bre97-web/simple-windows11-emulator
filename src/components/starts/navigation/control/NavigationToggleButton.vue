@@ -1,18 +1,16 @@
 <template>
-    <div
+    <IconButton
+        has-hover
+        has-active
         @click="emits('setIsExpanded', !props.isExpanded)"
-        class="rounded hover:bg-white/75 transition-all w-full h-full"
+        class="h-full px-2"
     >
-        <div class="w-full h-full active:scale-75 transition-all px-2">
-            <div class="w-full h-full grid place-content-center">
-                <FlexLayout>
-                    <Icon class="scale-75">wifi</Icon>
-                    <Icon class="scale-75 hidden md:block">volume_up</Icon>
-                    <Icon class="scale-75 hidden md:block">power</Icon>
-                </FlexLayout>
-            </div>
-        </div>
-    </div>
+        <FlexLayout>
+            <Icon class="scale-75">wifi</Icon>
+            <Icon class="scale-75 hidden md:block">volume_up</Icon>
+            <Icon class="scale-75 hidden md:block">power</Icon>
+        </FlexLayout>
+    </IconButton>
 </template>
 
 <script setup lang="ts">

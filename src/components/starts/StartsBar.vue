@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full h-12 border-t border-black/20 back-blur p-1">
+    <div class="relative w-full h-12 border-t border-black/20 back-blur bg-white/25 dark:bg-black/75 p-1">
 
         <!-- No need gap -->
         <FlexLayout class="relative w-full h-full items-center justify-between overflow-clip">

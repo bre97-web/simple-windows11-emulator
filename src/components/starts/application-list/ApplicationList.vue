@@ -1,5 +1,5 @@
 <template>
-    <FlexLayout class="flex-col gap-2">
+    <FlexLayout class="grid grid-cols-1 place-items-stretch gap-2">
         <ApplicationListItem
             v-for="(e, index) in apps"
             :index="index"

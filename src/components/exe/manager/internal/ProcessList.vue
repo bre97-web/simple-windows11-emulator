@@ -3,7 +3,7 @@
         v-for="e in process.getAllProcesses"
         :key="e.getProcessStateInstance().process.processId"
         @click="emits('setCurrentProcess', e)"
-        class="transition-all active:bg-white px-4 py-2 rounded flex gap-2 overflow-auto"
+        class="transition-all active:bg-white px-4 py-2 rounded-layer flex gap-2 overflow-auto"
         :class="[e === props.currentProcess ? 'bg-blue-500/25 hover:bg-blue-500/50' : 'hover:bg-white/75']"
     >
         <slot :e="e"></slot>

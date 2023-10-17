@@ -1,7 +1,7 @@
 <template>
-    <div class="drop-shadow-md shadow-black text-4xl text-white">
+    <p class="drop-shadow-md shadow-black text-4xl text-white">
         {{ user.accountState.name }}
-    </div>
+    </p>
 </template>
 
 <script setup lang="ts">
