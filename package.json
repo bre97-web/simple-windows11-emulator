@@ -34,7 +34,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@headlessui/vue": "^1.7.15",
     "@melloware/coloris": "^0.21.1",
-    "autoprefixer": "^10.4.15",
+    "autoprefixer": "^10.4.16",
     "lit": "^3.0.0",
     "material-symbols": "^0.10.4",
     "moment": "^2.29.4",
