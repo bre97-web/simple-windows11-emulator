@@ -2,4 +2,8 @@
  * Tailwindcss
  */
 import '@/assets/css/tailwind.css'
-import '@/assets/css/theme.css'
+
+/**
+ * Fluent Styles
+ */
+import '@/assets/css/fluent-ui.css'

@@ -20,7 +20,12 @@
                     <h1 class="text-3xl font-semibold mb-4">{{ currentLabel }}</h1>
                     <div class="bg-white/75 w-full h-full rounded-container">
                         <TabPanel>1</TabPanel>
-                        <TabPanel>2</TabPanel>
+
+                        <!-- appearance -->
+                        <TabPanel>
+                            <Personalization></Personalization>
+                        </TabPanel>
+
                         <TabPanel>3</TabPanel>
                         <TabPanel>4</TabPanel>
                     </div>
@@ -34,6 +39,23 @@
 <script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import { ref } from 'vue'
+import Personalization from './personalization/Personalization.vue'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const useListItem = (label: string, icon: string) => ({
     label,

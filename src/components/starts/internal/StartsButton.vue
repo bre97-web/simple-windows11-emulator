@@ -1,25 +1,24 @@
 <template>
-    <div class="rounded hover:bg-white/75 h-full aspect-square overflow-clip">
+    <IconButton
+        has-hover
+        has-active
+        class="h-full aspect-square"
+        @click="() => {
+            system.setStarts({
+                ...system.getSystemStarts,
+                isOpening: !props.isExpanded
+            })
+            emits('setIsExpanded', !props.isExpanded)
+        }"
+    >
         <div
-            @click="() => {
-                system.setStarts({
-                    ...system.getSystemStarts,
-                    isOpening: !props.isExpanded
-                })
-                emits('setIsExpanded', !props.isExpanded)
-            }"
-            class="w-full h-full transition-all active:scale-75 grid place-content-center"
-        >
-            <div
-                class="starts-button-group relative windows-starts-icon-special-shape overflow-clip w-6 h-6 grid grid-cols-2 grid-rows-2 gap-[1.25px]">
-                <div class="first-block-highlight"></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            class="starts-button-group relative windows-starts-icon-special-shape overflow-clip w-6 h-6 grid grid-cols-2 grid-rows-2 gap-[1.25px]">
+            <div class="first-block-highlight"></div>
+            <div></div>
+            <div></div>
+            <div></div>
             </div>
-
-        </div>
-    </div>
+    </IconButton>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +41,7 @@ const toggleStarts = (e: KeyboardEvent) => {
         return
     } else if (keys.length === 1) {
         keys[1] = e.code
+
     } else if (e.code !== keys[1]) {
         keys.shift()
         keys[1] = e.code

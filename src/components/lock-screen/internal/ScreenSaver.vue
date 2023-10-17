@@ -11,12 +11,12 @@
         class="relative left-0 full-screen grid justify-center select-none"
     >
         <div class="text-center mt-16 text-white">
-            <DisplayLarge>
+            <p class="text-rp-6">
                 <Time format="HH:mm"></Time>
-            </DisplayLarge>
-            <TitleLarge>
+            </p>
+            <p class="text-rp-3">
                 <Time format="MM-DD-YYYY"></Time>
-            </TitleLarge>
+            </p>
         </div>
     </div>
 </template>

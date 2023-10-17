@@ -14,7 +14,7 @@
                 :class="[isExpanded ? 'active' : 'inactive']"
             >
 
-                <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] w-full max-w-2xl overflow-auto max-h-[24rem]">
+                <fluent-card class="relative backdrop-blur-lg bg-white/80 dark:bg-black/80  w-full max-w-2xl overflow-auto max-h-[24rem]">
 
                     <!-- Content in here -->
                     <FlexLayout class="flex-col p-4 gap-8 justify-between h-full">

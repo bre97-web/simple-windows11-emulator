@@ -17,7 +17,7 @@
                 :class="[isExpanded ? 'active' : 'inactive']"
             >
 
-                <fluent-card class="relative backdrop-blur-lg bg-white/[0.85] bottom-0 w-screen mx-auto max-w-2xl overflow-auto max-h-[32rem]">
+                <fluent-card class="relative backdrop-blur-lg bg-white/80 dark:bg-black/80 bottom-0 w-screen mx-auto max-w-2xl overflow-auto max-h-[32rem]">
                     
                     <!-- Here -->
                     <div class="start-panel-content-aera">

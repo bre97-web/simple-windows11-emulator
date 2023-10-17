@@ -2,8 +2,8 @@
    <div 
         :class="[
             props.hasHover ? 'icon-has-hover' : '',
-            props.hasShape ? 'rounded overflow-clip' : '',
-            props.type === 'default' ? 'hover:bg-white/75' : 'hover:bg-error-500/75'
+            props.hasShape ? 'rounded-control overflow-clip' : '',
+            props.type === 'default' ? 'hover:bg-white/75 dark:hover:bg-black/75' : 'hover:bg-error-500/75'
         ]"
     >
         <div
@@ -11,7 +11,7 @@
                 props.hasActive ? 'icon-has-active' : '',
                 props.hasFilled ? 'icon-has-filled' : '',
             ]"
-            class="transition-all"
+            class="transition-all grid place-content-center w-full h-full"
         >
             <slot></slot>
         </div>

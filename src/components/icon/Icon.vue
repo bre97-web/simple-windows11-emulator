@@ -1,5 +1,5 @@
 <template>
-    <span class="material-symbols-outlined relative icon">
+    <span class="material-symbols-outlined relative icon dark:text-white">
         <slot></slot>
     </span>
 </template>

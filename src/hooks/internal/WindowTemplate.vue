@@ -8,10 +8,10 @@
     :class="classes"
     :style="styles"
   >
-    <FlexLayout class="rounded-container w-full h-full flex-col overflow-clip border">
+    <FlexLayout class="rounded-layer w-full h-full flex-col overflow-clip border">
 
-      <header v-show="!props.getProcessStateInstance().accessibility.fullscreen" class="flex-none select-none w-full h-8 bg-white/75 backdrop-blur-lg">
-        <div class="w-full h-full flex items-center justify-between px-1">
+      <header v-show="!props.getProcessStateInstance().accessibility.fullscreen" class="flex-none select-none w-full h-8 bg-white/75 dark:bg-black/75 backdrop-blur-lg">
+        <div class="w-full h-full flex items-center justify-between p-1">
           <div
             @mousedown="emits('gragwindow', $event)"
             class="h-full flex items-center justify-start w-full text-ellipsis overflow-clip"
@@ -45,7 +45,6 @@
               @click="emits('close')"
               has-hover
               has-active
-              type="error"
             >
               <Icon class="scale-75">close</Icon>
             </IconButton>

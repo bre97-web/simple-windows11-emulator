@@ -3,7 +3,7 @@
         <template v-slot:actions="{ isExpanded, setIsExpanded }">
             <div
                 @click="setIsExpanded(!isExpanded)"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-[4px] hover:bg-white/75"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-control hover:bg-white/75 dark:hover:bg-black/75"
             >
                 <div class="rounded-full w-8 h-8 bg-white/75"></div>
                 <span class="max-w-[12rem] overflow-clip text-ellipsis">{{ user.getUserAccountState.name }}</span>

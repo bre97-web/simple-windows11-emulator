@@ -1,10 +1,10 @@
 <template>
-    <div class="relative hover:bg-white/75 rounded">
-        <FlexLayout class="select-none w-full h-full active:scale-75 transition-all px-2 flex flex-col items-end justify-around text-end whitespace-nowrap">
-            <md-text type="label-small">{{ time }}</md-text>
-            <md-text type="label-small">{{ date }}</md-text>
-        </FlexLayout>
-    </div>
+    <IconButton has-hover has-active>
+        <div class="select-none px-2 inline-flex flex-col items-end justify-around text-end whitespace-nowrap">
+            <p class="text-rm-1">{{ time }}</p>
+            <p class="text-rm-1">{{ date }}</p>
+        </div>
+    </IconButton>
 </template>
 
 <script setup lang="ts">

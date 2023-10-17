@@ -5,7 +5,7 @@
                 <md-text type="title-large">Notepad Beta</md-text>
             </header>
 
-            <div class="w-full h-full rounded overflow-clip">
+            <div class="w-full h-full rounded-layer overflow-clip">
                 <fluent-text-area
                     autofocus
                     placeholder="Notepad beta, type here."

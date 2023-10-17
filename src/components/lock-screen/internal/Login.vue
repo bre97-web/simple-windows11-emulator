@@ -21,8 +21,8 @@
         </form>
     
         <div v-if="!state.pending">
-            <md-text type="label-large" v-if="state.isError">Typed password is incorrect</md-text>
-            <md-text type="label-large" v-else-if="system.getSystemIsLocked && state.isTyped">Welcome</md-text>
+            <p class="text-rb" v-if="state.isError">Typed password is incorrect</p>
+            <p class="text-rb" v-else-if="system.getSystemIsLocked && state.isTyped">Welcome</p>
         </div>
         <fluent-progress-ring v-else></fluent-progress-ring>
     </div>

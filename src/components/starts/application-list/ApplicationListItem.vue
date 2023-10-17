@@ -1,20 +1,18 @@
 <template>
-    <div class="relative overflow-clip text-ellipsis w-full h-full">
-        <IconButton
-            has-hover
-            has-active
-            @click="() => {
-                emits('closeStartsMenu')
-                createNewWindow(props.app.slot, props.app.title, props.app.icon)
-            }"
-            :key="props.app.slot"
-        >
-            <div class="flex flex-row items-center gap-2 p-2">
+    <div
+        @click="() => {
+            emits('closeStartsMenu')
+            createNewWindow(props.app.slot, props.app.title, props.app.icon)
+        }"
+        :key="props.app.slot"
+        class="hover:bg-white/75 dark:hover:bg-black/75"
+    >
+        <div class="inline-flex items-center justify-start h-full gap-2 p-2">
+            <IconButton >
                 <Icon>{{ props.app.icon }}</Icon>
-                <md-text type="label-large" class="select-none">{{ props.app.label }}</md-text>
-            </div>
-        </IconButton>
-
+            </IconButton>
+            <p class="text-rb select-none">{{ props.app.label }}</p>
+        </div>
     </div>
 </template>
 
