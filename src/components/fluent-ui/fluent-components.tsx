@@ -19,7 +19,7 @@ export const initFluentDesignBaseColor = () => {
     /**
      * Activate Dark mode if the option darkEnabled of theme store is true
      */
-    getBaseLayerLuminanceInstance().setValueFor(document.body,  theme.getTheme.darkModeEnabled ? StandardLuminance.DarkMode : StandardLuminance.LightMode)
+    getBaseLayerLuminanceInstance().setValueFor(document.body,  theme.getTheme.baseLayerValue)
     if(theme.getTheme.darkModeEnabled) {
         document.documentElement.classList.add('dark')
     }
@@ -66,8 +66,11 @@ export function BaseLayerSlider() {
         <fluent-slider
             max={max}
             min={min}
+            initialValue={theme.getTheme.baseLayerValue * 100}
             onChange={(e: CustomEvent) => {
-                getBaseLayerLuminanceInstance().setValueFor(document.body, parseInt((e.target as Slider).value) / 100)
+                let baseLayerValue = parseInt((e.target as Slider).value) / 100
+                getBaseLayerLuminanceInstance().setValueFor(document.body, baseLayerValue)
+                theme.setBaseLayerValue(baseLayerValue)
             }}
         >
         </fluent-slider>

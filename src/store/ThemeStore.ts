@@ -4,7 +4,7 @@ export const useThemeStore = defineStore('theme_store', {
     state: () => ({
         theme: {
             darkModeEnabled: false,
-            darkModeBaseLayerValue: 0,
+            baseLayerValue: 0,
 
             swatchColor: {
                 r: 0,
@@ -24,6 +24,9 @@ export const useThemeStore = defineStore('theme_store', {
         },
         setIsDarkMode(value: boolean) {
             this.theme.darkModeEnabled = value
+        },
+        setBaseLayerValue(value: number) {
+            this.theme.baseLayerValue = value
         },
         setSwatchColor(r: number, g: number, b: number) {
             this.theme.swatchColor = {

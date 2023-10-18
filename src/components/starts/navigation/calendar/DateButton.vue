@@ -1,9 +1,7 @@
 <template>
-    <IconButton has-hover has-active>
-        <div class="select-none px-2 inline-flex flex-col items-end justify-around text-end whitespace-nowrap">
-            <p class="text-rm-1">{{ time }}</p>
-            <p class="text-rm-1">{{ date }}</p>
-        </div>
+    <IconButton has-hover has-active class="h-full select-none text-end px-2 flex justify-around"> 
+        <p class="text-rm-1 text-black dark:text-white">{{ time }}</p>
+        <p class="text-rm-1 text-black dark:text-white">{{ date }}</p>
     </IconButton>
 </template>
 

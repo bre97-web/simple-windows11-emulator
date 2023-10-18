@@ -2,11 +2,17 @@ import colors from 'tailwindcss/colors'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    important: true,
-    content: ['./**/*.html', './src/**/*.{js,jsx,ts,tsx,vue}'],
+    important: false,
+    content: [
+        './src/*.html', 
+        './src/**/*.{js,jsx,ts,tsx,vue}'
+    ],
     darkMode: 'class',
     variants: {},
     plugins: [],
+    corePlugins: {
+        // preflight: false,
+    },
     theme: {
         screens: {
             xs: '360px',
@@ -94,5 +100,6 @@ export default {
         borderWidth: {
             DEFAULT: '1.5px',
         }
-    }
+    },
+    
 }

@@ -4,6 +4,13 @@
 @tailwind variants;
 
 @layer base {
+    *,
+    ::before,
+    ::after {
+      box-sizing: border-box; /* 1 */
+      border-style: solid; /* 2 */
+      border-color: theme('borderColor.DEFAULT', currentColor); /* 2 */
+    }
     :root {
 
         /**
@@ -103,39 +110,7 @@
 
 
 
-    .setting-list > div {
-        border-radius: 4px;
-        padding-left: 18px;
-        padding-right: 18px;
-        padding-top: 6px;
-        padding-bottom: 6px;
-        display: flex;
-        gap: 4px;
-        align-items: center;
-        position: relative;
-    }
-    .setting-list > div:hover {
-        background-color: rgb(255 255 255 / 0.75);
-    }
-    .setting-list > div[data-active="true"] {
-        background-color: rgb(255 255 255 / 0.75) !important;
-    }
-    .setting-list > div[data-active="true"]::after {
-        content: '';
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        background-color: blue;
-        width: 8px;
-        border-radius: 9999px;
-        scale: 50%;
-        opacity: 100%;
-        animation: settings-lead-in 0.15s cubic-bezier(.54,.01,.44,.9);
-    }
+
 
 
     .start-panel.active {

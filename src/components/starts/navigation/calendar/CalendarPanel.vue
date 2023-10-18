@@ -3,7 +3,7 @@
         <template v-slot:actions="{ isExpanded, setIsExpanded }">
             <DateButton
                 @click="setIsExpanded(!isExpanded)"
-                class="hidden xs:block"
+                class="invisible xs:visible"
             ></DateButton>
         </template>
 

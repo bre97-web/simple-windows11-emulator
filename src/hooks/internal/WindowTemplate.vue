@@ -19,7 +19,7 @@
             <div class="flex-none h-full aspect-square scale-75 grid place-content-center">
               <Icon>{{ props.getProcessStateInstance().window.info.icon }}</Icon>
             </div>
-            <h1 class="w-full whitespace-nowrap overflow-clip">{{ props.getProcessStateInstance().window.info.title }}</h1>
+            <h1 class="w-full whitespace-nowrap overflow-clip text-black dark:text-white rm-1">{{ props.getProcessStateInstance().window.info.title }}</h1>
           </div>
 
           <nav class="flex-none w-fit h-full flex items-center justify-end">
@@ -52,7 +52,7 @@
         </div>
       </header>
 
-      <main class="relative w-full h-full backdrop-blur-lg bg-white/75 overflow-auto">
+      <main class="relative w-full h-full backdrop-blur-lg bg-white/75 dark:bg-black/75 overflow-auto">
         <slot></slot>
       </main>
     </FlexLayout>
