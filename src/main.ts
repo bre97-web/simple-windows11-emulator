@@ -1,10 +1,8 @@
-import Router from '@/router/index'
 import '@/scripts/importStyles'
 import '@/scripts/importMaterial'
-import '@/typography/Typo'
 import { registerGlobalComponents } from '@/scripts/registerGlobalComponents'
 import { piniaInstance } from  '@/scripts/createPiniaInstance'
-import { windowsInstance } from '@/scripts/createWindowsVueInstance'
+import { windowsInstance } from '@/window'
 import { windowScreenMaskInstance } from './window-screen-mask'
 import { initFluentDesignBaseColor } from './components/fluent-ui/fluent-components'
 
@@ -14,7 +12,6 @@ import { initFluentDesignBaseColor } from './components/fluent-ui/fluent-compone
 windowsInstance
     .use(piniaInstance)
     .use(registerGlobalComponents)
-    .use(Router)
     .mount('#window')
 
 windowScreenMaskInstance.mount('#window-screen-mask')
