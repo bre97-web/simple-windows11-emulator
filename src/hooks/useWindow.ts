@@ -1,5 +1,5 @@
 import { App, Component, ComputedOptions, MethodOptions, createApp, h } from "vue"
-import WindowTemplate from '@/hooks/internal/WindowTemplate.vue'
+import WindowTemplate from '@/window-workspace/components/WindowTemplate.vue'
 import { ProcessState } from "./useProcessState"
 import { registerGlobalComponents } from "@/scripts/registerGlobalComponents"
 

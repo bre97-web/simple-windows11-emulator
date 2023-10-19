@@ -9,7 +9,7 @@
             <fluent-text-field
                 autofocus
                 type="password"
-                @input="(e: Event) => state.password = (e.target as EventTarget & Input).value" appearance="filled"
+                @input="(e: Event) => state.password = (e.target as TextField).value" appearance="filled"
                 @keyup.enter="login"
                 placeholder="Password"
             ></fluent-text-field>
@@ -31,10 +31,10 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useUserStore } from '@/store/UserStore';
-import { Input } from '@/types/Input'
 import ProfileAvatar from './ProfileAvatar.vue';
 import ProfileName from './ProfileName.vue';
 import { useSystemStore } from '@/store/SystemStore';
+import { TextField } from '@fluentui/web-components';
 
 const system = useSystemStore()
 const user = useUserStore()
