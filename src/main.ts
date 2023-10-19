@@ -5,22 +5,21 @@ import '@/typography/Typo'
 import { registerGlobalComponents } from '@/scripts/registerGlobalComponents'
 import { piniaInstance } from  '@/scripts/createPiniaInstance'
 import { windowsInstance } from '@/scripts/createWindowsVueInstance'
+import { windowScreenMaskInstance } from './window-screen-mask'
 import { initFluentDesignBaseColor } from './components/fluent-ui/fluent-components'
 
+/**
+ * Core Instance
+ */
 windowsInstance
     .use(piniaInstance)
     .use(registerGlobalComponents)
     .use(Router)
     .mount('#window')
 
+windowScreenMaskInstance.mount('#window-screen-mask')
+    
 initFluentDesignBaseColor()
-
-/**
- * Screen Brightness and nightlight
- */
-import ScreenMaskApp from '@/startup/screen-mask'
-ScreenMaskApp.mount('#window-screen-mask')
-
 
 /**
  * Listenning to 'shutdown' of system settings
@@ -32,7 +31,7 @@ const system = useSystemStore()
 
 watch(() => system.needShutdown, () => {
     windowsInstance.unmount()
-    ScreenMaskApp.unmount()
+    windowScreenMaskInstance.unmount()
     
     ShutdownApp.mount('#window')
 })
