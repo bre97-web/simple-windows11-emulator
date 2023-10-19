@@ -6,7 +6,7 @@
             
             <!-- Light Dark Select -->
             <!-- Light and Dark Slider -->
-            <fluent-accordion-item ref="chooseYourModeRef">
+            <fluent-accordion-item>
                 <Icon slot="start">dark_mode</Icon>
                 <h1 slot="heading">
                     Choose Your Mode

@@ -3,13 +3,13 @@
 
         <fluent-tabs
             orientation="vertical"
-            class="min-h-full"
+            class="min-h-full min-w-md"
         >
             <fluent-tab
                 v-for="(e, index) in settingList"
                 :key="index"
                 :id="e.label.toLowerCase().replace(' ', '-')"
-                class="gap-2 w-full"
+                class="gap-2 max-w-md"
             >
                 <Icon>{{ e.icon }}</Icon>
                 {{ e.label }}
@@ -21,7 +21,7 @@
                     <li>1</li>
                 </ul>
             </fluent-tab-panel>
-            <fluent-tab-panel id="personalizationPanel" class="max-h-full h-full overflow-auto">
+            <fluent-tab-panel id="personalizationPanel" class="max-h-full h-full">
                 <ul class="bg-white/75 dark:bg-black/75 w-full h-full overflow-auto rounded-layer">
                     <!-- appearance -->
                     <li>

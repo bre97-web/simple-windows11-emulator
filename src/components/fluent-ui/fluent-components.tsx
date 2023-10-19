@@ -32,7 +32,6 @@ export const initFluentDesignBaseColor = () => {
         ...theme.getTheme.swatchColor,
     })
     accentBaseColor.setValueFor(document.body, color)
-    // neutralBaseColor.setValueFor(document.body, color)
 }
 
 
@@ -81,8 +80,8 @@ export function BaseLayerSlider() {
         <>
             {
                 theme.getTheme.darkModeEnabled ?
-                <Slider min={0} max={45}></Slider> :
-                <Slider min={46} max={100}></Slider>
+                <Slider min={0} max={40}></Slider> :
+                <Slider min={50} max={100}></Slider>
             }
         </>
     )
@@ -113,7 +112,6 @@ export function AccentBaseColorPicker() {
                     b: parseInt(b)
                 })
                 accentBaseColor.setValueFor(document.body, color)
-                // neutralBaseColor.setValueFor(document.body, color)
             }}
         >Choose a different color</fluent-button>
     )

@@ -3,7 +3,7 @@
     aspect-ratio: 1 / 1;
     user-select: none;
 }
-html.dark .scaling-button
+html.dark .scaling-button,
 html.dark .icon-button {
     --container: #0000003f;
     --container-active: #000000bf;
