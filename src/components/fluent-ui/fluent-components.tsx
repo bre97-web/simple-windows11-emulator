@@ -2,11 +2,12 @@
  * Fluent Web Components
  */
 import { useThemeStore } from "@/store/ThemeStore"
-import { Slider, StandardLuminance, SwatchRGB, accentBaseColor, baseLayerLuminance, neutralBaseColor } from "@fluentui/web-components"
+import { Slider, StandardLuminance, SwatchRGB, accentBaseColor, baseLayerLuminance } from "@fluentui/web-components"
 import { Select } from '@microsoft/fast-foundation'
 import "@melloware/coloris/dist/coloris.css";
 import * as Coloris from "@melloware/coloris";
 
+// DesignToken.
 
 /**
  * The initializtion of the fleunt web components
@@ -31,7 +32,7 @@ export const initFluentDesignBaseColor = () => {
         ...theme.getTheme.swatchColor,
     })
     accentBaseColor.setValueFor(document.body, color)
-    neutralBaseColor.setValueFor(document.body, color)
+    // neutralBaseColor.setValueFor(document.body, color)
 }
 
 
@@ -112,7 +113,7 @@ export function AccentBaseColorPicker() {
                     b: parseInt(b)
                 })
                 accentBaseColor.setValueFor(document.body, color)
-                neutralBaseColor.setValueFor(document.body, color)
+                // neutralBaseColor.setValueFor(document.body, color)
             }}
         >Choose a different color</fluent-button>
     )

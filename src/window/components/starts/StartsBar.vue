@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import Starts from '@/components/starts/internal/Starts.vue';
-import Naviagtion from '@/components/starts/navigation/Navigation.vue';
+import Starts from '@/window/components/starts/internal/Starts.vue';
+import Naviagtion from '@/window/components/starts/navigation/Navigation.vue';
 import MinimizeApps from './internal/MinimizeApps.vue';
 
 </script>

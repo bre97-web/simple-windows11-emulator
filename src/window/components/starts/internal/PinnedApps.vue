@@ -1,8 +1,6 @@
 <template>
     <GridLayout class="relative gap-2 grid-cols-4 md:grid-cols-6 grid-rows-auto overflow-y-auto h-40 items-start">
-        <IconButton
-            has-hover
-            has-active
+        <ScalingButton
             @click="() => {
                 emits('closeStartsMenu')
                 createNewWindow(e.slot, e.title, e.icon)
@@ -10,10 +8,11 @@
             v-for="e in getAppList()"
             :key="e.slot"
             class="h-16 w-24"
+            direction="vertical"
         >
             <Icon>{{ e.icon }}</Icon>
-            <p class="text-rm-1 select-none mt-2 overflow-clip text-ellipsis whitespace-nowrap text-center">{{ e.label }}</p>
-        </IconButton>
+            <p class="text-rm-1 select-none overflow-clip text-ellipsis whitespace-nowrap">{{ e.label }}</p>
+        </ScalingButton>
 
     </GridLayout>
 </template>

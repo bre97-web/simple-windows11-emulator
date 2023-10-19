@@ -1,13 +1,12 @@
 <template>
     <ExpandLayout>
         <template v-slot:actions="{ isExpanded, setIsExpanded }">
-            <div
-                @click="setIsExpanded(!isExpanded)"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-control hover:bg-white/75 dark:hover:bg-black/75"
-            >
-                <div class="rounded-full w-8 h-8 bg-white/75"></div>
-                <span class="max-w-[12rem] overflow-clip text-ellipsis">{{ user.getUserAccountState.name }}</span>
-            </div>
+            <IconButton @click="setIsExpanded(!isExpanded)" class="px-2 py-1">
+                <div class="flex items-center gap-2">
+                    <div class="rounded-full w-8 h-8 border"></div>
+                    <span class="text-rb max-w-[12rem] overflow-clip text-ellipsis">{{ user.getUserAccountState.name }}</span>
+                </div>
+            </IconButton>
         </template>
 
         <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">

@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-import ScreenSaver from '@/components/lock-screen/internal/ScreenSaver.vue';
-import Login from '@/components/lock-screen/internal/Login.vue';
+import ScreenSaver from '@/window/components/lock-screen/internal/ScreenSaver.vue';
+import Login from '@/window/components/lock-screen/internal/Login.vue';
 
 const isTyped = ref(false)
 const setIsTyped = (e: boolean) => {

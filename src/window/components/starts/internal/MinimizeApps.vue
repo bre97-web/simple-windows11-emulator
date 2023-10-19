@@ -12,18 +12,14 @@
                 process.setTopZIndex(e)
             }"
         >
-            <IconButton
-                has-hover
-                has-active
+            <ScalingButton
                 :id="'process' + e.getProcessStateInstance().process.processId"
                 class="h-full aspect-square"
             >
-                <div class="h-full aspect-square grid">
-                    <Icon>
-                        {{ e.getProcessStateInstance().window.info.icon }}
-                    </Icon>
-                </div>
-            </IconButton>
+                <Icon>
+                    {{ e.getProcessStateInstance().window.info.icon }}
+                </Icon>
+            </ScalingButton>
             <fluent-tooltip
                 position="top"
                 :anchor="'process' + e.getProcessStateInstance().process.processId"

@@ -1,10 +1,8 @@
 <template>
     <ExpandLayout class="relative">
         <template v-slot:actions="{ isExpanded, setIsExpanded }">
-            <IconButton has-hover has-active @click="setIsExpanded(!isExpanded)" class="p-2">
-                <Icon>
-                    power_settings_new
-                </Icon>
+            <IconButton @click="setIsExpanded(!isExpanded)" class="p-2">
+                <Icon>power_settings_new</Icon>
             </IconButton>
         </template>
         <template v-slot:expanded-content="{ isExpanded, setIsExpanded }">

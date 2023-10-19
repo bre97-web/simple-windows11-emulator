@@ -1,13 +1,9 @@
 <template>
     <IconButton
-        has-hover
-        has-active
-        class="w-fit h-fit"
+        class="w-16 aspect-square"
         @click="doubleClickEvent"
     >
-        <div class="grid place-content-center w-16 h-16">
-            <Icon>{{ e.icon }}</Icon>
-        </div>
+        <Icon>{{ e.icon }}</Icon>
     </IconButton>
 </template>
 

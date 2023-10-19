@@ -16,38 +16,28 @@
             @mousedown="emits('gragwindow', $event)"
             class="h-full flex items-center justify-start w-full text-ellipsis overflow-clip"
           >
-            <div class="flex-none h-full aspect-square scale-75 grid place-content-center">
-              <Icon>{{ props.getProcessStateInstance().window.info.icon }}</Icon>
-            </div>
+            <Icon class="scale-75">{{ props.getProcessStateInstance().window.info.icon }}</Icon>
             <h1 class="w-full whitespace-nowrap overflow-clip text-black dark:text-white rm-1">{{ props.getProcessStateInstance().window.info.title }}</h1>
           </div>
 
           <nav class="flex-none w-fit h-full flex items-center justify-end">
-            <IconButton
+            <ScalingButton
               v-if="props.getProcessStateInstance().accessibility.minimizable"
               @click="emits('minimize')"
-              has-hover
-              has-active
             >
               <Icon class="scale-75">minimize</Icon>
-            </IconButton>
+            </ScalingButton>
 
-            <IconButton
+            <ScalingButton
               v-if="props.getProcessStateInstance().accessibility.maximizable"
               @click="emits('maximize')"
-              has-hover
-              has-active
             >
               <Icon class="scale-75">check_box_outline_blank</Icon>
-            </IconButton>
+            </ScalingButton>
 
-            <IconButton
-              @click="emits('close')"
-              has-hover
-              has-active
-            >
+            <ScalingButton @click="emits('close')">
               <Icon class="scale-75">close</Icon>
-            </IconButton>
+            </ScalingButton>
           </nav>
         </div>
       </header>

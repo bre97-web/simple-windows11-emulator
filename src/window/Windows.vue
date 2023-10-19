@@ -26,10 +26,10 @@
 
 <script setup lang="ts">
 import { onBeforeMount, onBeforeUnmount, onMounted, onUnmounted } from 'vue';
-import LockScreen from '@/components/lock-screen/LockScreen.vue';
+import LockScreen from '@/window/components/lock-screen/LockScreen.vue';
 import { useUserStore } from '@/store/UserStore';
-import StartsBar from '@/components/starts/StartsBar.vue'
-import Desktop from '@/components/desktop/Desktop.vue';
+import StartsBar from '@/window/components/starts/StartsBar.vue'
+import Desktop from '@/window/components/desktop/Desktop.vue';
 import { useSystemStore } from '@/store/SystemStore';
 import { useProcessStore } from '@/store/ProcessStore';
 

@@ -1,19 +1,16 @@
 <template>
-    <div
+    <IconButton
         @click="() => {
             emits('closeStartsMenu')
             createNewWindow(props.app.slot, props.app.title, props.app.icon)
         }"
         :key="props.app.slot"
-        class="hover:bg-white/75 dark:hover:bg-black/75"
     >
-        <div class="inline-flex items-center justify-start h-full gap-2 p-2">
-            <IconButton >
-                <Icon>{{ props.app.icon }}</Icon>
-            </IconButton>
+        <div class="inline-flex items-center justify-start w-full h-full gap-2 p-2">
+            <Icon>{{ props.app.icon }}</Icon>
             <p class="text-rm-1 select-none">{{ props.app.label }}</p>
         </div>
-    </div>
+    </IconButton>
 </template>
 
 <script setup lang="ts">

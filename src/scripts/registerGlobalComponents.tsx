@@ -8,9 +8,7 @@ import FlexLayout from '@/layouts/FlexLayout.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
 import StickyLayout from '@/layouts/StickyLayout.vue'
 import GridLayout from '@/layouts/GridLayout.vue'
-import Icon from '@/components/icon/Icon.vue'
-import IconButton from '@/components/icon/IconButton.vue'
-
+import { Icon, IconButton, ScalingButton } from '@/components/fluent-ui/icon'
 import { App } from 'vue'
 
 export const registerGlobalComponents = {
@@ -24,6 +22,7 @@ export const registerGlobalComponents = {
             .component('GridLayout', GridLayout)
             .component('Icon', Icon)
             .component('IconButton', IconButton)
+            .component('ScalingButton', ScalingButton)
             
     },
 }

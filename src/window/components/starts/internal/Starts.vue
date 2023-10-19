@@ -60,7 +60,7 @@
                         </FlexLayout>
                         
                         <!-- Account and shutdown button -->
-                        <FlexLayout class="row-span-1 justify-between items-center bg-black/5 px-8 py-2 border-t">
+                        <FlexLayout class="row-span-1 justify-between items-center bg-black/5 px-8 border-t">
                             <SimpleUserProfile></SimpleUserProfile>
                             <ShutdownMenu></ShutdownMenu>
                         </FlexLayout>
@@ -91,8 +91,8 @@ import PinnedApps from './PinnedApps.vue';
 import SimpleUserProfile from './SimpleUserProfile.vue';
 import ShutdownMenu from './ShutdownMenu.vue';
 import StartsButton from './StartsButton.vue';
-import ApplicationListButton from '@/components/starts/application-list/ApplicationListButton.vue';
-import ApplicationList from '@/components/starts/application-list/ApplicationList.vue';
+import ApplicationListButton from '@/window/components/starts/application-list/ApplicationListButton.vue';
+import ApplicationList from '@/window/components/starts/application-list/ApplicationList.vue';
 import { useSystemStore } from '@/store/SystemStore';
 import TablePanel from '../table-panel/TablePanel.vue';
 

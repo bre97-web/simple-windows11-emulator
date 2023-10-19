@@ -1,7 +1,5 @@
 <template>
-    <IconButton
-        has-hover
-        has-active
+    <ScalingButton
         class="h-full aspect-square"
         @click="() => {
             system.setStarts({
@@ -18,7 +16,7 @@
             <div></div>
             <div></div>
             </div>
-    </IconButton>
+    </ScalingButton>
 </template>
 
 <script setup lang="ts">

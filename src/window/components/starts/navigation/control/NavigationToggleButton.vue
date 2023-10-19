@@ -1,7 +1,5 @@
 <template>
     <IconButton
-        has-hover
-        has-active
         @click="emits('setIsExpanded', !props.isExpanded)"
         class="h-full px-2"
     >

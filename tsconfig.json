@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node10",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
@@ -28,6 +28,6 @@
     },
     "allowJs": true,
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/scripts/createWindowsVueInstance.sx"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "@microsoft/fast-foundation"],
   "exclude": ["scripts"]
 }
