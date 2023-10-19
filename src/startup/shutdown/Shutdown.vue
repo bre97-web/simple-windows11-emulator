@@ -1,5 +1,5 @@
 <template>
-    <LoadingBlackScreen class="z-highest shutdown flex justify-center items-center">
+    <div class="z-highest shutdown flex justify-center items-center fixed full-screen top-0 right-0 bg-black">
 
         <template v-if="process.getAllProcesses.length === 0">
             <div class="full-screen flex flex-col items-center justify-center gap-8">
@@ -35,20 +35,19 @@
                 <div class="flex gap-2 items-center justify-end">
                     <fluent-button @click="() => {
                         process.killAllProcesses()
-                    }">End All Processes</fluent-button>
+                    }">End All Processes({{ counter }})</fluent-button>
                 </div>
             </div>
 
         </template>
         
-    </LoadingBlackScreen>
+    </div>
 </template>
 
 <script setup lang="ts">
-import LoadingBlackScreen from '@/components/boot/LoadingBlackScreen.vue'
 import { useProcessStore } from '@/store/ProcessStore'
 import { useSystemStore } from '@/store/SystemStore';
-import { onBeforeUnmount, onMounted, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 const process = useProcessStore()
 const system = useSystemStore()
@@ -60,13 +59,18 @@ watch(() => process.getAllProcesses.length, () => {
 }, { immediate: true })
 
 var timer: NodeJS.Timeout
+const counter = ref(3)
 onMounted(() => {
-    timer = setTimeout(() => {
-        process.killAllProcesses()
-    }, 120000)
+    timer = setInterval(() => {
+        counter.value --
+        if(counter.value <= -1) {
+            process.killAllProcesses()
+            clearInterval(timer)
+        }
+    }, 1000)
 })
 onBeforeUnmount(() => {
-    clearTimeout(timer)
+    clearInterval(timer)
 })
 </script>
 
