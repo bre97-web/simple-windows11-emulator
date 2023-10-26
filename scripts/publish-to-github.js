@@ -1,4 +1,4 @@
-import { github } from '../publish.config.js'
+import { github } from './publish.config.js'
 import { convert } from './publish.js'
 
-convert('./publish.json', 'base', github)
+convert('./scripts/publish.json', 'base', github)
