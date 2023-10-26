@@ -1,9 +1,8 @@
 // vite.config.js
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import publish from './publish.json'
+import react from '@vitejs/plugin-react-swc'
+import publish from './scripts/publish.json'
 
 export default defineConfig({
   resolve: {
@@ -12,16 +11,7 @@ export default defineConfig({
     }
   },
   plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: (tag: string): boolean => tag.startsWith('fluent') || tag.startsWith('md')
-        }
-      }
-    }),
-    vueJsx({
-      isCustomElement: (tag: string): boolean => tag.startsWith('fluent') || tag.startsWith('md')
-    })
+    react(),
   ],
   base: publish.base,
   root: './src',
