@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { LockScreen } from "./components/lock-screen/LockScreen";
 import { useSelector } from "react-redux";
+import { Desktop } from "./components/desktop/Desktop";
 
 function DesktopWindow({ children }: {
     children: ReactElement
@@ -19,7 +20,9 @@ export function Window() {
     return (
         <DesktopWindow>
             {
-                !userIsLogIn && <LockScreen></LockScreen>
+                !userIsLogIn ?
+                <LockScreen></LockScreen> :
+                <Desktop></Desktop>
             }
             
         </DesktopWindow>
