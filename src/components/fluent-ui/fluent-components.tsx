@@ -1,7 +1,7 @@
 /**
  * Fluent Web Components
  */
-import { useThemeStore } from "@/store/ThemeStore"
+import { useThemeStore } from "@/store/themeSlice"
 import { Slider, StandardLuminance, SwatchRGB, accentBaseColor, baseLayerLuminance } from "@fluentui/web-components"
 import { Select } from '@microsoft/fast-foundation'
 import "@melloware/coloris/dist/coloris.css";

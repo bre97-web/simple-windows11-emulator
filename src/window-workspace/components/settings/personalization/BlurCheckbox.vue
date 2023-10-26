@@ -23,3 +23,4 @@ onMounted(() => {
     (checkbox.value as HTMLElement & { checked: boolean }).checked = theme.getTheme.blurEnabled
 })
 </script>
+@/store/themeSlice

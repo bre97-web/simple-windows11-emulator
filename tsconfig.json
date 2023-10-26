@@ -35,6 +35,6 @@
     "noEmit": true,
     "noUnusedParameters": true,
   },
-  "include": ["src/"],
+  "include": ["src/**/*.tsx"],
   "exclude": ["scripts"]
 }

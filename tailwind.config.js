@@ -5,7 +5,7 @@ export default {
     important: false,
     content: [
         './src/*.html', 
-        './src/**/*.{js,jsx,ts,tsx,vue}'
+        './src/**/*.{js,jsx,ts,tsx}'
     ],
     darkMode: 'class',
     variants: {},
