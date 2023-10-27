@@ -25,6 +25,7 @@
   "files": [],
   "workspaces": [],
   "dependencies": {
+    "@fluentui/react-calendar-compat": "^0.0.2",
     "@fluentui/react-components": "^9.36.0",
     "@melloware/coloris": "^0.21.1",
     "@reduxjs/toolkit": "^1.9.7",
