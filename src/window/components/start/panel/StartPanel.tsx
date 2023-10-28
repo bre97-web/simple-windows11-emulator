@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Input, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, makeStyles, shorthands, tokens } from "@fluentui/react-components"
+import { Avatar, Button, Card, Input, Label, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, makeStyles, shorthands, tokens } from "@fluentui/react-components"
 import { 
     Search20Regular,
     Power24Regular,
@@ -6,6 +6,8 @@ import {
     PlugDisconnected20Regular,
     ArrowSyncCircle20Regular,
     NotebookSync20Regular,
+    ArrowRight16Regular,
+    ArrowLeft16Regular
 } from "@fluentui/react-icons"
 import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { FullScreenLayer } from "./FullScreenLayer"
@@ -55,7 +57,7 @@ const useStyles = makeStyles({
         alignSelf: 'center',
         ...{
             ...shorthands.padding('0'),
-            ...shorthands.overflow('auto'),
+            ...shorthands.overflow('clip', 'auto'),
         },
         '&>.header': {
             width: '100%',
@@ -66,12 +68,46 @@ const useStyles = makeStyles({
             },
         },
         '&>.body': {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
+            width: '200%',
+            position: 'relative',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
             ...{
-                ...shorthands.padding('16px'),
                 ...shorthands.overflow('auto'),
+            },
+            '&>div.movePanel.active': {
+                transform: 'translateX(-100%)',
+                animationName: {
+                    from: {
+                        transform: 'translateX(0%)'
+                    },
+                    to: {
+                        transform: 'translateX(-100%)'
+                    },
+                },
+                animationDuration: tokens.durationNormal,
+            },
+            '&>div.movePanel.inactive': {
+                transform: 'translateX(0%)',
+                animationName: {
+                    from: {
+                        transform: 'translateX(-100%)'
+                    },
+                    to: {
+                        transform: 'translateX(0%)'
+                    },
+                },
+                animationDuration: tokens.durationNormal,
+            },
+            '&>div': {
+                ...{
+                    ...shorthands.padding('0', '32px'),
+                    ...shorthands.overflow('auto'),
+                },
+            },
+            '&>div>nav': {
+                display: 'flex',
+                justifyContent: 'space-between',
             },
         },
         '&>.footer': {
@@ -80,7 +116,7 @@ const useStyles = makeStyles({
             justifyContent: 'space-between',
             alignItems: 'center',
             ...{
-                ...shorthands.padding('16px'),
+                ...shorthands.padding('16px', '32px'),
             },
         },
     },
@@ -105,7 +141,11 @@ const useStyles = makeStyles({
     }
 })
 
-
+function StartPanelContentAllAppList() {
+    return (
+        <ul></ul>
+    )
+}
 function StartPanelContentPinnedAppList() {
     return (
         <ul></ul>
@@ -157,6 +197,9 @@ function StartPanelContent({ innerRef }: {
     innerRef: MutableRefObject<undefined>
 }) {
     const clases = useStyles()
+
+    const [activeTheSecondPanel, setActiveSecondPanel] = useState(false)
+
     return (
         <Card
             ref={innerRef}
@@ -170,7 +213,34 @@ function StartPanelContent({ innerRef }: {
                 ></Input>
             </div>
             <div className="body">
-                <StartPanelContentPinnedAppList></StartPanelContentPinnedAppList>
+
+                <div className={activeTheSecondPanel ? "movePanel active" : "movePanel inactive"}>
+                    <nav>
+                        <Label>Pinned</Label>
+                        <Button
+                            appearance="secondary"
+                            icon={<ArrowRight16Regular></ArrowRight16Regular>}
+                            iconPosition="after"
+                            size="small"
+                            onClick={() => setActiveSecondPanel(true)}
+                        >All apps</Button>
+                    </nav>
+                    <StartPanelContentPinnedAppList></StartPanelContentPinnedAppList>
+                </div>
+                <div className={activeTheSecondPanel ? "movePanel active" : "movePanel inactive"}>
+                    <nav>
+                        <Label>Pinned</Label>
+                        <Button
+                            appearance="secondary"
+                            icon={<ArrowLeft16Regular></ArrowLeft16Regular>}
+                            iconPosition="before"
+                            size="small"
+                            onClick={() => setActiveSecondPanel(false)}
+                        >Back</Button>
+                    </nav>
+                    <StartPanelContentAllAppList></StartPanelContentAllAppList>
+                </div>
+
             </div>
             <div className="footer">
                 <StartPanelContentNav></StartPanelContentNav>

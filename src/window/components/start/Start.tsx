@@ -1,8 +1,8 @@
 import { makeStyles, shorthands, tokens } from "@fluentui/react-components"
 import { createContext, useContext, useState } from "react"
-import { StartButton, StartPanel } from "./StartPanel"
-import { CalendarButton, CalendarPanel } from "./CalendarPanel"
-import { NavigationButton, NavigationPanel } from "./NavigationPanel"
+import { StartButton, StartPanel } from "./panel/StartPanel"
+import { CalendarButton, CalendarPanel } from "./panel/CalendarPanel"
+import { NavigationButton, NavigationPanel } from "./panel/NavigationPanel"
 
 const useStyles = makeStyles({
     root: {
@@ -23,13 +23,25 @@ const useStyles = makeStyles({
         backgroundColor: tokens.colorNeutralBackground1,
     },
     startBarContentLayout: {
-        position: 'relative',
+        position: 'fixed',
+        bottom: '0',
+        left: '0',
         width: '100%',
-        height: '100%',
+        height: '44px',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        ...{
+            ...shorthands.padding('4px'),
+            ...shorthands.borderTop(
+                tokens.strokeWidthThin,
+                'solid',
+                tokens.colorNeutralStroke1
+            ),
+            ...shorthands.overflow('clip'),
+        },
+        backgroundColor: tokens.colorNeutralBackground1,
         '&>.left': {
             width: '100%',
             flexBasis: '3/12',
@@ -48,7 +60,7 @@ const useStyles = makeStyles({
             alignSelf: 'center',
             ...{
                 ...shorthands.gap('8px'),
-                ...shorthands.overflow('clip'),
+                // ...shorthands.overflow('clip'),
             },
             '&>div': {
                 height: '100%',
@@ -106,7 +118,7 @@ function StartBarContent() {
     } = useContext(StartBarContext)
 
     return (
-        <div className={classes.startBarContentLayout}>
+        <>
             <div className="left">
             </div>
             
@@ -121,12 +133,14 @@ function StartBarContent() {
                 <NavigationButton setActiveNavigationPanel={setActiveNavigationPanel}></NavigationButton>
                 <CalendarButton setActiveCalendarPanel={setActiveCalendarPanel}></CalendarButton>
             </div>
-        </div>
+        </>
     )
 }
 
 
-
+/**
+ * 任务栏
+ */
 export function StartBar() {
     const classes = useStyles()
 
@@ -142,7 +156,7 @@ export function StartBar() {
                 setActiveNavigationPanel
             }}
         >
-            <nav className={classes.root}>
+            <nav className={classes.startBarContentLayout}>
                 <StartBarContent></StartBarContent>
             </nav>
 
