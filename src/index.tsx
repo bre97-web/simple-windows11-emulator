@@ -6,7 +6,11 @@ import { Window } from "./window"
 import '@/assets/css/tailwind.css'
 import { Mask } from "./window-screen-mask"
 
-ReactDOM.createRoot(document.getElementById('window')!).render(
+/**
+ * The Core DOM
+ */
+const WindowInstance = ReactDOM.createRoot(document.getElementById('window')!)
+WindowInstance.render(
     <StrictMode>
         <Provider store={Store}>
             <Window></Window>
@@ -14,6 +18,9 @@ ReactDOM.createRoot(document.getElementById('window')!).render(
     </StrictMode>
 )
 
+/**
+ * The System mask: brightness, nightlight, ...
+ */
 const WindowMaskInstance = ReactDOM.createRoot(document.getElementById('window-screen-mask')!)
 WindowMaskInstance.render(
     <StrictMode>

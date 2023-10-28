@@ -1,4 +1,4 @@
-import { makeStyles, shorthands, tokens } from '@fluentui/react-components'
+import { makeStyles, shorthands } from '@fluentui/react-components'
 import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles({
@@ -24,22 +24,28 @@ export function Mask() {
 
     const brightness = useSelector(state => state.theme.brightness)
     const isNightlightEnabled = useSelector(state => state.theme.isNightlightEnabled)
+    const readyToShutdown = useSelector(state => state.system.readyToShutdown)
 
     return (
-        <div className={classes.root}>
-            
-                <div
-                    style={{
-                        backgroundColor: `rgba(0, 0, 0, ${100 - brightness}%)`,
-                    }}
-                ></div>
+        <>
+            {
+                !readyToShutdown &&
+                <div className={classes.root}>
 
-                <div
-                    style={{
-                        backgroundColor: `rgba(255, 175, 0, 0.${isNightlightEnabled ? '35' : '0'})`,
-                    }}
-                ></div>
+                    <div
+                        style={{
+                            backgroundColor: `rgba(0, 0, 0, ${100 - brightness}%)`,
+                        }}
+                    ></div>
 
-        </div>
+                    <div
+                        style={{
+                            backgroundColor: `rgba(255, 175, 0, 0.${isNightlightEnabled ? '35' : '0'})`,
+                        }}
+                    ></div>
+
+                </div>
+            }
+        </>
     )
 }

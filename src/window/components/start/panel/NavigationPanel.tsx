@@ -27,7 +27,33 @@ const useStyles = makeStyles({
         ...{
             ...shorthands.padding('0', '16px', '48px', '16px'),
             ...shorthands.overflow('auto')
-        }
+        },
+        '&.active': {
+            animationName: {
+                from: {
+                    transform: 'translateY(24px)',
+                    opacity: 0
+                },
+                to: {
+                    transform: 'translateY(0px)',
+                    opacity: 1
+                }
+            },
+            animationDuration: tokens.durationNormal,
+        },
+        '&.inactive': {
+            animationName: {
+                from: {
+                    transform: 'translateY(0px)',
+                    opacity: 1
+                },
+                to: {
+                    transform: 'translateY(24px)',
+                    opacity: 0
+                }
+            },
+            animationDuration: tokens.durationNormal,
+        },
     },
     panelContent: {
         width: '100%',
@@ -196,7 +222,7 @@ export function NavigationPanel({ setActiveNavigationPanel }: {
     return (
         <FullScreenLayer>
             <div
-                className={classes.panel + " start-panel" + (closing ? ' inactive' : ' active')}
+                className={classes.panel + (closing ? ' inactive' : ' active')}
                 onClick={e => boundClickEvent(e)}
             >
                 <NavigationPanelContent innerRef={ref}></NavigationPanelContent>

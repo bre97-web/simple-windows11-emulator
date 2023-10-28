@@ -11,6 +11,8 @@ import {
 } from "@fluentui/react-icons"
 import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { FullScreenLayer } from "./FullScreenLayer"
+import { useDispatch } from "react-redux"
+import { setRequestToShutdown } from "@/store/systemSlice"
 
 const useStyles = makeStyles({
     startButton: {
@@ -47,7 +49,33 @@ const useStyles = makeStyles({
         ...{
             ...shorthands.padding('0', '16px', '48px', '16px'),
             ...shorthands.overflow('auto')
-        }
+        },
+        '&.active': {
+            animationName: {
+                from: {
+                    transform: 'translateY(24px)',
+                    opacity: 0
+                },
+                to: {
+                    transform: 'translateY(0px)',
+                    opacity: 1
+                }
+            },
+            animationDuration: tokens.durationNormal,
+        },
+        '&.inactive': {
+            animationName: {
+                from: {
+                    transform: 'translateY(0px)',
+                    opacity: 1
+                },
+                to: {
+                    transform: 'translateY(24px)',
+                    opacity: 0
+                }
+            },
+            animationDuration: tokens.durationNormal,
+        },
     },
     startPanelContent: {
         width: '100%',
@@ -156,6 +184,8 @@ function StartPanelContentPinnedAppList() {
  * Provides a profile avatar and a shutdown button
  */
 function StartPanelContentNav() {
+    const dispatch = useDispatch()
+
     return (
         <>
             <div>
@@ -179,6 +209,7 @@ function StartPanelContentNav() {
                         >Hibernate</MenuItem>
                         <MenuItem
                             icon={<PlugDisconnected20Regular></PlugDisconnected20Regular>}
+                            onClick={() => dispatch(setRequestToShutdown(true))}
                         >Shutdown</MenuItem>
                         <MenuItem
                             icon={<ArrowSyncCircle20Regular></ArrowSyncCircle20Regular>}
@@ -277,7 +308,7 @@ export function StartPanel({ setActiveStartPanel }: {
     return (
         <FullScreenLayer>
             <div
-                className={classes.startPanel + " start-panel" + (closing ? ' inactive' : ' active')}
+                className={classes.startPanel + (closing ? ' inactive' : ' active')}
                 onClick={e => boundClickEvent(e)}
             >
                 <StartPanelContent innerRef={ref}></StartPanelContent>
