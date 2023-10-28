@@ -6,6 +6,7 @@ import { Window } from "./window"
 import '@/assets/css/tailwind.css'
 import { Mask } from "./window-screen-mask"
 import { useProcess, useProcessState } from "./hooks/useProcessState"
+import { Settings } from "./window-workspace/components/settings/Settings"
 
 /**
  * The Core DOM
@@ -48,5 +49,5 @@ const state = useProcessState(
         width: 400,
     },
 )
-const app = useProcess(state, <></>)
+const app = useProcess(state, <Settings></Settings>)
 app.mount()

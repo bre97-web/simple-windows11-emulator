@@ -1,6 +1,6 @@
 import { ProcessState } from "@/hooks/useProcessState"
 import { Store } from "@/store/store"
-import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip } from "@fluentui/react-components"
+import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip, PartialTheme, createLightTheme } from "@fluentui/react-components"
 import { MouseEventHandler, ReactElement, StrictMode, useContext, useEffect, useRef, useState } from "react"
 import { Provider, useSelector } from "react-redux"
 import {
@@ -17,6 +17,7 @@ const useStyles = makeStyles({
         ...{
             ...shorthands.borderRadius(tokens.borderRadiusMedium),
             ...shorthands.border(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStroke1),
+            ...shorthands.overflow('clip'),
         },
         animationName: {
             from: {
@@ -87,6 +88,12 @@ const useStyles = makeStyles({
         '&>.actions': {
 
         },
+    },
+    body: {
+        height: '100%',
+        ...{
+            ...shorthands.overflow('auto')
+        }
     },
 })
 
@@ -190,7 +197,7 @@ function Body({ StateContext }: {
     } = useContext(StateContext)
     
     return (
-        <main>
+        <main className={classes.body}>
             { children }
         </main>
     )
