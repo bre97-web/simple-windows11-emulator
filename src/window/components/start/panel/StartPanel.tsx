@@ -9,10 +9,13 @@ import {
     ArrowRight16Regular,
     ArrowLeft16Regular
 } from "@fluentui/react-icons"
-import { MutableRefObject, useEffect, useRef, useState } from "react"
+import { MutableRefObject, ReactElement, useEffect, useRef, useState } from "react"
 import { FullScreenLayer } from "./FullScreenLayer"
 import { useDispatch } from "react-redux"
 import { setRequestToShutdown } from "@/store/systemSlice"
+import { AvailableAppList } from "@/window-workspace"
+import { useProcess, useProcessState } from "@/hooks/useProcessState"
+import { pushProcess } from "@/store/processSlice"
 
 const useStyles = makeStyles({
     startButton: {
@@ -97,11 +100,18 @@ const useStyles = makeStyles({
         },
         '&>.body': {
             width: '200%',
+            height: '100%',
             position: 'relative',
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             ...{
-                ...shorthands.overflow('auto'),
+                ...shorthands.overflow('clip'),
+            },
+            '&>div>:first-child~*': {
+                ...{
+
+                    ...shorthands.margin('8px', '0'),
+                },
             },
             '&>div.movePanel.active': {
                 transform: 'translateX(-100%)',
@@ -131,6 +141,8 @@ const useStyles = makeStyles({
                 ...{
                     ...shorthands.padding('0', '32px'),
                     ...shorthands.overflow('auto'),
+                },
+                '&>nav~*': {
                 },
             },
             '&>div>nav': {
@@ -166,17 +178,156 @@ const useStyles = makeStyles({
             ...shorthands.padding('6px'),
 
         }
-    }
+    },
+    pinnedAppList: {
+        display: 'grid',
+        gridTemplateRows: '1fr 1fr',
+        ...{
+            ...shorthands.gap('8px'),
+        },
+        '@media (min-width: 360px)': {
+            gridTemplateColumns: '1fr 1fr 1fr',
+        },
+        '@media (min-width: 540px)': {
+            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+        },
+        '@media (min-width: 720px)': {
+            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+        },
+        '@media (min-width: 768px)': {
+            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+        },
+        '&>*': {
+            // width: '100%',
+            height: '100%',
+            aspectRatio: '1 / 1',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...{
+                ...shorthands.padding('16px'),
+                ...shorthands.gap('8px'),
+            },
+        },
+        '&>*>.icon': {
+            height: '100%',
+            aspectRatio: '1 / 1',
+        },
+        '&>*>label': {
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            fontSize: tokens.fontSizeBase200,
+            fontWeight: tokens.fontWeightRegular,
+            lineHeight: tokens.lineHeightBase200,
+        }
+    },
+    allAppList: {
+        display: 'flex',
+        flexDirection: 'column',
+        ...{
+            ...shorthands.gap('4px'),
+        },
+        '&>*>div': {
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'start',
+            ...{
+                ...shorthands.padding('4px'),
+            },
+            '&>.icon': {
+                height: '100%',
+                aspectRatio: '1 / 1',
+            },
+            '&>label': {
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                fontSize: tokens.fontSizeBase200,
+                fontWeight: tokens.fontWeightRegular,
+                lineHeight: tokens.lineHeightBase200,
+            }
+        }
+    },
 })
 
-function StartPanelContentAllAppList() {
+function StartPanelContentAllAppListItem({ e }: {
+    e: {
+        title: string,
+        element: ReactElement
+    }
+}) {
+    const dispatch = useDispatch()
+
     return (
-        <ul></ul>
+        <Button
+            appearance="subtle"
+            onClick={() => {
+                const state = useProcessState({
+                    title: e.title,
+                })
+                const instance = useProcess(state, e.element)
+                instance.mount()
+                dispatch(pushProcess(instance))
+            }}
+        >
+            <div>
+                <div className="icon"></div>
+                <Label>{ e.title }</Label>
+            </div>
+        </Button>
+    )
+}
+function StartPanelContentAllAppList() {
+    const classes = useStyles()
+
+    const list = AvailableAppList
+
+    return (
+        <ul className={classes.allAppList}>
+            {
+                list.map((e, i) => <StartPanelContentAllAppListItem key={i} e={e}></StartPanelContentAllAppListItem>)
+            }
+        </ul>
+    )
+}
+function StartPanelContentPinnedAppListItem({ e }: {
+    e: {
+        title: string,
+        element: ReactElement
+    }
+}) {
+    const dispatch = useDispatch()
+
+    return (
+        <Button
+            appearance="subtle"
+            onClick={() => {
+                const state = useProcessState({
+                    title: e.title,
+                })
+                const instance = useProcess(state, e.element)
+                instance.mount()
+                dispatch(pushProcess(instance))
+            }}        >
+            <div className="icon">
+
+            </div>
+            <Label>{e.title}</Label>
+        </Button>
     )
 }
 function StartPanelContentPinnedAppList() {
+    const classes = useStyles()
+
+    const list = AvailableAppList
     return (
-        <ul></ul>
+        <ul className={classes.pinnedAppList}>
+            {
+                list.map((e, i) => <StartPanelContentPinnedAppListItem key={i} e={e}></StartPanelContentPinnedAppListItem>)
+            }
+        </ul>
     )
 }
 
