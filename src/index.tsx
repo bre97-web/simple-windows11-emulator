@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { Window } from "./window"
 import '@/assets/css/tailwind.css'
 import { Mask } from "./window-screen-mask"
+import { useProcess, useProcessState } from "./hooks/useProcessState"
 
 /**
  * The Core DOM
@@ -29,3 +30,23 @@ WindowMaskInstance.render(
         </Provider>
     </StrictMode>
 )
+
+/**
+ * Default Actions
+ */
+const state = useProcessState(
+    {
+        icon: '',
+        title: 'D'
+    },
+    {
+        x: 0,
+        y: 0,
+    },
+    {
+        height: 400,
+        width: 400,
+    },
+)
+const app = useProcess(state, <></>)
+app.mount()
