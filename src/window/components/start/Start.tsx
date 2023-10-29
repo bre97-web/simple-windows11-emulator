@@ -137,8 +137,6 @@ function RunningAppList() {
 }
 
 function StartBarContent() {
-    const classes = useStyles()
-
     const {
         setActiveStartPanel,
         setActiveCalendarPanel,

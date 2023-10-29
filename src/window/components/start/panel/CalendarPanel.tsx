@@ -144,7 +144,7 @@ export function CalendarButton({ setActiveCalendarPanel }: {
             time.date = moment().format('mm/DD/YYYY');
 
             (ref.current as HTMLElement).children.item(0).children.item(0).innerText = time.time;
-            (ref.current as HTMLElement).children.item(0).children.item(1).innerText = time.date;
+            (ref.current as HTMLElement).children.item(0).children.item(1).innerText = time.date
         }, 1000)
 
         return () => {

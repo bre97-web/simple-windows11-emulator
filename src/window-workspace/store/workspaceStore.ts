@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { WorkspaceSlice } from "./workspaceSlice";
+import { configureStore } from "@reduxjs/toolkit"
+import { WorkspaceSlice } from "./workspaceSlice"
 
 
 export const WorkspaceStore = configureStore({

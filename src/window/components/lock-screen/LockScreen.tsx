@@ -121,7 +121,7 @@ function GraggableWindow() {
     }
     const verify = () => {
         if(grag.position.start - grag.position.end >= (grag.pageHeight / 2)) {
-           setLeaveScreenSaver(true)
+            setLeaveScreenSaver(true)
         }
     }
     return (

@@ -1,8 +1,7 @@
 import { setReadyToShutdown } from "@/store/systemSlice"
-import { Body1, Body2, Label, ProgressBar, Spinner, makeStyles, tokens } from "@fluentui/react-components"
+import { Body2, Spinner, makeStyles } from "@fluentui/react-components"
 import { useEffect } from "react"
-import ReactDOM from "react-dom/client"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 const useStyles = makeStyles({
     root: {
@@ -41,7 +40,7 @@ function SpinnerPanel() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        let timer: NodeJS.Timeout | null = setTimeout(() => {
+        const timer: NodeJS.Timeout | null = setTimeout(() => {
             dispatch(setReadyToShutdown(true))
         }, 250)
 
@@ -66,9 +65,6 @@ function SpinnerPanel() {
 export function Shutdown() {
     const classes = useStyles()
 
-    const dispatch = useDispatch()
-    const needShutdown = useSelector(state => state.system.needShutdown)
-
     const hasProssesRunning = false
 
     return (
@@ -76,8 +72,8 @@ export function Shutdown() {
 
             {
                 hasProssesRunning ?
-                <ProssesRunningPanel></ProssesRunningPanel> :
-                <SpinnerPanel></SpinnerPanel>
+                    <ProssesRunningPanel></ProssesRunningPanel> :
+                    <SpinnerPanel></SpinnerPanel>
             }
 
         </div>
