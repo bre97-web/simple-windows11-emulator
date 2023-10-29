@@ -5,13 +5,14 @@ import { Desktop } from "./components/desktop/Desktop"
 import { StartBar } from "./components/start/Start"
 import { FluentProvider, webDarkTheme, webLightTheme } from "@fluentui/react-components"
 import { Shutdown } from "./components/shutdown/Shutdown"
+import { WindowWorkspaceGroupProvider } from "@/window-workspace/components/WindowWorkspaceGroupProvider"
 
 function DesktopWindow({ children }: {
     children: ReactElement
 }) {
     return (
         <div className="overflow-clip w-screen h-screen">
-            { children }
+            {children}
         </div>
     )
 }
@@ -24,7 +25,7 @@ export function Window() {
     const readyToShutdown = useSelector(state => state.system.readyToShutdown)
 
     useEffect(() => {
-        if(readyToShutdown) {
+        if (readyToShutdown) {
             // instance.unmount()
         }
     }, [readyToShutdown])
@@ -32,24 +33,28 @@ export function Window() {
     return (
         <>
             {
-                !readyToShutdown && 
+                !readyToShutdown &&
                 <FluentProvider theme={isDarkEnabled ? webDarkTheme : webLightTheme}>
-                    <DesktopWindow>
-                        <>
-                            {
-                                userIsLogIn ?
-                                    <LockScreen></LockScreen> :
-                                    <>
-                                        <Desktop></Desktop>
-                                        <StartBar></StartBar>
-                                    </>
-                            }
-                            
-                            {
-                                requestToShutdown && <Shutdown></Shutdown>
-                            }
-                        </>
-                    </DesktopWindow>
+                    <WindowWorkspaceGroupProvider>
+
+                        <DesktopWindow>
+                            <>
+                                {
+                                    userIsLogIn ?
+                                        <LockScreen></LockScreen> :
+                                        <>
+                                            <Desktop></Desktop>
+                                            <StartBar></StartBar>
+                                        </>
+                                }
+
+                                {
+                                    requestToShutdown && <Shutdown></Shutdown>
+                                }
+                            </>
+                        </DesktopWindow>
+                    </WindowWorkspaceGroupProvider>
+
                 </FluentProvider>
             }
 

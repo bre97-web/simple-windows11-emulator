@@ -1,11 +1,12 @@
-import { ProcessState } from "@/hooks/useProcessState"
-import { Store } from "@/store/store"
-import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip, PartialTheme, createLightTheme } from "@fluentui/react-components"
+import { ProcessState, StateContextType } from "@/hooks/useProcessState"
+import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip } from "@fluentui/react-components"
 import { MouseEventHandler, ReactElement, StrictMode, useContext, useEffect, useRef, useState } from "react"
-import { Provider, useSelector } from "react-redux"
+import { Provider, useDispatch, useSelector } from "react-redux"
 import {
     ErrorCircle16Regular
 } from "@fluentui/react-icons"
+import { pushStateToProcessStates, removeStateByIdFromProcessStates, updateStateByIdFromProcessStates } from "../store/workspaceSlice"
+import { Store } from "@/store/store"
 
 const useStyles = makeStyles({
     root: {
@@ -211,21 +212,27 @@ function Window({ StateContext }: {
 }) {
 
     const windowRef = useRef()
-
-    const [closing, setClosing] = useState(false)
-    useEffect(() => {
-        if (!closing) return
-        const timer = setTimeout(() => unmount(), 250)
-        return () => {
-            clearTimeout(timer)
-        }
-    }, [closing])
-
+    const dispatch = useDispatch()
     const {
         state,
         setState,
         unmount
     } = useContext(StateContext)
+    const [closing, setClosing] = useState(false)
+    useEffect(() => {
+        if (!closing) return ;        
+        dispatch(removeStateByIdFromProcessStates({
+            id: state.process.processId
+        }))
+        const timer = setTimeout(() => {            
+            unmount()
+        }, 250)
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [closing])
+
+
 
     const onGragEvent = (e: MouseEvent): void => {
         if (state.accessibility.maximize) return
@@ -317,7 +324,10 @@ function WindowWorkspace({ StateContext }: {
 }
 
 /**
- * Trnaslate state
+ * WindowWorkspaceProvider.tsx
+ * 
+ * 此渲染函数内部维护一个state。state的数据来源自state_copy（从useProcessState），state和state_copy没有任何链接。
+ * 任何state的数据更改都应该反映到processStates（位于WindowWorkspaceGroupProvider）。
  */
 export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, children }: {
     unmount: () => void
@@ -326,7 +336,32 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
     children: ReactElement
 }) {
 
+    /**
+     * 数据来源state_copy和数据state没有任何联系，state_copy仅作为state的初始值。
+     */
     const [state, setState] = useState(state_copy)
+
+
+    
+    /**
+     * 任何state的数据更改都应该立即反映到WindowWorkspaceGroupProvider中的procesStates
+     */
+    const dispatch = useDispatch()
+    useEffect(() => {
+
+        try {
+            dispatch(pushStateToProcessStates({
+                state,
+                setState
+            }))    
+        } catch (error) {
+            dispatch(updateStateByIdFromProcessStates({
+                id: state.process.processId,
+                state: state
+            }))
+        }
+
+    }, [state])
 
     return (
         <StrictMode>
@@ -334,10 +369,7 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
                 <StateContext.Provider
                     value={{
                         state,
-                        setState: (value: React.SetStateAction<ProcessState>) => {
-                            setState(value)
-                            state_copy = state
-                        },
+                        setState,
                         unmount,
                         children
                     }}
@@ -350,11 +382,3 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
         </StrictMode >
     )
 }
-
-
-type StateContextType = React.Context<{
-    state: ProcessState
-    setState: (value: React.SetStateAction<ProcessState>) => void
-    unmount: () => void
-    children: ReactElement
-}>

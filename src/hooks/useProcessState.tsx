@@ -1,5 +1,5 @@
+import { WindowWorkspaceGroupProvider } from "@/window-workspace/components/WindowWorkspaceGroupProvider"
 import { WindowWorkspaceProvider } from "@/window-workspace/components/WindowWorkspaceProvider"
-import { Observer } from "mobx-react"
 import { ReactElement, createContext } from "react"
 import ReactDOM from "react-dom/client"
 
@@ -92,37 +92,37 @@ export function useProcessState(
         title?: string,
         icon?: string
     } = {
-        title: 'Untitled',
-        icon: ''
-    },
+            title: 'Untitled',
+            icon: ''
+        },
     positionProps: {
         x?: number,
         y?: number,
     } = {
-        x: 0,
-        y: 0,
-    },
+            x: 0,
+            y: 0,
+        },
     sizeProps: {
         width?: number,
         height?: number,
     } = {
-        width: 300,
-        height: 400,
-    },
+            width: 300,
+            height: 400,
+        },
     accessibilityProps: {
         maximizable?: boolean,
         minimizable?: boolean,
         fullscreen?: boolean,
     } = {
-        maximizable: true,
-        minimizable: true,
-        fullscreen: false,
-    },
+            maximizable: true,
+            minimizable: true,
+            fullscreen: false,
+        },
     processProps: {
         runningInBackground: boolean,
     } = {
-        runningInBackground: false,
-    },
+            runningInBackground: false,
+        },
 ) {
     return ({
         window: {
@@ -156,7 +156,18 @@ export function useProcessState(
     })
 }
 
-export function useProcess(state: ProcessState, children: ReactElement) {
+export type StateContextType = React.Context<{
+    state: ProcessState
+    setState: (value: React.SetStateAction<ProcessState>) => void
+    unmount: () => void
+    children: ReactElement
+}>
+export type UseProcessType = {
+    mount: () => void
+    unmount: () => void
+}
+
+export function useProcess(state: ProcessState, children: ReactElement): UseProcessType {
 
     const createDOM = () => {
         const target = document.createElement('div')
@@ -167,30 +178,22 @@ export function useProcess(state: ProcessState, children: ReactElement) {
     const mount = () => {
         const StateContext = createContext(null)
         instance.render(
-            <Observer
-                render={() => (
-                    <WindowWorkspaceProvider
-                        unmount={unmount}
-                        StateContext={StateContext}
-                        state_copy={state}
-                    >
-                        {children}
-                    </WindowWorkspaceProvider>
-                )
-                }
-            />
-
+            <WindowWorkspaceGroupProvider>
+                <WindowWorkspaceProvider
+                    unmount={unmount}
+                    StateContext={StateContext}
+                    state_copy={state}
+                >
+                    {children}
+                </WindowWorkspaceProvider>
+            </WindowWorkspaceGroupProvider>
         )
     }
-
-    const minimize = () => state.accessibility.minimize = true
 
     const instance = ReactDOM.createRoot(createDOM()!)
 
     return {
-        instance,
-        state,
         mount,
-        minimize
+        unmount,
     }
 }

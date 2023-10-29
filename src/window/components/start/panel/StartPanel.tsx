@@ -15,7 +15,6 @@ import { useDispatch } from "react-redux"
 import { setRequestToShutdown } from "@/store/systemSlice"
 import { AvailableAppList } from "@/window-workspace"
 import { useProcess, useProcessState } from "@/hooks/useProcessState"
-import { pushProcess } from "@/store/processSlice"
 
 const useStyles = makeStyles({
     startButton: {
@@ -258,8 +257,6 @@ function StartPanelContentAllAppListItem({ e }: {
         element: ReactElement
     }
 }) {
-    const dispatch = useDispatch()
-
     return (
         <Button
             appearance="subtle"
@@ -269,7 +266,6 @@ function StartPanelContentAllAppListItem({ e }: {
                 })
                 const instance = useProcess(state, e.element)
                 instance.mount()
-                dispatch(pushProcess(instance))
             }}
         >
             <div>
@@ -298,8 +294,6 @@ function StartPanelContentPinnedAppListItem({ e }: {
         element: ReactElement
     }
 }) {
-    const dispatch = useDispatch()
-
     return (
         <Button
             appearance="subtle"
@@ -309,8 +303,8 @@ function StartPanelContentPinnedAppListItem({ e }: {
                 })
                 const instance = useProcess(state, e.element)
                 instance.mount()
-                dispatch(pushProcess(instance))
-            }}        >
+            }}
+        >
             <div className="icon">
 
             </div>

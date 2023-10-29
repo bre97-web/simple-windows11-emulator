@@ -1,8 +1,11 @@
-import { makeStyles, shorthands, tokens } from "@fluentui/react-components"
+import { Button, makeStyles, shorthands, tokens } from "@fluentui/react-components"
 import { createContext, useContext, useState } from "react"
 import { StartButton, StartPanel } from "./panel/StartPanel"
 import { CalendarButton, CalendarPanel } from "./panel/CalendarPanel"
 import { NavigationButton, NavigationPanel } from "./panel/NavigationPanel"
+import { ProcessState } from "@/hooks/useProcessState"
+import { useDispatch, useSelector } from "react-redux"
+import { WorkspaceProcessState, updateStateByIdFromProcessStates } from "@/window-workspace/store/workspaceSlice"
 
 const useStyles = makeStyles({
     root: {
@@ -82,9 +85,10 @@ const useStyles = makeStyles({
         flexGrow: '1',
         ...{
             ...shorthands.gap('8px'),
-            ...shorthands.overflow('auto', 'hidden'),
+            // ...shorthands.overflow('auto', 'hidden'),
         },
-        '&>li': {
+        '&>*': {
+            backgroundColor: 'red',
             height: '100%',
             aspectRatio: '1/1',
             ...{
@@ -100,10 +104,38 @@ const StartBarContext = createContext(null)
 /**
  * The apps of the running in background
  */
+function RunningAppListItem({ e }: {
+    e: WorkspaceProcessState
+}) {
+    const dispatch = useDispatch()
+    return (
+        <Button
+            appearance="subtle"
+            onClick={() => {
+                dispatch(updateStateByIdFromProcessStates({
+                    id: e.state.process.processId,
+                    state: i => ({
+                        ...i,
+                        accessibility: {
+                            ...i.accessibility,
+                            minimize: !i.accessibility.minimize
+                        },
+                    })
+                }))
+            }}
+        >1</Button>
+    )
+}
 function RunningAppList() {
     const classes = useStyles()
+
+    const processStates = useSelector(s => s.workspace.processStates)
+
     return (
         <ul className={classes.runningAppList}>
+            {
+                processStates.map((e, i) => <RunningAppListItem key={i} e={e}></RunningAppListItem>)
+            }
         </ul>
     )
 }
