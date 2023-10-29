@@ -115,7 +115,7 @@ function Header({ StateContext, setClosing, onMouseDown }: {
     } = useContext(StateContext)
 
 
-    const Title = () => <Label className="title">{state.window.info.title}</Label>
+    const Title = () => <Label className="title">{state.title}</Label>
     const CloseButton = () => (
         <Tooltip
             content={"Close"}
@@ -140,10 +140,7 @@ function Header({ StateContext, setClosing, onMouseDown }: {
                 onClick={() => {
                     setState(e => ({
                         ...e,
-                        accessibility: {
-                            ...e.accessibility,
-                            minimize: true,
-                        },
+                        minimize: true,
                     }))
                 }}
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
@@ -161,10 +158,7 @@ function Header({ StateContext, setClosing, onMouseDown }: {
                 onClick={() => {
                     setState(e => ({
                         ...e,
-                        accessibility: {
-                            ...e.accessibility,
-                            maximize: !e.accessibility.maximize,
-                        },
+                        maximize: !e.maximize,
                     }))
                 }}
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
@@ -220,9 +214,9 @@ function Window({ StateContext }: {
     } = useContext(StateContext)
     const [closing, setClosing] = useState(false)
     useEffect(() => {
-        if (!closing) return ;        
+        if (!closing) return
         dispatch(removeStateByIdFromProcessStates({
-            id: state.process.processId
+            id: state.processId
         }))
         const timer = setTimeout(() => {            
             unmount()
@@ -235,7 +229,7 @@ function Window({ StateContext }: {
 
 
     const onGragEvent = (e: MouseEvent): void => {
-        if (state.accessibility.maximize) return
+        if (state.maximize) return
 
         const current: HTMLElement = windowRef.current
 
@@ -264,11 +258,9 @@ function Window({ StateContext }: {
             setState(e => ({
                 ...e,
                 window: {
-                    ...e.window,
-                    position: {
-                        x: currentDisPostion.x,
-                        y: currentDisPostion.y,
-                    }
+                    ...e,
+                    x: currentDisPostion.x,
+                    y: currentDisPostion.y,
                 }
             }))
         }
@@ -286,17 +278,17 @@ function Window({ StateContext }: {
     const windowStyles = mergeClasses(
         classes.root,
         closing && classes.willBeClosed,
-        state.accessibility.minimize && classes.minimize
+        state.minimize && classes.minimize
     )
 
     return (
         <div
             className={windowStyles}
             style={{
-                left: state.accessibility.maximize ? '0' : state.window.position.x,
-                top: state.accessibility.maximize ? '0' : state.window.position.y,
-                height: state.accessibility.maximize ? '100%' : state.window.size.height,
-                width: state.accessibility.maximize ? '100%' : state.window.size.width,
+                left: state.maximize ? '0' : state.x,
+                top: state.maximize ? '0' : state.y,
+                height: state.maximize ? '100%' : state.height,
+                width: state.maximize ? '100%' : state.width,
             }}
             ref={windowRef}
         >
@@ -356,7 +348,7 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
             }))    
         } catch (error) {
             dispatch(updateStateByIdFromProcessStates({
-                id: state.process.processId,
+                id: state.processId,
                 state: state
             }))
         }

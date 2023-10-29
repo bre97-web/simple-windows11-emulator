@@ -3,45 +3,29 @@ import { WindowWorkspaceProvider } from "@/window-workspace/components/WindowWor
 import { ReactElement, createContext } from "react"
 import ReactDOM from "react-dom/client"
 
-export type InfoProperties = {
-
-    title: string
-
-    icon: string
+export type ProcessState = {
 
     /**
-     * z-index
+     * 窗口标题和图标
+     */
+    title: string
+    icon: string | ReactElement
+
+    /**
+     * 窗口纵轴，用于确定窗口的层级
      */
     activeZIndex: number
 
-}
-export type SizeProperties = {
     width: number
     height: number
-}
-export type WindowProperties = {
-
-    /**
-     * For template of components
-     */
-    info: InfoProperties
-
-    position: PositionProperties
-
-    size: SizeProperties
-
-}
-export type PositionProperties = {
     x: number
     y: number
-}
-export type AccessibilityProperties = {
-    maximizable: boolean
-    minimizable: boolean
 
     /**
      * Window maximize and minimize
      */
+    maximizable: boolean
+    minimizable: boolean
     maximize: boolean
     minimize: boolean
 
@@ -49,16 +33,11 @@ export type AccessibilityProperties = {
      * ?
      */
     focus: boolean
-
     /**
      * It is active while mousedown
      */
     active: boolean
-
     fullscreen: boolean
-
-}
-export type ProcessProperties = {
 
     /**
      * The 'runningInBackgorund' and 'minimize' are not the same
@@ -69,17 +48,6 @@ export type ProcessProperties = {
      * Unique process id
      */
     processId: number
-
-}
-
-export type ProcessState = {
-
-    window: WindowProperties
-
-    accessibility: AccessibilityProperties
-
-    process: ProcessProperties
-
 }
 
 let processHandler: number = 0
@@ -88,71 +56,30 @@ function createProcessHandle(): number {
 }
 
 export function useProcessState(
-    infoProps: {
-        title?: string,
-        icon?: string
-    } = {
-            title: 'Untitled',
-            icon: ''
-        },
-    positionProps: {
-        x?: number,
-        y?: number,
-    } = {
-            x: 0,
-            y: 0,
-        },
-    sizeProps: {
-        width?: number,
-        height?: number,
-    } = {
-            width: 300,
-            height: 400,
-        },
-    accessibilityProps: {
-        maximizable?: boolean,
-        minimizable?: boolean,
-        fullscreen?: boolean,
-    } = {
-            maximizable: true,
-            minimizable: true,
-            fullscreen: false,
-        },
-    processProps: {
-        runningInBackground: boolean,
-    } = {
-            runningInBackground: false,
-        },
-) {
+    title = '',
+    icon = '',
+    width = 400,
+    height = 400,
+    x = 10,
+    y = 10,
+): ProcessState {
     return ({
-        window: {
-            info: {
-                title: infoProps.title,
-                icon: infoProps.icon,
-                activeZIndex: createProcessHandle(),
-            },
-            position: {
-                x: positionProps.x,
-                y: positionProps.y,
-            },
-            size: {
-                width: sizeProps.width,
-                height: sizeProps.height,
-            },
-        },
-        accessibility: {
-            maximizable: accessibilityProps.maximizable,
-            minimizable: accessibilityProps.minimizable,
-            fullscreen: accessibilityProps.fullscreen,
-            focus: false,
-            active: false,
-            maximize: false,
-            minimize: false,
-        },
-        process: {
-            runningInBackground: processProps.runningInBackground,
-            processId: createProcessHandle(),
-        },
+        title: title,
+        icon: icon,
+        activeZIndex: createProcessHandle(),
+        x: x,
+        y: y,
+        width: width,
+        height: height,
+        maximizable: true,
+        minimizable: true,
+        fullscreen: false,
+        focus: false,
+        active: false,
+        maximize: false,
+        minimize: false,
+        runningInBackground: true,
+        processId: createProcessHandle(),
     })
 }
 

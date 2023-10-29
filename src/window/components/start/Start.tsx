@@ -3,7 +3,6 @@ import { createContext, useContext, useState } from "react"
 import { StartButton, StartPanel } from "./panel/StartPanel"
 import { CalendarButton, CalendarPanel } from "./panel/CalendarPanel"
 import { NavigationButton, NavigationPanel } from "./panel/NavigationPanel"
-import { ProcessState } from "@/hooks/useProcessState"
 import { useDispatch, useSelector } from "react-redux"
 import { WorkspaceProcessState, updateStateByIdFromProcessStates } from "@/window-workspace/store/workspaceSlice"
 
@@ -113,13 +112,10 @@ function RunningAppListItem({ e }: {
             appearance="subtle"
             onClick={() => {
                 dispatch(updateStateByIdFromProcessStates({
-                    id: e.state.process.processId,
+                    id: e.state.processId,
                     state: i => ({
                         ...i,
-                        accessibility: {
-                            ...i.accessibility,
-                            minimize: !i.accessibility.minimize
-                        },
+                        minimize: !i.minimize
                     })
                 }))
             }}

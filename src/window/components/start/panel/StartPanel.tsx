@@ -261,9 +261,9 @@ function StartPanelContentAllAppListItem({ e }: {
         <Button
             appearance="subtle"
             onClick={() => {
-                const state = useProcessState({
-                    title: e.title,
-                })
+                const state = useProcessState(
+                    e.title,
+                )
                 const instance = useProcess(state, e.element)
                 instance.mount()
             }}
@@ -298,9 +298,9 @@ function StartPanelContentPinnedAppListItem({ e }: {
         <Button
             appearance="subtle"
             onClick={() => {
-                const state = useProcessState({
-                    title: e.title,
-                })
+                const state = useProcessState(
+                    e.title,
+                )
                 const instance = useProcess(state, e.element)
                 instance.mount()
             }}

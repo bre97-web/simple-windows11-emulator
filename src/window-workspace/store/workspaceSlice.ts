@@ -33,7 +33,7 @@ export const WorkspaceSlice = createSlice({
             payload: WorkspaceProcessState
         }) => {
             for(let i = 0; i < s.processStates.length; i ++) {
-                if(s.processStates[i].state.process.processId === e.payload.state.process.processId) {
+                if(s.processStates[i].state.processId === e.payload.state.processId) {
                     throw new Error("The process has been pushed in processStates Check your processId of state.")
                 }
             }
@@ -51,7 +51,7 @@ export const WorkspaceSlice = createSlice({
             }
         }) => {
             for(let i = 0; i < s.processStates.length; i ++) {
-                if(s.processStates[i].state.process.processId === e.payload.id) {
+                if(s.processStates[i].state.processId === e.payload.id) {
                     s.processStates[i].setState(e.payload.state)
                 }
             }
