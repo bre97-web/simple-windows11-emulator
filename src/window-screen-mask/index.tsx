@@ -1,5 +1,5 @@
+import { useSystemSelector } from '@/store/store'
 import { makeStyles, shorthands } from '@fluentui/react-components'
-import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles({
     root: {
@@ -22,9 +22,9 @@ const useStyles = makeStyles({
 export function Mask() {
     const classes = useStyles()
 
-    const brightness = useSelector(state => state.theme.brightness)
-    const isNightlightEnabled = useSelector(state => state.theme.isNightlightEnabled)
-    const readyToShutdown = useSelector(state => state.system.readyToShutdown)
+    const brightness = useSystemSelector(state => state.theme.brightness)
+    const isNightlightEnabled = useSystemSelector(state => state.theme.isNightlightEnabled)
+    const readyToShutdown = useSystemSelector(state => state.system.readyToShutdown)
 
     return (
         <>

@@ -1,7 +1,8 @@
-import { WindowWorkspaceGroupProvider } from "@/window-workspace/components/WindowWorkspaceGroupProvider"
-import { WindowWorkspaceProvider } from "@/window-workspace/components/WindowWorkspaceProvider"
+import { Store } from "@/store/store"
+import { WindowProvider } from "@/window-workspace/components/WindowProvider"
 import { ReactElement, StrictMode, createContext } from "react"
 import ReactDOM from "react-dom/client"
+import { Provider } from "react-redux"
 
 export type ProcessState = {
 
@@ -109,16 +110,15 @@ export function useProcess(state: ProcessState, children: ReactElement): UseProc
         const StateContext = createContext(null)
         instance.render(
             <StrictMode>
-                <WindowWorkspaceGroupProvider>
-                    <WindowWorkspaceProvider
-
+                <Provider store={Store}>
+                    <WindowProvider
                         unmount={unmount}
                         StateContext={StateContext}
                         state_copy={state}
                     >
                         {children}
-                    </WindowWorkspaceProvider>
-                </WindowWorkspaceGroupProvider>
+                    </WindowProvider>
+                </Provider>
             </StrictMode>
         )
     }

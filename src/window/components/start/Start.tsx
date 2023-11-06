@@ -3,8 +3,8 @@ import { createContext, useContext, useState } from "react"
 import { StartButton, StartPanel } from "./panel/StartPanel"
 import { CalendarButton, CalendarPanel } from "./panel/CalendarPanel"
 import { NavigationButton, NavigationPanel } from "./panel/NavigationPanel"
-import { useDispatch, useSelector } from "react-redux"
-import { WorkspaceProcessState, updateStateByIdFromProcessStates } from "@/window-workspace/store/workspaceSlice"
+import { WorkspaceProcessState, updateStateByIdFromProcessStates } from "@/store/workspaceSlice"
+import { useSystemDispatch, useSystemSelector } from "@/store/store"
 
 const useStyles = makeStyles({
     root: {
@@ -103,8 +103,7 @@ const StartBarContext = createContext(null)
 /**
  * The apps of the running in background
  */
-function RunningAppListItem({ e, onClick }: {
-    e: WorkspaceProcessState
+function RunningAppListItem({ onClick }: {
     onClick: () => void
 }) {
     return (
@@ -117,9 +116,10 @@ function RunningAppListItem({ e, onClick }: {
 function RunningAppList() {
     const classes = useStyles()
 
-    const processStates = useSelector(s => s.workspace.processStates)
-    const dispatch = useDispatch()
-console.log(processStates);
+    const {
+        processStates
+    } = useSystemSelector(s => s.workspace)
+    const dispatch = useSystemDispatch()
 
     return (
         <ul className={classes.runningAppList}>
@@ -127,7 +127,6 @@ console.log(processStates);
                 processStates.map((e: WorkspaceProcessState, i: number) => (
                     <RunningAppListItem
                         key={i}
-                        e={e}
                         onClick={() => {
                             dispatch(updateStateByIdFromProcessStates({
                                 id: e.state.processId,

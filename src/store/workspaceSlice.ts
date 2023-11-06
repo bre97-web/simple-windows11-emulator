@@ -61,8 +61,10 @@ export const WorkspaceSlice = createSlice({
                 id: number
             }
         }) => {
+            console.log(e)
+            
             s.processStates = s.processStates.filter(p => p.state.processId !== e.payload.id)
-            console.log('remove', s.processStates)
+            // console.log('remove', s.processStates)
             // for(let i = 0; i < s.processStates.length; i ++) {
             //     if(s.processStates[i].state.processId === e.payload.id) {
                     

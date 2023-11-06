@@ -5,7 +5,6 @@ import { Desktop } from "./components/desktop/Desktop"
 import { StartBar } from "./components/start/Start"
 import { FluentProvider, webDarkTheme, webLightTheme } from "@fluentui/react-components"
 import { Shutdown } from "./components/shutdown/Shutdown"
-import { WindowWorkspaceGroupProvider } from "@/window-workspace/components/WindowWorkspaceGroupProvider"
 
 function DesktopWindow({ children }: {
     children: ReactElement
@@ -35,26 +34,22 @@ export function Window() {
             {
                 !readyToShutdown &&
                 <FluentProvider theme={isDarkEnabled ? webDarkTheme : webLightTheme}>
-                    <WindowWorkspaceGroupProvider>
+                    <DesktopWindow>
+                        <>
+                            {
+                                userIsLogIn ?
+                                    <LockScreen></LockScreen> :
+                                    <>
+                                        <Desktop></Desktop>
+                                        <StartBar></StartBar>
+                                    </>
+                            }
 
-                        <DesktopWindow>
-                            <>
-                                {
-                                    userIsLogIn ?
-                                        <LockScreen></LockScreen> :
-                                        <>
-                                            <Desktop></Desktop>
-                                            <StartBar></StartBar>
-                                        </>
-                                }
-
-                                {
-                                    requestToShutdown && <Shutdown></Shutdown>
-                                }
-                            </>
-                        </DesktopWindow>
-                    </WindowWorkspaceGroupProvider>
-
+                            {
+                                requestToShutdown && <Shutdown></Shutdown>
+                            }
+                        </>
+                    </DesktopWindow>
                 </FluentProvider>
             }
 

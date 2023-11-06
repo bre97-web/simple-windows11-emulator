@@ -1,12 +1,11 @@
 import { ProcessState, StateContextType } from "@/hooks/useProcessState"
 import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip } from "@fluentui/react-components"
 import { MouseEventHandler, ReactElement, useContext, useEffect, useRef, useState } from "react"
-import { Provider, useDispatch, useSelector } from "react-redux"
 import {
     ErrorCircle16Regular
 } from "@fluentui/react-icons"
-import { pushStateToProcessStates, removeStateByIdFromProcessStates, updateStateByIdFromProcessStates } from "../store/workspaceSlice"
-import { Store } from "@/store/store"
+import { pushStateToProcessStates, removeStateByIdFromProcessStates, updateStateByIdFromProcessStates } from "../../store/workspaceSlice"
+import { useSystemDispatch, useSystemSelector } from "@/store/store"
 
 const useStyles = makeStyles({
     root: {
@@ -211,9 +210,9 @@ function Window({ StateContext }: {
         setState,
     } = useContext(StateContext)
 
-    const onGragEvent = (e: MouseEvent): void => {
+    const onGragEvent = (e: React.MouseEvent<HTMLElement, MouseEvent>) => () => {
         if (state.maximize) return
-
+        
         const current: HTMLElement = windowRef.current
 
         // 计算鼠标距离弹出框内的位置
@@ -240,11 +239,8 @@ function Window({ StateContext }: {
              */
             setState(e => ({
                 ...e,
-                window: {
-                    ...e,
-                    x: currentDisPostion.x,
-                    y: currentDisPostion.y,
-                }
+                x: currentDisPostion.x,
+                y: currentDisPostion.y,
             }))
         }
 
@@ -255,7 +251,6 @@ function Window({ StateContext }: {
 
         return
     }
-
 
     const classes = useStyles()
     const windowStyles = mergeClasses(
@@ -282,7 +277,7 @@ function Window({ StateContext }: {
                         closing: closingValue
                     }))
                 }}
-                onMouseDown={e => onGragEvent(e)}
+                onMouseDown={onGragEvent}
                 StateContext={StateContext}
             ></Header>
 
@@ -294,7 +289,7 @@ function Window({ StateContext }: {
 function WindowWorkspace({ StateContext }: {
     StateContext: StateContextType
 }) {
-    const isDarkEnabled = useSelector(state => state.theme.isDarkEnabled)
+    const isDarkEnabled = useSystemSelector(state => state.theme.isDarkEnabled)
 
     return (
         <FluentProvider theme={isDarkEnabled ? webDarkTheme : webLightTheme}>
@@ -309,7 +304,7 @@ function WindowWorkspace({ StateContext }: {
  * 此渲染函数内部维护一个state。state的数据来源自state_copy（从useProcessState），state和state_copy没有任何链接。
  * 任何state的数据更改都应该反映到processStates（位于WindowWorkspaceGroupProvider）。
  */
-export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, children }: {
+export function WindowProvider({ unmount, state_copy, StateContext, children }: {
     unmount: () => void
     state_copy: ProcessState
     StateContext: StateContextType
@@ -324,25 +319,17 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
     /**
      * 任何state的数据更改都应该立即反映到WindowWorkspaceGroupProvider中的procesStates
      */
-    const dispatch = useDispatch()
-    
+    const dispatch = useSystemDispatch()
+
     useEffect(() => {
-        if (!state.closing) {
-            return () => {
-                
-            }
-        }
         dispatch(removeStateByIdFromProcessStates({
             id: state.processId
         }))
-        const timer = setTimeout(() => {
-            unmount()
-        }, 250)
-        return () => {
-            clearTimeout(timer)
-        }
+        const timer = setTimeout(() => unmount(), 250)
+        return () => clearTimeout(timer)
     }, [state.closing])
     useEffect(() => {
+        if(state.closing) return 
         try {
             dispatch(pushStateToProcessStates({
                 state,
@@ -358,19 +345,17 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
     }, [state])
 
     return (
-        <Provider store={Store}>
-            <StateContext.Provider
-                value={{
-                    state,
-                    setState,
-                    unmount,
-                    children
-                }}
-            >
-                <WindowWorkspace
-                    StateContext={StateContext}
-                ></WindowWorkspace>
-            </StateContext.Provider>
-        </Provider>
+        <StateContext.Provider
+            value={{
+                state,
+                setState,
+                unmount,
+                children
+            }}
+        >
+            <WindowWorkspace
+                StateContext={StateContext}
+            ></WindowWorkspace>
+        </StateContext.Provider>
     )
 }
