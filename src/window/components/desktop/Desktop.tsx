@@ -18,7 +18,12 @@ export function Desktop() {
     const classes = useStyles()
 
     return (
-        <div className={classes.root}>
+        <div
+            className={classes.root}
+            style={{
+                backgroundPosition: 'center',
+            }}
+        >
             
         </div>
     )
