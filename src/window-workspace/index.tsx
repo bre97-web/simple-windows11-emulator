@@ -4,6 +4,7 @@
  */
 import { Settings } from '@/window-workspace/components/settings/Settings'
 import { Notepad } from './components/notepad/Notepad'
+import { ProcessManager } from './components/manager/ProcessManager'
 
 export const AvailableAppList = [
     {
@@ -13,6 +14,10 @@ export const AvailableAppList = [
     {
         title: 'Notepad',
         element: <Notepad></Notepad>,
+    },
+    {
+        title: 'Process Manager',
+        element: <ProcessManager></ProcessManager>,
     },
 ]
 

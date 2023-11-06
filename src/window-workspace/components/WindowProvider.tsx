@@ -101,9 +101,9 @@ const useStyles = makeStyles({
  * 窗口头部
  * 提供窗口标题、窗口行动组（最小化、最大化、关闭）
  */
-function Header({ StateContext, setClosing, onMouseDown }: {
+function Header({ StateContext, onClose, onMouseDown }: {
     StateContext: StateContextType
-    setClosing: (e: boolean) => void
+    onClose: () => void
     onMouseDown: MouseEventHandler<HTMLElement>
 }) {
     const classes = useStyles()
@@ -123,7 +123,7 @@ function Header({ StateContext, setClosing, onMouseDown }: {
         >
             <Button
                 appearance="subtle"
-                onClick={() => setClosing(true)}
+                onClick={() => onClose()}
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
             ></Button>
         </Tooltip>
@@ -251,6 +251,12 @@ function Window({ StateContext }: {
 
         return
     }
+    const onCloseWindowEvent = () => {
+        setState(e => ({
+            ...e,
+            requestClose: true
+        }))
+    }
 
     const classes = useStyles()
     const windowStyles = mergeClasses(
@@ -271,12 +277,7 @@ function Window({ StateContext }: {
             ref={windowRef}
         >
             <Header
-                setClosing={(closingValue) => {
-                    setState(e => ({
-                        ...e,
-                        closing: closingValue
-                    }))
-                }}
+                onClose={onCloseWindowEvent}
                 onMouseDown={onGragEvent}
                 StateContext={StateContext}
             ></Header>
@@ -322,15 +323,25 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
     const dispatch = useSystemDispatch()
 
     useEffect(() => {
-        if(!state.closing) return 
+        if(!state.requestClose) return () => {}
+        setState(e => ({
+            ...e,
+            closing: true
+        }))
         dispatch(removeStateByIdFromProcessStates({
             id: state.processId
         }))
-        const timer = setTimeout(() => unmount(), 250)
+        const timer = setTimeout(() => {
+            unmount()
+            setState(e => ({
+                ...e,
+                closing: false
+            }))
+        }, 250)
         return () => clearTimeout(timer)
-    }, [state.closing])
+    }, [state.requestClose])
     useEffect(() => {
-        if(state.closing) return 
+        if(state.requestClose) return 
         try {
             dispatch(pushStateToProcessStates({
                 state,
@@ -354,9 +365,7 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
                 children
             }}
         >
-            <WindowWorkspace
-                StateContext={StateContext}
-            ></WindowWorkspace>
+            <WindowWorkspace StateContext={StateContext}></WindowWorkspace>
         </StateContext.Provider>
     )
 }

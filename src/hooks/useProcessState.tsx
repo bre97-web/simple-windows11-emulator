@@ -50,6 +50,7 @@ export type ProcessState = {
      */
     processId: number
 
+    requestClose: boolean
     closing: boolean
 }
 
@@ -83,6 +84,7 @@ export function useProcessState(
         minimize: false,
         runningInBackground: true,
         processId: createProcessHandle(),
+        requestClose: false,
         closing: false
     })
 }

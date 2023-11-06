@@ -30,7 +30,7 @@ function TextArea() {
     )
 }
 
-function Context() {
+function Content() {
     const classes = useStyles()
 
     return (
@@ -44,6 +44,6 @@ function Context() {
 
 export function Notepad() {
     return (
-        <Context></Context>
+        <Content></Content>
     )
 }
