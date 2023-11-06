@@ -1,6 +1,6 @@
 import { WindowWorkspaceGroupProvider } from "@/window-workspace/components/WindowWorkspaceGroupProvider"
 import { WindowWorkspaceProvider } from "@/window-workspace/components/WindowWorkspaceProvider"
-import { ReactElement, createContext } from "react"
+import { ReactElement, StrictMode, createContext } from "react"
 import ReactDOM from "react-dom/client"
 
 export type ProcessState = {
@@ -48,6 +48,8 @@ export type ProcessState = {
      * Unique process id
      */
     processId: number
+
+    closing: boolean
 }
 
 let processHandler: number = 0
@@ -80,6 +82,7 @@ export function useProcessState(
         minimize: false,
         runningInBackground: true,
         processId: createProcessHandle(),
+        closing: false
     })
 }
 
@@ -105,15 +108,18 @@ export function useProcess(state: ProcessState, children: ReactElement): UseProc
     const mount = () => {
         const StateContext = createContext(null)
         instance.render(
-            <WindowWorkspaceGroupProvider>
-                <WindowWorkspaceProvider
-                    unmount={unmount}
-                    StateContext={StateContext}
-                    state_copy={state}
-                >
-                    {children}
-                </WindowWorkspaceProvider>
-            </WindowWorkspaceGroupProvider>
+            <StrictMode>
+                <WindowWorkspaceGroupProvider>
+                    <WindowWorkspaceProvider
+
+                        unmount={unmount}
+                        StateContext={StateContext}
+                        state_copy={state}
+                    >
+                        {children}
+                    </WindowWorkspaceProvider>
+                </WindowWorkspaceGroupProvider>
+            </StrictMode>
         )
     }
 

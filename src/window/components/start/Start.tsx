@@ -103,22 +103,14 @@ const StartBarContext = createContext(null)
 /**
  * The apps of the running in background
  */
-function RunningAppListItem({ e }: {
+function RunningAppListItem({ e, onClick }: {
     e: WorkspaceProcessState
+    onClick: () => void
 }) {
-    const dispatch = useDispatch()
     return (
         <Button
             appearance="subtle"
-            onClick={() => {
-                dispatch(updateStateByIdFromProcessStates({
-                    id: e.state.processId,
-                    state: i => ({
-                        ...i,
-                        minimize: !i.minimize
-                    })
-                }))
-            }}
+            onClick={onClick}
         >1</Button>
     )
 }
@@ -126,11 +118,27 @@ function RunningAppList() {
     const classes = useStyles()
 
     const processStates = useSelector(s => s.workspace.processStates)
+    const dispatch = useDispatch()
+console.log(processStates);
 
     return (
         <ul className={classes.runningAppList}>
             {
-                processStates.map((e, i) => <RunningAppListItem key={i} e={e}></RunningAppListItem>)
+                processStates.map((e: WorkspaceProcessState, i: number) => (
+                    <RunningAppListItem
+                        key={i}
+                        e={e}
+                        onClick={() => {
+                            dispatch(updateStateByIdFromProcessStates({
+                                id: e.state.processId,
+                                state: i => ({
+                                    ...i,
+                                    minimize: !i.minimize
+                                })
+                            }))
+                        }}
+                    ></RunningAppListItem>
+                ))
             }
         </ul>
     )

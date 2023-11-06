@@ -1,6 +1,6 @@
 import { ProcessState, StateContextType } from "@/hooks/useProcessState"
 import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip } from "@fluentui/react-components"
-import { MouseEventHandler, ReactElement, StrictMode, useContext, useEffect, useRef, useState } from "react"
+import { MouseEventHandler, ReactElement, useContext, useEffect, useRef, useState } from "react"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import {
     ErrorCircle16Regular
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         userSelect: 'none',
         resize: "both",
         ...{
-            ...shorthands.borderRadius(tokens.borderRadiusMedium),
+            ...shorthands.borderRadius(tokens.borderRadiusLarge),
             ...shorthands.border(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStroke1),
             ...shorthands.overflow('clip'),
         },
@@ -206,27 +206,10 @@ function Window({ StateContext }: {
 }) {
 
     const windowRef = useRef()
-    const dispatch = useDispatch()
     const {
         state,
         setState,
-        unmount
     } = useContext(StateContext)
-    const [closing, setClosing] = useState(false)
-    useEffect(() => {
-        if (!closing) return
-        dispatch(removeStateByIdFromProcessStates({
-            id: state.processId
-        }))
-        const timer = setTimeout(() => {            
-            unmount()
-        }, 250)
-        return () => {
-            clearTimeout(timer)
-        }
-    }, [closing])
-
-
 
     const onGragEvent = (e: MouseEvent): void => {
         if (state.maximize) return
@@ -277,7 +260,7 @@ function Window({ StateContext }: {
     const classes = useStyles()
     const windowStyles = mergeClasses(
         classes.root,
-        closing && classes.willBeClosed,
+        state.closing && classes.willBeClosed,
         state.minimize && classes.minimize
     )
 
@@ -293,7 +276,12 @@ function Window({ StateContext }: {
             ref={windowRef}
         >
             <Header
-                setClosing={setClosing}
+                setClosing={(closingValue) => {
+                    setState(e => ({
+                        ...e,
+                        closing: closingValue
+                    }))
+                }}
                 onMouseDown={e => onGragEvent(e)}
                 StateContext={StateContext}
             ></Header>
@@ -333,14 +321,28 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
      */
     const [state, setState] = useState(state_copy)
 
-
-    
     /**
      * 任何state的数据更改都应该立即反映到WindowWorkspaceGroupProvider中的procesStates
      */
     const dispatch = useDispatch()
+    
     useEffect(() => {
-
+        if (!state.closing) {
+            return () => {
+                
+            }
+        }
+        dispatch(removeStateByIdFromProcessStates({
+            id: state.processId
+        }))
+        const timer = setTimeout(() => {
+            unmount()
+        }, 250)
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [state.closing])
+    useEffect(() => {
         try {
             dispatch(pushStateToProcessStates({
                 state,
@@ -356,21 +358,19 @@ export function WindowWorkspaceProvider({ unmount, state_copy, StateContext, chi
     }, [state])
 
     return (
-        <StrictMode>
-            <Provider store={Store}>
-                <StateContext.Provider
-                    value={{
-                        state,
-                        setState,
-                        unmount,
-                        children
-                    }}
-                >
-                    <WindowWorkspace
-                        StateContext={StateContext}
-                    ></WindowWorkspace>
-                </StateContext.Provider>
-            </Provider>
-        </StrictMode >
+        <Provider store={Store}>
+            <StateContext.Provider
+                value={{
+                    state,
+                    setState,
+                    unmount,
+                    children
+                }}
+            >
+                <WindowWorkspace
+                    StateContext={StateContext}
+                ></WindowWorkspace>
+            </StateContext.Provider>
+        </Provider>
     )
 }
