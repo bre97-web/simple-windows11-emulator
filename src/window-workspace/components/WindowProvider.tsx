@@ -210,7 +210,7 @@ function Window({ StateContext }: {
         setState,
     } = useContext(StateContext)
 
-    const onGragEvent = (e: React.MouseEvent<HTMLElement, MouseEvent>) => () => {
+    const onGragEvent = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         if (state.maximize) return
         
         const current: HTMLElement = windowRef.current
@@ -322,6 +322,7 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
     const dispatch = useSystemDispatch()
 
     useEffect(() => {
+        if(!state.closing) return 
         dispatch(removeStateByIdFromProcessStates({
             id: state.processId
         }))
