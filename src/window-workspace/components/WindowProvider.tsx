@@ -101,9 +101,8 @@ const useStyles = makeStyles({
  * 窗口头部
  * 提供窗口标题、窗口行动组（最小化、最大化、关闭）
  */
-function Header({ StateContext, onClose, onMouseDown }: {
+function Header({ StateContext, onMouseDown }: {
     StateContext: StateContextType
-    onClose: () => void
     onMouseDown: MouseEventHandler<HTMLElement>
 }) {
     const classes = useStyles()
@@ -123,7 +122,12 @@ function Header({ StateContext, onClose, onMouseDown }: {
         >
             <Button
                 appearance="subtle"
-                onClick={() => onClose()}
+                onMouseUp={() => {
+                    setState(e => ({
+                        ...e,
+                        requestClose: true
+                    }))
+                }}
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
             ></Button>
         </Tooltip>
@@ -136,7 +140,7 @@ function Header({ StateContext, onClose, onMouseDown }: {
         >
             <Button
                 appearance="subtle"
-                onClick={() => {
+                onMouseUp={() => {
                     setState(e => ({
                         ...e,
                         minimize: true,
@@ -154,7 +158,7 @@ function Header({ StateContext, onClose, onMouseDown }: {
         >
             <Button
                 appearance="subtle"
-                onClick={() => {
+                onMouseUp={() => {
                     setState(e => ({
                         ...e,
                         maximize: !e.maximize,
@@ -189,10 +193,10 @@ function Body({ StateContext }: {
     const {
         children
     } = useContext(StateContext)
-    
+
     return (
         <main className={classes.body}>
-            { children }
+            {children}
         </main>
     )
 }
@@ -212,7 +216,7 @@ function Window({ StateContext }: {
 
     const onGragEvent = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         if (state.maximize) return
-        
+
         const current: HTMLElement = windowRef.current
 
         // 计算鼠标距离弹出框内的位置
@@ -251,12 +255,6 @@ function Window({ StateContext }: {
 
         return
     }
-    const onCloseWindowEvent = () => {
-        setState(e => ({
-            ...e,
-            requestClose: true
-        }))
-    }
 
     const dispatch = useSystemDispatch()
     const onActiveWindowEvent = () => {
@@ -293,10 +291,9 @@ function Window({ StateContext }: {
                 zIndex: state.active ? 1000 : '',
             }}
             ref={windowRef}
-            onMouseDown={onActiveWindowEvent}
+            onMouseDownCapture={onActiveWindowEvent}
         >
             <Header
-                onClose={onCloseWindowEvent}
                 onMouseDown={onGragEvent}
                 StateContext={StateContext}
             ></Header>
@@ -342,7 +339,7 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
     const dispatch = useSystemDispatch()
 
     useEffect(() => {
-        if(!state.requestClose) return () => {}
+        if (!state.requestClose) return () => { }
         setState(e => ({
             ...e,
             closing: true
@@ -360,12 +357,12 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
         return () => clearTimeout(timer)
     }, [state.requestClose])
     useEffect(() => {
-        if(state.requestClose) return 
+        if (state.requestClose) return
         try {
             dispatch(pushStateToProcessStates({
                 state,
                 setState
-            }))    
+            }))
         } catch (error) {
             dispatch(updateStateByIdFromProcessStates({
                 id: state.processId,
