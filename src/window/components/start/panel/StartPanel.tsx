@@ -26,8 +26,8 @@ const useStyles = makeStyles({
         gridTemplateRows: '1fr 1fr',
         ...{
             ...shorthands.borderRadius(tokens.borderRadiusSmall),
-            ...shorthands.gap('1.25px'),
             ...shorthands.overflow('clip'),
+            ...shorthands.gap('1.25px'),
         },
         '&>:first-child': {
             backgroundColor: '#09e3f0',
@@ -160,47 +160,15 @@ const useStyles = makeStyles({
             },
         },
     },
-    scalingButton: {
-        '&>div': {
-            transitionDuration: tokens.durationNormal
-        },
-        '&:active>div': {
-            scale: '0.75'
-        },
-        '&:hover': {
-            backgroundColor: tokens.colorNeutralBackground1Hover,
-            ...{
-                ...shorthands.outline(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStroke2),
-            }
-        },
-        ...{
-            ...shorthands.borderRadius(tokens.borderRadiusMedium),
-            ...shorthands.padding('6px'),
-
-        }
-    },
     pinnedAppList: {
-        display: 'grid',
-        gridTemplateRows: '1fr 1fr',
+        display: 'flex',
+        flexWrap: 'wrap',
         ...{
             ...shorthands.gap('8px'),
         },
-        '@media (min-width: 360px)': {
-            gridTemplateColumns: '1fr 1fr 1fr',
-        },
-        '@media (min-width: 540px)': {
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-        },
-        '@media (min-width: 720px)': {
-            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
-        },
-        '@media (min-width: 768px)': {
-            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
-        },
         '&>*': {
-            // width: '100%',
-            height: '100%',
-            aspectRatio: '1 / 1',
+            height: '64px',
+            aspectRatio: '1 / 1.25',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -208,6 +176,7 @@ const useStyles = makeStyles({
             ...{
                 ...shorthands.padding('16px'),
                 ...shorthands.gap('8px'),
+                ...shorthands.overflow('clip'),
             },
         },
         '&>*>.icon': {
@@ -236,6 +205,7 @@ const useStyles = makeStyles({
             justifyContent: 'start',
             ...{
                 ...shorthands.padding('4px'),
+                ...shorthands.gap('4px'),
             },
             '&>.icon': {
                 height: '100%',
@@ -250,12 +220,21 @@ const useStyles = makeStyles({
             }
         }
     },
+    scalingButton: {
+        '&>div': {
+            transitionDuration: tokens.durationNormal
+        },
+        '&:active>div': {
+            scale: '0.75'
+        },
+    },
 })
 
 function StartPanelContentAllAppListItem({ e }: {
     e: {
         title: string,
-        element: ReactElement
+        element: ReactElement,
+        icon: ReactElement
     }
 }) {
     return (
@@ -264,13 +243,16 @@ function StartPanelContentAllAppListItem({ e }: {
             onClick={() => {
                 const state = useProcessState(
                     e.title,
+                    e.icon
                 )
                 const instance = useProcess(state, e.element)
                 instance.mount()
             }}
         >
             <div>
-                <div className="icon"></div>
+                <div className="icon">
+                    { e.icon }
+                </div>
                 <Label>{e.title}</Label>
             </div>
         </Button>
@@ -292,22 +274,27 @@ function StartPanelContentAllAppList() {
 function StartPanelContentPinnedAppListItem({ e }: {
     e: {
         title: string,
-        element: ReactElement
+        element: ReactElement,
+        icon: ReactElement
     }
 }) {
+    const classes = useStyles()
+
     return (
         <Button
+            className={classes.scalingButton}
             appearance="subtle"
             onClick={() => {
                 const state = useProcessState(
                     e.title,
+                    e.icon
                 )
                 const instance = useProcess(state, e.element)
                 instance.mount()
             }}
         >
             <div className="icon">
-
+                { e.icon }
             </div>
             <Label>{e.title}</Label>
         </Button>
@@ -485,13 +472,13 @@ function StartIcon() {
         </div>
     )
 }
-export function StartButton({ setActiveStartPanel }: {
+export function StartButton({ className, setActiveStartPanel }: {
+    className: string
     setActiveStartPanel: (value: (e: boolean) => boolean) => void
 }) {
-    const classes = useStyles()
     return (
         <div
-            className={classes.scalingButton}
+            className={className}
             onClick={() => {
                 setActiveStartPanel(e => !e)
             }}

@@ -1,5 +1,5 @@
-import { Button, makeStyles, shorthands, tokens } from "@fluentui/react-components"
-import { createContext, useContext, useState } from "react"
+import { makeStyles, shorthands, tokens } from "@fluentui/react-components"
+import { ReactElement, createContext, useContext, useState } from "react"
 import { StartButton, StartPanel } from "./panel/StartPanel"
 import { CalendarButton, CalendarPanel } from "./panel/CalendarPanel"
 import { NavigationButton, NavigationPanel } from "./panel/NavigationPanel"
@@ -7,23 +7,6 @@ import { WorkspaceProcessState, updateStateByIdFromProcessStates } from "@/store
 import { useSystemDispatch, useSystemSelector } from "@/store/store"
 
 const useStyles = makeStyles({
-    root: {
-        height: '44px',
-        width: '100vw',
-        position: 'fixed',
-        bottom: '0',
-        left: '0',
-        ...{
-            ...shorthands.padding('4px'),
-            ...shorthands.borderTop(
-                tokens.strokeWidthThin,
-                'solid',
-                tokens.colorNeutralStroke1
-            ),
-            ...shorthands.overflow('clip'),
-        },
-        backgroundColor: tokens.colorNeutralBackground1,
-    },
     startBarContentLayout: {
         position: 'fixed',
         bottom: '0',
@@ -34,6 +17,8 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        backgroundColor: tokens.colorNeutralBackgroundAlpha2,
+        backdropFilter: 'blur(16px)',
         ...{
             ...shorthands.padding('4px'),
             ...shorthands.borderTop(
@@ -43,31 +28,38 @@ const useStyles = makeStyles({
             ),
             ...shorthands.overflow('clip'),
         },
-        backgroundColor: tokens.colorNeutralBackground1,
         '&>.left': {
             width: '100%',
             flexBasis: '3/12',
             display: 'none',
-            '@media (min-width: 360px)': {
+            '@media (min-width: 720px)': {
                 display: 'block'
             },
         },
         '&>.center': {
             flexBasis: '6/12',
+            '@media (min-width: 720px)': {
+                flexBasis: '9/12',
+                justifyContent: 'center',
+                alignItems: 'center',
+            },
             width: '100%',
             height: '100%',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            ...{
-                ...shorthands.gap('8px'),
-                // ...shorthands.overflow('clip'),
-            },
+            justifyContent: 'start',
+            alignItems: 'start',
             '&>div': {
                 height: '100%',
-                aspectRatio: '1/1',
+                display: 'flex',
+                ...{
+                    ...shorthands.padding('1px'),
+                    ...shorthands.overflow('auto')
+                }
             },
+            ...{
+                ...shorthands.overflow('auto')
+
+            }
         },
         '&>.right': {
             width: '100%',
@@ -81,21 +73,35 @@ const useStyles = makeStyles({
     runningAppList: {
         height: '100%',
         display: 'flex',
-        flexGrow: '1',
         ...{
-            ...shorthands.gap('8px'),
-            // ...shorthands.overflow('auto', 'hidden'),
+            ...shorthands.gap('4px'),
         },
-        '&>*': {
-            backgroundColor: 'red',
+        '&>li': {
             height: '100%',
             aspectRatio: '1/1',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+    },
+    scalingButton: {
+        '&>div': {
+            transitionDuration: tokens.durationNormal
+        },
+        '&:active>div': {
+            scale: '0.75'
+        },
+        '&:hover': {
+            backgroundColor: tokens.colorNeutralBackground1Hover,
             ...{
-                ...shorthands.flex('none'),
-                ...shorthands.overflow('none'),
+                ...shorthands.outline(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStroke2),
             }
+        },
+        ...{
+            ...shorthands.borderRadius(tokens.borderRadiusMedium),
+            ...shorthands.padding('6px'),            
         }
-    }
+    },
 })
 
 const StartBarContext = createContext(null)
@@ -103,14 +109,18 @@ const StartBarContext = createContext(null)
 /**
  * The apps of the running in background
  */
-function RunningAppListItem({ onClick }: {
+function RunningAppListItem({ icon, onClick }: {
+    icon: ReactElement,
     onClick: () => void
 }) {
+    const classes = useStyles()
+
     return (
-        <Button
-            appearance="subtle"
-            onClick={onClick}
-        >1</Button>
+        <li className={classes.scalingButton}>
+            <div onClick={onClick}>
+                { icon }
+            </div>
+        </li>
     )
 }
 function RunningAppList() {
@@ -122,11 +132,14 @@ function RunningAppList() {
     const dispatch = useSystemDispatch()
 
     return (
-        <ul className={classes.runningAppList}>
+        <ul
+            className={classes.runningAppList}
+        >
             {
                 processStates.map((e: WorkspaceProcessState, i: number) => (
                     <RunningAppListItem
                         key={i}
+                        icon={e.state.icon}
                         onClick={() => {
                             dispatch(updateStateByIdFromProcessStates({
                                 id: e.state.processId,
@@ -144,6 +157,8 @@ function RunningAppList() {
 }
 
 function StartBarContent() {
+    const classes = useStyles()  
+
     const {
         setActiveStartPanel,
         setActiveCalendarPanel,
@@ -156,8 +171,11 @@ function StartBarContent() {
             </div>
             
             <div className="center">
-                <div className="flex h-full">
-                    <StartButton setActiveStartPanel={setActiveStartPanel}></StartButton>
+                <div>
+                    <StartButton
+                        className={classes.scalingButton}
+                        setActiveStartPanel={setActiveStartPanel}
+                    ></StartButton>
                     <RunningAppList></RunningAppList>
                 </div>
             </div>

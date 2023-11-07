@@ -10,7 +10,7 @@ export type ProcessState = {
      * 窗口标题和图标
      */
     title: string
-    icon: string | ReactElement
+    icon: ReactElement
 
     /**
      * 窗口纵轴，用于确定窗口的层级
@@ -61,7 +61,7 @@ function createProcessHandle(): number {
 
 export function useProcessState(
     title = '',
-    icon = '',
+    icon: ReactElement,
     width = 400,
     height = 400,
     x = 10,
