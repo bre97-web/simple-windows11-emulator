@@ -6,7 +6,7 @@ const useStyles = makeStyles({
         height: '100svh',
         width: '100%',
         position: 'fixed',
-        zIndex: '0',
+        zIndex: '9999',
         top: '0',
         left: '0'
     },

@@ -3,10 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 import React from "react"
 
 /**
- * WindowWorkspaceGroupProvider.tsx
- * 
  * 此文件内部维护了一个名为processStates的数组。
- * 通过此渲染函数向外公开所有的WindowWorkspaceProvider对象的state和setState。
+ * 通过此渲染函数向外公开所有的WindowProvider对象的state和setState。
  * 
  * 请确保processStates内部的数据对最新，且不存在（或短时间内不存在）无效数据。
  * 为了确保processStates内部的数据是有效的，请确保：
@@ -63,11 +61,26 @@ export const WorkspaceSlice = createSlice({
         }) => {
             s.processStates = s.processStates.filter(p => p.state.processId !== e.payload.id)
         },
+
+        /**
+         * 将指定id的程序的属性设置
+         */
+        updatePropertyForAllProcessState: (s, e: {
+            payload: {
+                properties: object
+            }
+        }) => {
+            s.processStates.map(item => item.setState(last => ({
+                ...last,
+                ...e.payload.properties
+            })))
+        }
     }
 })
 
 export const {
     pushStateToProcessStates,
     updateStateByIdFromProcessStates,
-    removeStateByIdFromProcessStates
+    removeStateByIdFromProcessStates,
+    updatePropertyForAllProcessState
 } = WorkspaceSlice.actions

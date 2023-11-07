@@ -3,7 +3,7 @@ import { ReactElement, createContext, useContext, useState } from "react"
 import { StartButton, StartPanel } from "./panel/StartPanel"
 import { CalendarButton, CalendarPanel } from "./panel/CalendarPanel"
 import { NavigationButton, NavigationPanel } from "./panel/NavigationPanel"
-import { WorkspaceProcessState, updateStateByIdFromProcessStates } from "@/store/workspaceSlice"
+import { WorkspaceProcessState, updatePropertyForAllProcessState, updateStateByIdFromProcessStates } from "@/store/workspaceSlice"
 import { useSystemDispatch, useSystemSelector } from "@/store/store"
 
 const useStyles = makeStyles({
@@ -19,6 +19,7 @@ const useStyles = makeStyles({
         justifyContent: 'space-between',
         backgroundColor: tokens.colorNeutralBackgroundAlpha2,
         backdropFilter: 'blur(16px)',
+        zIndex: '9999',
         ...{
             ...shorthands.padding('4px'),
             ...shorthands.borderTop(
@@ -116,8 +117,8 @@ function RunningAppListItem({ icon, onClick }: {
     const classes = useStyles()
 
     return (
-        <li className={classes.scalingButton}>
-            <div onClick={onClick}>
+        <li className={classes.scalingButton} onClick={onClick}>
+            <div>
                 { icon }
             </div>
         </li>
@@ -141,11 +142,17 @@ function RunningAppList() {
                         key={i}
                         icon={e.state.icon}
                         onClick={() => {
+                            dispatch(updatePropertyForAllProcessState({
+                                properties: ({
+                                    active: false
+                                })
+                            }))
                             dispatch(updateStateByIdFromProcessStates({
                                 id: e.state.processId,
                                 state: i => ({
                                     ...i,
-                                    minimize: !i.minimize
+                                    minimize: !i.minimize,
+                                    active: true
                                 })
                             }))
                         }}

@@ -4,7 +4,7 @@ import { MouseEventHandler, ReactElement, useContext, useEffect, useRef, useStat
 import {
     ErrorCircle16Regular
 } from "@fluentui/react-icons"
-import { pushStateToProcessStates, removeStateByIdFromProcessStates, updateStateByIdFromProcessStates } from "../../store/workspaceSlice"
+import { pushStateToProcessStates, removeStateByIdFromProcessStates, updatePropertyForAllProcessState, updateStateByIdFromProcessStates } from "../../store/workspaceSlice"
 import { useSystemDispatch, useSystemSelector } from "@/store/store"
 
 const useStyles = makeStyles({
@@ -258,6 +258,22 @@ function Window({ StateContext }: {
         }))
     }
 
+    const dispatch = useSystemDispatch()
+    const onActiveWindowEvent = () => {
+        dispatch(updatePropertyForAllProcessState({
+            properties: ({
+                active: false
+            })
+        }))
+        dispatch(updateStateByIdFromProcessStates({
+            id: state.processId,
+            state: ({
+                ...state,
+                active: true
+            })
+        }))
+    }
+
     const classes = useStyles()
     const windowStyles = mergeClasses(
         classes.root,
@@ -273,8 +289,11 @@ function Window({ StateContext }: {
                 top: state.maximize ? '0' : state.y,
                 height: state.maximize ? '100%' : state.height,
                 width: state.maximize ? '100%' : state.width,
+                boxShadow: state.active ? tokens.shadow16 : '',
+                zIndex: state.active ? 1000 : '',
             }}
             ref={windowRef}
+            onMouseDown={onActiveWindowEvent}
         >
             <Header
                 onClose={onCloseWindowEvent}
@@ -355,6 +374,21 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
         }
 
     }, [state])
+
+    useEffect(() => {
+        dispatch(updatePropertyForAllProcessState({
+            properties: ({
+                active: false
+            })
+        }))
+        dispatch(updateStateByIdFromProcessStates({
+            id: state.processId,
+            state: ({
+                ...state,
+                active: true
+            })
+        }))
+    }, [])
 
     return (
         <StateContext.Provider
