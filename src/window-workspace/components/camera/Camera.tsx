@@ -1,8 +1,8 @@
 import { Button } from "@fluentui/react-components"
-import { useEffect, useRef } from "react"
+import { MutableRefObject, useEffect, useRef } from "react"
 
 function Photos({ innerRef }: {
-    innerRef: React.MutableRefObject<undefined>
+    innerRef: MutableRefObject<HTMLDivElement | undefined>
 }) {
 
     return (
@@ -24,7 +24,7 @@ function TakePhotoButton({ onPhotoTake }: {
     )
 }
 function Video({ innerRef }: {
-    innerRef: React.MutableRefObject<undefined>
+    innerRef: MutableRefObject<HTMLVideoElement | undefined>
 }) {
     return (
         <video
@@ -34,8 +34,8 @@ function Video({ innerRef }: {
 }
 
 export function Camera() {
-    const cameraRef = useRef()
-    const photoRef = useRef()
+    const cameraRef: MutableRefObject<HTMLVideoElement | undefined> = useRef()
+    const photoRef: MutableRefObject<HTMLDivElement | undefined> = useRef()
 
     /**
      * Request Permission
@@ -60,11 +60,8 @@ export function Camera() {
         }
     })
 
-
-
-
     const onPhotoTakeEvent = () => {
-        let canvas = document.createElement('canvas')
+        const canvas = document.createElement('canvas')
         canvas.getContext('2d').drawImage(cameraRef.current, 0, 0, canvas.width, canvas.height)
         canvas.style.width = '8rem'
         canvas.style.aspectRatio = '1 / 1'
