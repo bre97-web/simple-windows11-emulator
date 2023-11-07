@@ -1,5 +1,5 @@
 import { Avatar, Button, Card, Input, Label, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, makeStyles, shorthands, tokens } from "@fluentui/react-components"
-import { 
+import {
     Search20Regular,
     Power24Regular,
     Sleep20Regular,
@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux"
 import { setRequestToShutdown } from "@/store/systemSlice"
 import { AvailableAppList } from "@/window-workspace"
 import { useProcess, useProcessState } from "@/hooks/useProcessState"
+import { setIsLogIn } from "@/store/accountSlice"
 
 const useStyles = makeStyles({
     startButton: {
@@ -270,7 +271,7 @@ function StartPanelContentAllAppListItem({ e }: {
         >
             <div>
                 <div className="icon"></div>
-                <Label>{ e.title }</Label>
+                <Label>{e.title}</Label>
             </div>
         </Button>
     )
@@ -334,7 +335,19 @@ function StartPanelContentNav() {
     return (
         <>
             <div>
-                <Avatar></Avatar>
+                <Menu>
+                    <MenuTrigger disableButtonEnhancement>
+                        <Avatar></Avatar>
+                    </MenuTrigger>
+                    <MenuPopover>
+                        <MenuList>
+                            <MenuItem
+                                icon={<Sleep20Regular></Sleep20Regular>}
+                                onClick={() => dispatch(setIsLogIn(false))}
+                            >Logout</MenuItem>
+                        </MenuList>
+                    </MenuPopover>
+                </Menu>
             </div>
 
             <Menu>
@@ -431,21 +444,21 @@ export function StartPanel({ setActiveStartPanel }: {
     const classes = useStyles()
     const ref = useRef()
     const [closing, setClosing] = useState(false)
-    
+
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null
-        if(closing) {
+        if (closing) {
             timer = setTimeout(() => setActiveStartPanel(false), 150)
         }
         return () => {
-            if(timer !== null) {
+            if (timer !== null) {
                 clearTimeout(timer)
             }
         }
     }, [closing])
 
     const boundClickEvent = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if(!(ref.current as HTMLElement).contains((e.target as HTMLElement))) {
+        if (!(ref.current as HTMLElement).contains((e.target as HTMLElement))) {
             setClosing(true)
         }
     }

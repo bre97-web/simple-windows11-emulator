@@ -1,10 +1,10 @@
 import { ReactElement, useEffect } from "react"
 import { LockScreen } from "./components/lock-screen/LockScreen"
-import { useSelector } from "react-redux"
 import { Desktop } from "./components/desktop/Desktop"
 import { StartBar } from "./components/start/Start"
 import { FluentProvider, webDarkTheme, webLightTheme } from "@fluentui/react-components"
 import { Shutdown } from "./components/shutdown/Shutdown"
+import { useSystemSelector } from "@/store/store"
 
 function DesktopWindow({ children }: {
     children: ReactElement
@@ -18,10 +18,10 @@ function DesktopWindow({ children }: {
 
 export function Window() {
 
-    const userIsLogIn = useSelector(state => state.account.isLogIn)
-    const isDarkEnabled = useSelector(state => state.theme.isDarkEnabled)
-    const requestToShutdown = useSelector(state => state.system.requestToShutdown)
-    const readyToShutdown = useSelector(state => state.system.readyToShutdown)
+    const userIsLogIn = useSystemSelector(state => state.account.isLogIn)
+    const isDarkEnabled = useSystemSelector(state => state.theme.isDarkEnabled)
+    const requestToShutdown = useSystemSelector(state => state.system.requestToShutdown)
+    const readyToShutdown = useSystemSelector(state => state.system.readyToShutdown)
 
     useEffect(() => {
         if (readyToShutdown) {
@@ -37,7 +37,7 @@ export function Window() {
                     <DesktopWindow>
                         <>
                             {
-                                userIsLogIn ?
+                                !userIsLogIn ?
                                     <LockScreen></LockScreen> :
                                     <>
                                         <Desktop></Desktop>

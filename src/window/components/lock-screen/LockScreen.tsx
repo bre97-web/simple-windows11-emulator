@@ -1,12 +1,12 @@
 import { setIsLogIn } from "@/store/accountSlice"
-import { makeStyles, tokens, shorthands, Avatar, Button, Input } from "@fluentui/react-components"
+import { useSystemDispatch, useSystemSelector } from "@/store/store"
+import { makeStyles, tokens, shorthands, Avatar, Button, Input, Title1, Label } from "@fluentui/react-components"
 import { 
     ArrowRight16Regular,
     Password16Regular
 } from "@fluentui/react-icons"
 import moment from "moment"
-import { useEffect, useState, createContext, useContext } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState, createContext, useContext, useRef, useMemo } from "react"
 
 const useStyles = makeStyles({
     root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         width: '100%',
         ...{
             ...shorthands.overflow('clip'),
-        }
+        },
     },
     screenSaver: {
         display: 'flex',
@@ -32,6 +32,7 @@ const useStyles = makeStyles({
             ...shorthands.padding('28px', '0')
         },
         '&>section': {
+            position: 'relative',
             pointerEvents: 'none',
             userSelect: 'none',
             display: 'flex',
@@ -62,6 +63,17 @@ const useStyles = makeStyles({
         width: '100%',
         height: '100%',
         transitionDuration: tokens.durationUltraSlow,
+        animationName: {
+            from: {
+                scale: '1.25',
+                filter: 'blur(32px)',
+            },
+            to: {
+                scale: '1',
+                filter: 'blur(0px)',
+            },
+        },
+        animationDuration: tokens.durationUltraSlow,
     },
     graggableWindow: {
         width: '100%',
@@ -84,7 +96,20 @@ const useStyles = makeStyles({
         ...{
             ...shorthands.gap('32px')
         }
-    }
+    },
+    profilePanel: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        ...{
+            ...shorthands.gap('8px'),
+        },
+        '&>.username': {
+            color: tokens.colorNeutralBackground1,
+            userSelect: 'none',
+        },
+    },
 })
 
 const LockScreenContext = createContext(null)
@@ -109,32 +134,43 @@ function ScreenSaverTime({ format }: {
 function GraggableWindow() {
     const classes = useStyles()
     const {
-        setLeaveScreenSaver
+        setLeaveScreenSaver,
+        setCurrentYPosition
     } = useContext(LockScreenContext)
 
-    const grag = {
+    const grag = useRef({
         pageHeight: 0,
         position: {
             start: 0,
             end: 0
         }
-    }
-    const verify = () => {
-        if(grag.position.start - grag.position.end >= (grag.pageHeight / 2)) {
+    })
+    const verifyUnlock = (): boolean => {
+        if(grag.current.position.start - grag.current.position.end >= (grag.current.pageHeight / 2)) {
             setLeaveScreenSaver(true)
+            return true
         }
+        return false
     }
     return (
         <div
             className={classes.graggableWindow}
             draggable={true}
             onDragStart={e => {
-                grag.position.start = e.clientY
+                grag.current.position.start = e.clientY
+            }}
+            onDragOver={e => {
+                if(grag.current.position.start - e.clientY > 0) {
+                    setCurrentYPosition(-(grag.current.position.start - e.clientY) / 2)
+                }
             }}
             onDragEnd={e => {
-                grag.position.end = e.clientY
-                grag.pageHeight = e.screenY
-                verify()
+                grag.current.position.end = e.clientY
+                grag.current.pageHeight = e.screenY
+                const result = verifyUnlock()
+                if(!result) {
+                    setCurrentYPosition(0)
+                }
             }}
         ></div>
     )
@@ -142,7 +178,8 @@ function GraggableWindow() {
 function ScreenSaver() {
     const classes = useStyles()
     const {
-        leaveScreenSaver
+        leaveScreenSaver,
+        currentYPosition
     } = useContext(LockScreenContext)
 
     return (
@@ -153,7 +190,12 @@ function ScreenSaver() {
             }}
         >
             <GraggableWindow></GraggableWindow>
-            <section>
+            <section
+                style={{
+                    top: `${currentYPosition}px`,
+                    transitionDuration: currentYPosition === 0 ? tokens.durationNormal : '',
+                }}
+            >
                 <ScreenSaverTime format={"HH:mm"}></ScreenSaverTime>
                 <ScreenSaverTime format="MM-DD-YYYY"></ScreenSaverTime>
             </section>
@@ -172,30 +214,75 @@ function ScreenSaverBackground() {
             className={classes.screenSaverBackground}
             style={{
                 backgroundPosition: 'center',
-                scale: `${leaveScreenSaver ? 1.25 : 1}`,
+                scale: `${leaveScreenSaver ? 1.25 : ''}`,
                 filter: `blur(${leaveScreenSaver ? 32 : 0}px) brightness(${leaveScreenSaver ? 0.75 : 1})`,
             }}
         ></div>
     )
 }
-function Login() {
+
+function ProfilePanel() {
     const classes = useStyles()
 
-    const user = useSelector(state => state.account.currentAccount)
-    const dispatch = useDispatch()
+    const {
+        name
+    } = useSystemSelector(e => e.account.currentAccount)
+    return (
+        <div className={classes.profilePanel}>
+            <Avatar size={128}></Avatar>
+            <Title1 className="username">{ name }</Title1>
+        </div>
+    )
+}
+function LoginForm() {
+    const [typedPassword, setTypedPassword] = useState('')
 
-    const [password, setPassword] = useState('')
+    const {
+        password
+    } = useSystemSelector(state => state.account.currentAccount)
+    const dispatch = useSystemDispatch()
+
+    const [isError, setIsError] = useState(false)
+
+    const verifyPassword = useMemo((): boolean => {
+        if(password === typedPassword) {
+            return true
+        }
+        return false
+    }, [typedPassword])
+    const loginEvent = () => {
+        if(verifyPassword) {
+            setIsError(false)
+            dispatch(setIsLogIn(true))
+        } else {
+            setIsError(true)
+        }
+    }
+
+    useEffect(() => {
+        const verifyPasswordKeyupEvent = (e: KeyboardEvent) => {
+            if(e.key === 'Enter') {
+                loginEvent()
+            }
+        }
+        window.addEventListener('keyup', verifyPasswordKeyupEvent)
+        return () => {
+            window.removeEventListener('keyup', verifyPasswordKeyupEvent)
+        }
+    })
 
     return (
-        <div className={classes.login}>
-
-            <Avatar size={128}></Avatar>
-
+        <>
             <Input
                 placeholder="Password"
                 type="password"
-                value={password}
-                onInput={e => setPassword((e.target as HTMLInputElement).value)}
+                inputMode="text"
+                autoFocus
+                defaultValue={typedPassword}
+                onInput={e => {
+                    setIsError(false)
+                    setTypedPassword((e.target as HTMLInputElement).value)
+                }}
                 appearance="filled-lighter"
                 contentBefore={
                     <Password16Regular></Password16Regular>
@@ -205,15 +292,33 @@ function Login() {
                         size="small"
                         appearance="subtle"
                         icon={<ArrowRight16Regular></ArrowRight16Regular>}
-                        onClick={() => {
-                            if(password === user.password) {
-                                dispatch(setIsLogIn(true))
-                            }
-                        }}
+                        onClick={loginEvent}
                     ></Button>
                 }
+
             ></Input>
 
+            {
+                isError && (
+                    <Label
+                        style={{
+                            color: tokens.colorPaletteRedBackground2
+                        }}
+                    >Password is incorrect</Label>
+                )
+            }
+            
+        </>
+
+    )
+}
+function Login() {
+    const classes = useStyles()
+
+    return (
+        <div className={classes.login}>
+            <ProfilePanel></ProfilePanel>
+            <LoginForm></LoginForm>
         </div>
     )
 }
@@ -222,15 +327,49 @@ export function LockScreen() {
     const classes = useStyles()
 
     const [leaveScreenSaver, setLeaveScreenSaver] = useState(false)
+    const [currentYPosition, setCurrentYPosition] = useState(0)
+
+    useEffect(() => {
+        if(!leaveScreenSaver) {
+            const gotoLogin = (e: Event) => {
+                setLeaveScreenSaver(true)
+                e.preventDefault()
+            }
+            window.addEventListener('keydown', gotoLogin)
+            return () => {
+                window.removeEventListener('keydown', gotoLogin)
+            }
+        }
+        const createLockTimeout = (timeout: number) => setTimeout(() => {
+            setLeaveScreenSaver(false)
+            setCurrentYPosition(0)
+        }, timeout)
+
+        let timer = createLockTimeout(60000)
+        const addSomeTimeToTimer = () => {
+            clearTimeout(timer)
+            timer = createLockTimeout(60000)
+        }
+
+        window.addEventListener('keypress', addSomeTimeToTimer)
+
+        return () => {
+            window.removeEventListener('keypress', addSomeTimeToTimer)
+        }
+    }, [leaveScreenSaver])
+
     return (
         <div className={classes.root}>
             <LockScreenContext.Provider
                 value={{
                     leaveScreenSaver,
-                    setLeaveScreenSaver
+                    setLeaveScreenSaver,
+                    currentYPosition,
+                    setCurrentYPosition
                 }}
             >
                 <ScreenSaver></ScreenSaver>
+
                 {
                     leaveScreenSaver && <Login></Login>
                 }
