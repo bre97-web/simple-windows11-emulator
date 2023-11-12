@@ -1,6 +1,6 @@
-import { ProcessState, StateContextType } from "@/hooks/useProcessState"
+import { ProcessState, ProcessContext } from "@/hooks/useProcess"
 import { makeStyles, Button, FluentProvider, Label, tokens, webDarkTheme, webLightTheme, shorthands, mergeClasses, Tooltip } from "@fluentui/react-components"
-import { MouseEventHandler, ReactElement, useContext, useEffect, useRef, useState } from "react"
+import { MouseEventHandler, ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
 import {
     ErrorCircle16Regular
 } from "@fluentui/react-icons"
@@ -101,9 +101,9 @@ const useStyles = makeStyles({
  * 窗口头部
  * 提供窗口标题、窗口行动组（最小化、最大化、关闭）
  */
-function Header({ StateContext, onMouseDown }: {
-    StateContext: StateContextType
-    onMouseDown: MouseEventHandler<HTMLElement>
+function Header({ StateContext, windowDomRef }: {
+    StateContext: ProcessContext
+    windowDomRef: React.MutableRefObject<undefined>
 }) {
     const classes = useStyles()
 
@@ -113,8 +113,8 @@ function Header({ StateContext, onMouseDown }: {
     } = useContext(StateContext)
 
 
-    const Title = () => <Label className="title">{state.title}</Label>
-    const CloseButton = () => (
+    const Title = () => useMemo(() => <Label className="title">{state.title}</Label>, [state.title])
+    const CloseButton = () => useMemo(() => (
         <Tooltip
             content={"Close"}
             relationship="label"
@@ -131,8 +131,8 @@ function Header({ StateContext, onMouseDown }: {
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
             ></Button>
         </Tooltip>
-    )
-    const MinimizeButton = () => (
+    ), [state])
+    const MinimizeButton = () => useMemo(() => (
         <Tooltip
             content={"Minimize"}
             relationship="label"
@@ -149,8 +149,8 @@ function Header({ StateContext, onMouseDown }: {
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
             ></Button>
         </Tooltip>
-    )
-    const MaximizeButton = () => (
+    ), [state])
+    const MaximizeButton = () => useMemo(() => (
         <Tooltip
             content={"Maximize"}
             relationship="label"
@@ -167,57 +167,12 @@ function Header({ StateContext, onMouseDown }: {
                 icon={<ErrorCircle16Regular></ErrorCircle16Regular>}
             ></Button>
         </Tooltip>
-    )
+    ), [state])
 
-    return (
-        <header
-            className={classes.header}
-            onMouseDown={onMouseDown}
-        >
-            <Title></Title>
-
-            <div className="actions">
-                <MinimizeButton></MinimizeButton>
-                <MaximizeButton></MaximizeButton>
-                <CloseButton></CloseButton>
-            </div>
-        </header>
-    )
-}
-
-function Body({ StateContext }: {
-    StateContext: StateContextType
-}) {
-    const classes = useStyles()
-
-    const {
-        children
-    } = useContext(StateContext)
-
-    return (
-        <main className={classes.body}>
-            {children}
-        </main>
-    )
-}
-
-/**
- * 窗口
- */
-function Window({ StateContext }: {
-    StateContext: StateContextType
-}) {
-
-    const windowRef = useRef()
-    const {
-        state,
-        setState,
-    } = useContext(StateContext)
-
-    const onGragEvent = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const onMouseDownEvent: MouseEventHandler<HTMLElement> = useCallback(e => {
         if (state.maximize) return
 
-        const current: HTMLElement = windowRef.current
+        const current: HTMLElement = windowDomRef.current
 
         // 计算鼠标距离弹出框内的位置
         const position = {
@@ -254,10 +209,56 @@ function Window({ StateContext }: {
         }
 
         return
-    }
+    }, [state])
+
+    return (
+        <header
+            className={classes.header}
+            onMouseDown={onMouseDownEvent}
+        >
+            <Title></Title>
+
+            <div className="actions">
+                <MinimizeButton></MinimizeButton>
+                <MaximizeButton></MaximizeButton>
+                <CloseButton></CloseButton>
+            </div>
+        </header>
+    )
+}
+
+function Body({ StateContext }: {
+    StateContext: ProcessContext
+}) {
+    const classes = useStyles()
+
+    const {
+        children
+    } = useContext(StateContext)
+
+    return (
+        <main className={classes.body}>
+            {children}
+        </main>
+    )
+}
+
+/**
+ * 窗口
+ */
+function Window({ StateContext }: {
+    StateContext: ProcessContext
+}) {
+
+    const windowDomRef = useRef()
+    const {
+        state,
+    } = useContext(StateContext)
+
+
 
     const dispatch = useSystemDispatch()
-    const onActiveWindowEvent = () => {
+    const onActiveWindowEvent: MouseEventHandler<HTMLDivElement> = useCallback(() => {
         dispatch(updatePropertyForAllProcessState({
             properties: ({
                 active: false
@@ -270,7 +271,7 @@ function Window({ StateContext }: {
                 active: true
             })
         }))
-    }
+    }, [state])
 
     const classes = useStyles()
     const windowStyles = mergeClasses(
@@ -290,11 +291,11 @@ function Window({ StateContext }: {
                 boxShadow: state.active ? tokens.shadow16 : '',
                 zIndex: state.active ? 1000 : '',
             }}
-            ref={windowRef}
+            ref={windowDomRef}
             onMouseDownCapture={onActiveWindowEvent}
         >
             <Header
-                onMouseDown={onGragEvent}
+                windowDomRef={windowDomRef}
                 StateContext={StateContext}
             ></Header>
 
@@ -303,8 +304,8 @@ function Window({ StateContext }: {
     )
 }
 
-function WindowWorkspace({ StateContext }: {
-    StateContext: StateContextType
+function WindowThemeProvider({ StateContext }: {
+    StateContext: ProcessContext
 }) {
     const isDarkEnabled = useSystemSelector(state => state.theme.isDarkEnabled)
 
@@ -316,62 +317,62 @@ function WindowWorkspace({ StateContext }: {
 }
 
 /**
- * WindowWorkspaceProvider.tsx
+ * WindowProvider.tsx
  * 
- * 此渲染函数内部维护一个state。state的数据来源自state_copy（从useProcessState），state和state_copy没有任何链接。
- * 任何state的数据更改都应该反映到processStates（位于WindowWorkspaceGroupProvider）。
+ * 此渲染函数内部维护一个state。state的数据来源自state_copy（从useProcess），state和state_copy没有任何链接。
+ * 任何state的数据更改都应该反映到processStates（位于store中的workspaceSlice）。
  */
 export function WindowProvider({ unmount, state_copy, StateContext, children }: {
     unmount: () => void
     state_copy: ProcessState
-    StateContext: StateContextType
+    StateContext: ProcessContext
     children: ReactElement
 }) {
 
-    /**
-     * 数据来源state_copy和数据state没有任何联系，state_copy仅作为state的初始值。
-     */
     const [state, setState] = useState(state_copy)
-
-    /**
-     * 任何state的数据更改都应该立即反映到WindowWorkspaceGroupProvider中的procesStates
-     */
     const dispatch = useSystemDispatch()
 
+    /**
+     * 追踪组件的关闭请求 'requestClose'
+     * 
+     * 当关闭请求为true时，首先将状态的closing设为true，然后在250ms后
+     * 移除在processStates中对应的state与setState，同时卸载组件，期间
+     * 的250ms容许组件显示最后的CSS动画。
+     * 
+     */
     useEffect(() => {
         if (!state.requestClose) return () => { }
         setState(e => ({
             ...e,
             closing: true
         }))
-        dispatch(removeStateByIdFromProcessStates({
-            id: state.processId
-        }))
         const timer = setTimeout(() => {
-            unmount()
-            setState(e => ({
-                ...e,
-                closing: false
+            dispatch(removeStateByIdFromProcessStates({
+                id: state.processId
             }))
+            unmount()
         }, 250)
         return () => clearTimeout(timer)
     }, [state.requestClose])
+
+    /**
+     * 在组件首次渲染时将state与setState添加到processStates
+     * 从此刻开始，本组件的state与setState可供外部访问
+     */
     useEffect(() => {
-        if (state.requestClose) return
         try {
-            dispatch(pushStateToProcessStates({
-                state,
-                setState
-            }))
+            dispatch(pushStateToProcessStates({state, setState}))
         } catch (error) {
             dispatch(updateStateByIdFromProcessStates({
                 id: state.processId,
                 state: state
             }))
         }
+    }, [])
 
-    }, [state])
-
+    /**
+     * 在组件渲染时设置状态的active，这将影响组件的CSS属性。
+     */
     useEffect(() => {
         dispatch(updatePropertyForAllProcessState({
             properties: ({
@@ -396,7 +397,7 @@ export function WindowProvider({ unmount, state_copy, StateContext, children }: 
                 children
             }}
         >
-            <WindowWorkspace StateContext={StateContext}></WindowWorkspace>
+            <WindowThemeProvider StateContext={StateContext}></WindowThemeProvider>
         </StateContext.Provider>
     )
 }
