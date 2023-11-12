@@ -1,8 +1,9 @@
 import { Store } from "@/store/store"
 import { WindowProvider } from "@/window-workspace/components/WindowProvider"
+import { useProcessHandle } from '@/hooks/useProcessHandle'
+import { Provider } from "react-redux"
 import { ReactElement, StrictMode, createContext } from "react"
 import ReactDOM from "react-dom/client"
-import { Provider } from "react-redux"
 
 export type ProcessState = {
 
@@ -50,31 +51,25 @@ export type ProcessState = {
      */
     processId: number
 
+    /**
+     * 当程序需要被关闭时，修改requestClose为true
+     */
     requestClose: boolean
     closing: boolean
 }
 
-let processHandler: number = 0
-function createProcessHandle(): number {
-    return processHandler++
-}
-
-export function useProcessState(
-    title = '',
-    icon: ReactElement,
-    width = 400,
-    height = 400,
-    x = 10,
-    y = 10,
-): ProcessState {
+/**
+ * 这将创建一个完全为默认值的ProcessState对象
+ */
+export function makeDefaultProcessState(): ProcessState {
     return ({
-        title: title,
-        icon: icon,
-        activeZIndex: createProcessHandle(),
-        x: x,
-        y: y,
-        width: width,
-        height: height,
+        title: 'Untitled',
+        icon: <></>,
+        activeZIndex: 0,
+        x: 10,
+        y: 10,
+        width: 300,
+        height: 300,
         maximizable: true,
         minimizable: true,
         fullscreen: false,
@@ -83,52 +78,70 @@ export function useProcessState(
         maximize: false,
         minimize: false,
         runningInBackground: true,
-        processId: createProcessHandle(),
+        processId: useProcessHandle(),
         requestClose: false,
         closing: false
     })
 }
+export function makeProcessState(props: ProcessState) {
+    return props
+}
 
-export type StateContextType = React.Context<{
+export type ProcessContext = React.Context<{
     state: ProcessState
     setState: (value: React.SetStateAction<ProcessState>) => void
     unmount: () => void
     children: ReactElement
 }>
-export type UseProcessType = {
+
+
+interface ProcessReactRootComponentInterface {
     mount: () => void
     unmount: () => void
 }
+export interface ProcessInterface extends ProcessReactRootComponentInterface {
+}
 
-export function useProcess(state: ProcessState, children: ReactElement): UseProcessType {
+class ProcessClass implements ProcessInterface {
 
-    const createDOM = () => {
+    private readonly context: ProcessContext = createContext(null)
+    private readonly instance: ReactDOM.Root
+    
+    constructor(
+        private readonly state: ProcessState,
+        private readonly children: ReactElement,
+    ) {
         const target = document.createElement('div')
         document.getElementById('window-workspace').appendChild(target)
-        return target
+        this.instance = ReactDOM.createRoot(target!)
     }
-    const unmount = () => instance.unmount()
-    const mount = () => {
-        const StateContext = createContext(null)
-        instance.render(
+
+    public mount() {
+        this.instance.render(
             <StrictMode>
                 <Provider store={Store}>
                     <WindowProvider
-                        unmount={unmount}
-                        StateContext={StateContext}
-                        state_copy={state}
+                        unmount={() => this.unmount()}
+                        state_copy={this.state}
+                        StateContext={this.context}
                     >
-                        {children}
+                        { this.children }
                     </WindowProvider>
                 </Provider>
             </StrictMode>
         )
     }
-
-    const instance = ReactDOM.createRoot(createDOM()!)
-
-    return {
-        mount,
-        unmount,
+    public unmount() {
+        this.instance.unmount()
     }
+
+}
+
+export function useProcess(state: ProcessState, children: ReactElement): ProcessClass {
+    const process = new ProcessClass(
+        state,
+        children
+    )
+        
+    return process
 }

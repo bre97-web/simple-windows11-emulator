@@ -1,14 +1,13 @@
-import { ProcessState } from "@/hooks/useProcessState"
+import { ProcessState } from "@/hooks/useProcess"
 import { createSlice } from "@reduxjs/toolkit"
 import React from "react"
 
 /**
  * 此文件内部维护了一个名为processStates的数组。
- * 通过此渲染函数向外公开所有的WindowProvider对象的state和setState。
+ * 通过向外公开所有的WindowProvider对象的state和setState来控制每一个程序的状态。
  * 
  * 请确保processStates内部的数据对最新，且不存在（或短时间内不存在）无效数据。
  * 为了确保processStates内部的数据是有效的，请确保：
- *     1. 当组件的state更新时，立即调用updateStateByIdFromProcessStates方法
  *     2. 当组件被卸载时，立即调用removeStateByIdFromProcessStates方法
  *     3. 当组件创建时，立即调用pushStateToProcessStates方法
  */
@@ -61,10 +60,6 @@ export const WorkspaceSlice = createSlice({
         }) => {
             s.processStates = s.processStates.filter(p => p.state.processId !== e.payload.id)
         },
-
-        /**
-         * 将指定id的程序的属性设置
-         */
         updatePropertyForAllProcessState: (s, e: {
             payload: {
                 properties: object

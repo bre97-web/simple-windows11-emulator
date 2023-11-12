@@ -14,7 +14,7 @@ import { FullScreenLayer } from "./FullScreenLayer"
 import { useDispatch } from "react-redux"
 import { setRequestToShutdown } from "@/store/systemSlice"
 import { AvailableAppList } from "@/window-workspace"
-import { useProcess, useProcessState } from "@/hooks/useProcessState"
+import { useProcess, makeDefaultProcessState } from "@/hooks/useProcess"
 import { setIsLogIn } from "@/store/accountSlice"
 
 const useStyles = makeStyles({
@@ -240,11 +240,13 @@ function StartPanelContentAllAppListItem({ e }: {
         <Button
             appearance="subtle"
             onClick={() => {
-                const state = useProcessState(
-                    e.title,
-                    e.icon
+                const instance = useProcess(
+                    {
+                        ...makeDefaultProcessState(),
+                        ...e
+                    }, 
+                    e.element
                 )
-                const instance = useProcess(state, e.element)
                 instance.mount()
             }}
         >
@@ -284,11 +286,13 @@ function StartPanelContentPinnedAppListItem({ e }: {
             className={classes.scalingButton}
             appearance="subtle"
             onClick={() => {
-                const state = useProcessState(
-                    e.title,
-                    e.icon
+                const instance = useProcess(
+                    {
+                        ...makeDefaultProcessState(),
+                        ...e
+                    }, 
+                    e.element
                 )
-                const instance = useProcess(state, e.element)
                 instance.mount()
             }}
         >
